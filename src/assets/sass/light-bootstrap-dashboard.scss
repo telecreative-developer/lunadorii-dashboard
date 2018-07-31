@@ -1,0 +1,237 @@
+/*!
+
+ =========================================================
+ * Light Bootstrap Dashboard React - v1.2.0
+ * Based on Light Bootstrap Dashboard - v1.3.0
+ =========================================================
+
+ * Product Page: http://www.creative-tim.com/product/light-bootstrap-dashboard-react
+ * Copyright 2017 Creative Tim (http://www.creative-tim.com)
+ * Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
+
+ =========================================================
+
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+ */
+
+//loading
+.contentAdd{  
+  height: 100%;
+  margin-top: 20px;
+  form{
+    padding: 20px 20px 60px 20px;
+  }
+}
+
+.contentLoading{
+  margin-top:20%;
+  height: 100%;
+  .loading-bro {
+    margin: 50px auto;
+    width: 100px;
+    > h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 1em;
+      font-weight: 300;
+      color: #8E8E8E;
+    }
+  }
+
+  #load {
+      width: 150px;
+      animation: loading 3s linear infinite;
+      #loading-inner {
+        stroke: {
+          dashoffset: 0;
+          dasharray: 300;
+          width: 10;
+          miterlimit: 10;
+          linecap: round;
+        }
+        animation: loading-circle 2s linear infinite;
+        stroke: #51BBA7;
+        fill: transparent;
+      }
+    }
+
+  @keyframes loading {
+      0% { 
+        transform: rotate(0); 
+      }
+      100% { 
+        transform: rotate(360deg);
+      }
+  }
+  @keyframes loading-circle {
+      0% { 
+        stroke-dashoffset: 0
+      }
+      100% { 
+        stroke-dashoffset: -600;
+      }
+  }
+}
+
+//end loading
+
+
+
+
+
+//end content login 
+.contentLogin{
+  @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.login-page {
+  width: 500px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #1f1f1f;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #1f1f1f;
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form .message a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.container:before, .container:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.container .info {
+  margin: 50px auto;
+  text-align: center;
+}
+.container .info h1 {
+  margin: 0 0 15px;
+  padding: 0;
+  font-size: 36px;
+  font-weight: 300;
+  color: #1a1a1a;
+}
+.container .info span {
+  color: #4d4d4d;
+  font-size: 12px;
+}
+.container .info span a {
+  color: #000000;
+  text-decoration: none;
+}
+.container .info span .fa {
+  color: #EF3B3A;
+}
+body {
+  background: #76b852; /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+  background: -moz-linear-gradient(right, #76b852, #8DC26F);
+  background: -o-linear-gradient(right, #76b852, #8DC26F);
+  background: linear-gradient(to left, #76b852, #8DC26F);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+}
+}
+
+.header-inbox{
+  border-bottom:1px solid #ccc;
+}
+.wrapper-inbox{
+  margin-left:0px;
+  margin-right:0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom:1px solid #ccc;
+  background:rgba(15,215,241,0.23);
+}
+.wrapper-inbox-read{
+  margin-left:0px;  
+  margin-right:0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #fff;
+  color: '#000';
+}
+
+
+@import "lbd/variables";
+@import "lbd/mixins";
+
+// Core CSS
+@import "lbd/typography";
+@import "lbd/misc";
+@import "lbd/sidebar-and-main-panel";
+@import "lbd/buttons";
+@import "lbd/inputs";
+
+@import "lbd/alerts";
+@import "lbd/tables";
+
+@import "lbd/checkbox-radio-switch";
+@import "lbd/navbars";
+@import "lbd/footers";
+
+// Fancy Stuff
+@import "lbd/dropdown";
+@import "lbd/cards";
+@import "lbd/chartist";
+@import "lbd/responsive";
+
+
+
+
+
