@@ -1,21 +1,28 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { HashRouter, Route, Switch } from "react-router-dom"
+import React from "react"
+import ReactDOM from "react-dom"
+import { HashRouter, Switch, Route } from "react-router-dom"
+import { Provider } from "react-redux"
+import { PouchDB } from "react-pouchdb"
+import store from "./store"
+import { PrivateRoute } from "./Route"
+import LoginContainer from "./containers/LoginContainer"
+import Dashboard from "./layouts/Dashboard/Dashboard"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/css/animate.min.css"
 import "./assets/sass/light-bootstrap-dashboard.css?v=1.2.0"
 import "./assets/css/demo.css"
 import "./assets/css/pe-icon-7-stroke.css"
-import Dashboard from "./layouts/Dashboard/Dashboard"
-import Login from "./layouts/Login/Login"
-import PrivateRoute from './PrivateRoute'
 
 ReactDOM.render(
-  <HashRouter>
-    <Switch>
-      <Route to="/" component={Dashboard} />
-      {/* <Route to="/login" component={Login} /> */}
-    </Switch>
-  </HashRouter>,
-  document.getElementById("root")
-);
+	<PouchDB name="lunadorii">
+		<Provider store={store}>
+			<HashRouter>
+				<Switch>
+					<Route exact to="/" component={Dashboard} />
+					<Route to="/login" component={LoginContainer} />
+				</Switch>
+			</HashRouter>
+		</Provider>
+	</PouchDB>,
+	document.getElementById("root")
+)

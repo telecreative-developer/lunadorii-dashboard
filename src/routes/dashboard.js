@@ -1,8 +1,8 @@
-import Dashboard from "views/Dashboard/Dashboard"
-import Users from "views/Users/Users"
-import Reports from "views/Reports/Reports"
-import Icons from "views/Icons/Icons"
-import Banners from "views/Banners/Banners"
+import Dashboard from "../views/Dashboard/Dashboard"
+import Users from "../views/Users/Users"
+import ReportContainer from "../containers/ReportContainer"
+import Icons from "../views/Icons/Icons"
+import Banners from "../views/Banners/Banners"
 
 const dashboardRoutes = [
   {
@@ -21,7 +21,7 @@ const dashboardRoutes = [
     path: "/products",
     name: "Products",
     icon: "pe-7s-box1",
-    component: Reports
+    component: ReportContainer
   },
   {
     path: "/users",
@@ -33,7 +33,7 @@ const dashboardRoutes = [
     path: "/reports",
     name: "Reports",
     icon: "pe-7s-mail-open-file",
-    component: Reports
+    component: ReportContainer
   },
   {
     path: "/icons",
@@ -42,6 +42,6 @@ const dashboardRoutes = [
     component: Icons
   },
   { redirect: true, path: "/", to: "/dashboard", name: "Dashboard" }
-];
+]
 
-export default dashboardRoutes;
+export default dashboardRoutes

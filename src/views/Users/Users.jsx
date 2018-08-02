@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Grid, Row, Col, Table } from "react-bootstrap"
-import Card from "components/Card/Card.jsx"
-import { thArray, tdArray } from "variables/Variables.jsx"
+import Card from "../../components/Card/Card"
+import { thArray, tdArray } from "../../variables/Variables"
 
 class Users extends Component {
   render() {
@@ -20,7 +20,7 @@ class Users extends Component {
                     <thead>
                       <tr>
                         {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
+                          return <th key={key}>{prop}</th>
                         })}
                       </tr>
                     </thead>
@@ -29,11 +29,11 @@ class Users extends Component {
                         return (
                           <tr key={key}>
                             {prop.map((prop, key) => {
-                              return <td key={key}>{prop}</td>;
+                              return <td key={key}>{prop}</td>
                             })}
                             <button class="btn btn-danger">Unactive</button>
                           </tr>
-                        );
+                        )
                       })}
                     </tbody>
                   </Table>
@@ -43,8 +43,8 @@ class Users extends Component {
           </Row>
         </Grid>
       </div>
-    );
+    )
   }
 }
 
-export default Users;
+export default Users

@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Grid, Row, Col } from "react-bootstrap";
+import React, { Component } from "react"
+import { Grid, Row, Col } from "react-bootstrap"
 
-import Card from "components/Card/Card";
-import { iconsArray } from "variables/Variables.jsx";
+import Card from "../../components/Card/Card"
+import { iconsArray } from "../../variables/Variables"
 
 class Icons extends Component {
   render() {
@@ -20,8 +20,7 @@ class Icons extends Component {
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
-                      href="http://themes-pixeden.com/font-demos/7-stroke/index.html"
-                    >
+                      href="http://themes-pixeden.com/font-demos/7-stroke/index.html">
                       Pixeden
                     </a>
                   </span>
@@ -36,14 +35,13 @@ class Icons extends Component {
                           sm={4}
                           xs={6}
                           className="font-icon-list"
-                          key={key}
-                        >
+                          key={key}>
                           <div className="font-icon-detail">
                             <i className={prop} />
                             <input type="text" defaultValue={prop} />
                           </div>
                         </Col>
-                      );
+                      )
                     })}
                   </Row>
                 }
@@ -52,8 +50,8 @@ class Icons extends Component {
           </Row>
         </Grid>
       </div>
-    );
+    )
   }
 }
 
-export default Icons;
+export default Icons
