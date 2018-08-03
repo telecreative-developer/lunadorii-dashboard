@@ -13,7 +13,11 @@ const AddBanner = ({
   onChangeThumbnail,
   thumbnail,
   onChangeTitle,
-  title
+  title,
+  formType,
+  handleAddBanner,
+  onClearImage,
+  handleCancel
 }) => (
   <div className="contentAdd">
     <Col xs={12}>
@@ -25,24 +29,35 @@ const AddBanner = ({
           <div>
             <Row>
               <Col xs={6}>
-                {/* <div className="imageUploader">
-                  <p style={{textAlign: 'center'}}><i class="pe-7s-camera" style={{fontSize: 40, marginTop: 20}}></i></p>
-                  <ImageUploader
-                    withIcon={false}
-                    buttonText="Choose images"
-                    label="Max Image size 5 Mb, Accepted .jpg, .gif, .png"
-                    onChange={this.onDrop}
-                    imgExtension={[".jpg", ".gif", ".png"]}
-                    maxFileSize={5242880}
-                    style={{marginTop: 0}}
-                  />
-                </div> */}
-                <div class="profile">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Facebook_New_Logo_%282015%29.svg/2000px-Facebook_New_Logo_%282015%29.svg.png" style={{width: '100%', maxHeight: 225}}/>
-                  <div class="overlay">
-                    <center><p>Cancel</p></center>
+                {thumbnail ? (
+                  <div className="profile">
+                    <img
+                      alt="banner-thumbnail"
+                      src={thumbnail}
+                      style={styles.thumbnailBanner}
+                    />
+                    <div className="overlay" onClick={onClearImage}>
+                      <center>
+                        <p>Cancel</p>
+                      </center>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="imageUploader">
+                    <p style={styles.pIconCamera}>
+                      <i className="pe-7s-camera" style={styles.iconCamera} />
+                    </p>
+                    <ImageUploader
+                      withIcon={false}
+                      buttonText="Choose Image"
+                      label="Max Image size 5 Mb, Accepted .jpg, .gif, .png"
+                      onChange={onChangeThumbnail}
+                      imgExtension={[".jpg", ".gif", ".png"]}
+                      maxFileSize={5242880}
+                      style={styles.imageUploader}
+                    />
+                  </div>
+                )}
               </Col>
               <Col xs={6}>
                 <div style={styles.form}>
@@ -84,8 +99,13 @@ const AddBanner = ({
             <Row>
               <Col xs={12}>
                 <div style={styles.divButton}>
-                  <button className="btn btn-warning">Cancel</button>
-                  <button className="btn btn-info" style={styles.buttonSave}>
+                  <button className="btn btn-warning" onClick={handleCancel}>
+                    Cancel
+                  </button>
+                  <button
+                    className="btn btn-info"
+                    style={styles.buttonSave}
+                    onClick={handleAddBanner}>
                     Save
                   </button>
                 </div>
@@ -117,8 +137,22 @@ const styles = {
   buttonSave: {
     marginLeft: 10
   },
-  form:{
+  form: {
     padding: 20
+  },
+  pIconCamera: {
+    textAlign: "center"
+  },
+  iconCamera: {
+    fontSize: 40,
+    marginTop: 20
+  },
+  imageUploader: {
+    marginTop: 0
+  },
+  thumbnailBanner: {
+    width: "100%",
+    maxHeight: 225
   }
 }
 
