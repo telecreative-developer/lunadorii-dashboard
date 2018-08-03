@@ -1,58 +1,74 @@
 class ReduxFetch {
-	http({ url, method, accessToken, body }) {
-		return fetch(url, {
-			method: method,
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-				Authorization: accessToken
-			},
-			body: JSON.stringify(body)
-		})
-			.then(res => res.json())
-			.catch(err => err)
+	async http({ url, method, accessToken, body }) {
+		try {
+			const res = await fetch(url, {
+				method: method,
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+					Authorization: accessToken
+				},
+				body: JSON.stringify(body)
+			})
+			const data = await res.json()
+			return data
+		} catch (e) {
+			return e
+		}
 	}
 
-	post({ url, body, accessToken }) {
-		return this.http({
-			url: url,
-			method: "POST",
-			accessToken: accessToken,
-			body: body
-		})
-			.then(res => res)
-			.catch(err => err)
+	async post({ url, body, accessToken }) {
+		try {
+			const res = await this.http({
+				url: url,
+				method: "POST",
+				accessToken: accessToken,
+				body: body
+			})
+			return res
+		} catch (e) {
+			return e
+		}
 	}
 
-	get({ url, accessToken }) {
-		return this.http({
-			url: url,
-			method: "GET",
-			accessToken: accessToken
-		})
-			.then(res => res)
-			.catch(err => err)
+	async get({ url, accessToken }) {
+		try {
+			const res = await this.http({
+				url: url,
+				method: "GET",
+				accessToken: accessToken
+			})
+			return res
+		} catch (e) {
+			return e
+		}
 	}
 
-	put({ url, body, accessToken }) {
-		return this.http({
-			url: url,
-			method: "PUT",
-			accessToken: accessToken,
-			body: body
-		})
-			.then(res => res)
-			.catch(err => err)
+	async put({ url, body, accessToken }) {
+		try {
+			const res = await this.http({
+				url: url,
+				method: "PUT",
+				accessToken: accessToken,
+				body: body
+			})
+			return res
+		} catch (e) {
+			return e
+		}
 	}
 
-	delete({ url, accessToken }) {
-		return this.http({
-			url: url,
-			method: "DELETE",
-			accessToken: accessToken
-		})
-			.then(res => res)
-			.catch(err => err)
+	async delete({ url, accessToken }) {
+		try {
+			const res = await this.http({
+				url: url,
+				method: "DELETE",
+				accessToken: accessToken
+			})
+			return res
+		} catch (e) {
+			return e
+		}
 	}
 }
 

@@ -9,6 +9,23 @@ const initialStateLoading = {
 	process_on: null
 }
 
+const initialStateNavigation = {
+	dashboard: "dashboard",
+	banner: "banner",
+	product: "product",
+	user: "user",
+	report: "report"
+}
+
+export const navigation = (state = initialStateNavigation, action) => {
+	switch (action.type) {
+		case "SET_NAVIGATION":
+			return { ...state, ...action.payload }
+		default:
+			return state
+	}
+}
+
 export const loading = (state = initialStateLoading, action) => {
 	switch (action.type) {
 		case "SET_LOADING":

@@ -1,3 +1,8 @@
+export const setNavigation = navigation => ({
+	type: "SET_NAVIGATION",
+	payload: navigation
+})
+
 export const setSuccessAndBackToDefault = (message, process_on) => {
 	return async dispatch => {
 		dispatch(
@@ -34,7 +39,7 @@ export const setLoading = ({ status, process_on }) => {
 	}
 }
 
-export const setSuccess = ({ status, message, process_on }) => {
+const setSuccess = ({ status, message, process_on }) => {
 	return {
 		type: "SET_SUCCESS",
 		status,
@@ -43,7 +48,7 @@ export const setSuccess = ({ status, message, process_on }) => {
 	}
 }
 
-export const setFailed = ({ status, message, process_on }) => {
+const setFailed = ({ status, message, process_on }) => {
 	return {
 		type: "SET_FAILED",
 		status,

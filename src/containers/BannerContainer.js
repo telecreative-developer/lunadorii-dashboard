@@ -3,7 +3,15 @@ import PouchDB from "pouchdb"
 import { connect } from "react-redux"
 import Banner from "../views/Banner/Banner"
 import AddBanner from "../views/Banner/AddBanner"
-import { fetchBanners } from "../actions/banners"
+import { setNavigation } from "../actions/processor"
+import {
+	fetchBanners,
+	uploadImageBannerToS3,
+	addBanner,
+	updateBanner,
+	setActiveBanner,
+	setUnactiveBanner
+} from "../actions/banners"
 const db = new PouchDB("lunadorii")
 
 class BannerContainer extends React.Component {
@@ -11,7 +19,7 @@ class BannerContainer extends React.Component {
 		super()
 
 		this.state = {
-			formMode: false,
+			formType: "",
 			title: "",
 			thumbnail: "",
 			categorySelected: "general",
@@ -28,28 +36,40 @@ class BannerContainer extends React.Component {
 	}
 
 	componentWillMount() {
-		db.get("session").then(doc =>
-			this.props.fetchBanners({ accessToken: doc.accessToken })
-		)
+		db.get("session").then(doc => this.props.fetchBanners(doc.accessToken))
+	}
+
+	handleAddBanner() {
+		const { title, thumbnail, typeSelected, categorySelected } = this.state
+		this.props.uploadImageBannerToS3(thumbnail)
 	}
 
 	render() {
 		const {
 			formMode,
+			formType,
 			thumbnail,
+			title,
 			categories,
 			types,
 			categorySelected,
 			typeSelected
 		} = this.state
-		const { banners } = this.props
+		const { navigationBanner, banners } = this.props
 
-		if (formMode) {
+		if (
+			navigationBanner === "add-banner" ||
+			navigationBanner === "update-banner"
+		) {
 			return (
 				<AddBanner
+					formType={navigationBanner}
+					handleAddBanner={() => this.handleAddBanner()}
+					title={title}
+					onChangeTitle={e => this.setState({ title: e.target.value })}
 					thumbnail={thumbnail}
-					onChangeThumbnail={e =>
-						this.setState({ thumbnail: e.target.files[0] })
+					onChangeThumbnail={thumbnail =>
+						this.setState({ thumbnail: URL.createObjectURL(thumbnail[0]) })
 					}
 					categorySelected={categorySelected}
 					typeSelected={typeSelected}
@@ -59,6 +79,8 @@ class BannerContainer extends React.Component {
 					categories={categories}
 					onChangeType={e => this.setState({ typeSelected: e.target.value })}
 					types={types}
+					onClearImage={() => this.setState({ thumbnail: "" })}
+					handleCancel={() => this.props.setNavigation({ banner: "banner" })}
 				/>
 			)
 		}
@@ -66,18 +88,29 @@ class BannerContainer extends React.Component {
 		return (
 			<Banner
 				banners={banners}
-				onAddBanner={() => this.setState({ formMode: true })}
+				onAddBanner={() => this.props.setNavigation({ banner: "add-banner" })}
 			/>
 		)
 	}
 }
 
 const mapStateToProps = state => ({
-	banners: state.banners
+	banners: state.banners,
+	navigationBanner: state.navigation.banner
 })
 
 const mapDispatchToProps = dispacth => ({
-	fetchBanners: ({ accessToken }) => dispacth(fetchBanners({ accessToken }))
+	setNavigation: navigation => dispacth(setNavigation(navigation)),
+	fetchBanners: accessToken => dispacth(fetchBanners(accessToken)),
+	uploadImageBannerToS3: thumbnail =>
+		dispacth(uploadImageBannerToS3(thumbnail)),
+	addBanner: (data, accessToken) => dispacth(addBanner(data, accessToken)),
+	updateBanner: (data, accessToken) =>
+		dispacth(updateBanner(data, accessToken)),
+	setActiveBanner: (banner_id, accessToken) =>
+		dispacth(setActiveBanner(banner_id, accessToken)),
+	setUnactiveBanner: (banner_id, accessToken) =>
+		dispacth(setUnactiveBanner(banner_id, accessToken))
 })
 
 export default connect(
