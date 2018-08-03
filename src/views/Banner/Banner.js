@@ -18,26 +18,25 @@ const tooltipRemove = (
   <Tooltip id="tooltip">
     <strong>Remove</strong>
   </Tooltip>
-);
+)
 
 const tooltipEdit = (
   <Tooltip id="tooltip">
     <strong>Remove</strong>
   </Tooltip>
-);
+)
 
 const tooltipUnActive = (
   <Tooltip id="tooltip">
     <strong>Set Unactive</strong>
   </Tooltip>
-);
+)
 
 const tooltipActive = (
   <Tooltip id="tooltip">
     <strong>Set Active</strong>
   </Tooltip>
-);
-
+)
 
 const Banner = ({ banners, onAddBanner }) => (
   <div className="content">
@@ -78,33 +77,47 @@ const Banner = ({ banners, onAddBanner }) => (
                       <td>{banner.category}</td>
                       <td>{moment(banner.created_at).format("LLL")}</td>
                       <td>
-                        {banner.active ? 
-                          <button style={styles.btnActive}>Active</button> : 
-                          <button style={styles.btnNotActive}>Not Active</button>
-                        }
+                        {banner.active ? (
+                          <button style={styles.btnActive}>Active</button>
+                        ) : (
+                          <button style={styles.btnNotActive}>
+                            Not Active
+                          </button>
+                        )}
                       </td>
                       <td>
                         <OverlayTrigger placement="top" overlay={tooltipEdit}>
-                          <button
-                            class="btn btn-info"
-                            style={styles.btnEdit}>
-                            <i class="pe-7s-eyedropper" style={{color: '#fff'}}></i>
+                          <button class="btn btn-info" style={styles.btnEdit}>
+                            <i
+                              class="pe-7s-eyedropper"
+                              style={{ color: "#fff" }}
+                            />
                           </button>
                         </OverlayTrigger>
                         {banner.active ? (
-                          <OverlayTrigger placement="top" overlay={tooltipUnActive}>
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={tooltipUnActive}>
                             <button
                               class="btn btn-danger"
                               style={styles.btnDanger}>
-                              <i class="pe-7s-close-circle" style={{color: '#fff'}}></i>
+                              <i
+                                class="pe-7s-close-circle"
+                                style={{ color: "#fff" }}
+                              />
                             </button>
                           </OverlayTrigger>
                         ) : (
-                          <OverlayTrigger placement="top" overlay={tooltipActive}>
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={tooltipActive}>
                             <button
                               class="btn btn-success"
                               style={styles.btnSuccess}>
-                              <i class="pe-7s-check" style={{color: '#fff'}}></i>
+                              <i
+                                class="pe-7s-check"
+                                style={{ color: "#fff" }}
+                              />
                             </button>
                           </OverlayTrigger>
                         )}
@@ -112,7 +125,7 @@ const Banner = ({ banners, onAddBanner }) => (
                           <button
                             class="btn btn-default"
                             style={styles.btnDefault}>
-                            <i class="pe-7s-trash" style={{color: '#fff'}}></i>
+                            <i class="pe-7s-trash" style={{ color: "#fff" }} />
                           </button>
                         </OverlayTrigger>
                       </td>
@@ -144,19 +157,19 @@ const styles = {
     border: 'none',
     marginRight: 10
   },
-  btnDefault:{
-    background: '#6d6d6d',
-    border: 'none',
+  btnDefault: {
+    background: "#6d6d6d",
+    border: "none",
     marginRight: 10
   },
-  btnSuccess:{
-    background: '#5bb95b',
-    border: 'none',
+  btnSuccess: {
+    background: "#5bb95b",
+    border: "none",
     marginRight: 10
   },
-  btnDanger:{
-    background: '#da534e',
-    border: 'none',
+  btnDanger: {
+    background: "#da534e",
+    border: "none",
     marginRight: 10
   },
   btnActive:{

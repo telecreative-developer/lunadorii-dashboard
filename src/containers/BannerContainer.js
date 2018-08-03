@@ -19,7 +19,6 @@ class BannerContainer extends React.Component {
 		super()
 
 		this.state = {
-			formType: "",
 			title: "",
 			thumbnail: "",
 			categorySelected: "general",
@@ -46,8 +45,6 @@ class BannerContainer extends React.Component {
 
 	render() {
 		const {
-			formMode,
-			formType,
 			thumbnail,
 			title,
 			categories,
