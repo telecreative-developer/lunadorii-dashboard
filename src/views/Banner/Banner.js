@@ -100,6 +100,7 @@ const styles = {
     float:'right'
   },
   btnEdit: {
+    width: 90,
     marginLeft: 5,
     marginRight: 5
   },
