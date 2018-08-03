@@ -45,7 +45,7 @@ const Banner = ({ banners, onAddBanner }) => (
       <Row>
         <Col xs={12}>
           <button onClick={onAddBanner} className="btn btn-primary" style={styles.btnAdd}>
-            Add Banners
+            Add Banner
           </button>
         </Col>
       </Row>
@@ -132,6 +132,13 @@ const styles = {
   bannerThumbnail: {
     width: 100
   },
+  btnAdd:{
+    background: '#3279b8',
+    border: 'none',
+    float: 'right',
+    marginBottom: 10,
+    color: '#fff'
+  },
   btnEdit:{
     background: '#59c1de',
     border: 'none',
@@ -153,7 +160,7 @@ const styles = {
     marginRight: 10
   },
   btnActive:{
-    background: '#46a946', 
+    background: '#80c67b', 
     color: '#fff', 
     width: 90, 
     borderRadius: 13, 
@@ -162,7 +169,7 @@ const styles = {
     padding: 5
   },
   btnNotActive:{
-    background: '#f14d4d', 
+    background: '#e47672', 
     color: '#fff', 
     width: 90, 
     borderRadius: 13, 

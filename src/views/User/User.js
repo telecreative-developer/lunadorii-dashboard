@@ -69,7 +69,7 @@ const styles = {
     height: 50
   },
   btnActive:{
-    background: '#46a946', 
+    background: '#80c67b', 
     color: '#fff', 
     width: 90, 
     borderRadius: 13, 
@@ -78,7 +78,7 @@ const styles = {
     padding: 5
   },
   btnNotActive:{
-    background: '#f14d4d', 
+    background: '#e47672', 
     color: '#fff', 
     width: 90, 
     borderRadius: 13, 
