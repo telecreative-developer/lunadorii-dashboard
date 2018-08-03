@@ -12,6 +12,8 @@ class BannerContainer extends React.Component {
 
 		this.state = {
 			formMode: false,
+			title: "",
+			thumbnail: "",
 			categorySelected: "general",
 			typeSelected: "web",
 			categories: [
@@ -34,6 +36,7 @@ class BannerContainer extends React.Component {
 	render() {
 		const {
 			formMode,
+			thumbnail,
 			categories,
 			types,
 			categorySelected,
@@ -44,6 +47,10 @@ class BannerContainer extends React.Component {
 		if (formMode) {
 			return (
 				<AddBanner
+					thumbnail={thumbnail}
+					onChangeThumbnail={e =>
+						this.setState({ thumbnail: e.target.files[0] })
+					}
 					categorySelected={categorySelected}
 					typeSelected={typeSelected}
 					onChangeCategory={e =>

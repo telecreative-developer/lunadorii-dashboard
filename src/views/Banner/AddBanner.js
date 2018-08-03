@@ -1,7 +1,7 @@
 import React from "react"
-import { Grid, Row, Col, Table } from "react-bootstrap"
-import moment from "moment"
+import { Row, Col } from "react-bootstrap"
 import Card from "../../components/Card/Card"
+import ImageUploader from "react-images-upload"
 
 const AddBanner = ({
   categories,
@@ -9,7 +9,11 @@ const AddBanner = ({
   onChangeCategory,
   onChangeType,
   categorySelected,
-  typeSelected
+  typeSelected,
+  onChangeThumbnail,
+  thumbnail,
+  onChangeTitle,
+  title
 }) => (
   <div className="contentAdd">
     <Col xs={12}>
@@ -18,43 +22,46 @@ const AddBanner = ({
         ctTableFullWidth
         ctTableResponsive
         content={
-          <form>
+          <div>
             <Row>
               <Col xs={6}>
-              <div class="profile">
-                <img src="http://www.tourniagara.com/wp-content/uploads/2014/10/default-img.gif" style={styles.imageBanners}/>
-                <div class="overlay">
-                  <input id="imgInp" type="file" /> 
-                  <p>Change Picture</p>
-                </div>
-              </div>
-              <label style={styles.label}>* Hover to image to change the image</label>
+                <ImageUploader
+                  withIcon={true}
+                  buttonText="Choose images"
+                  onChange={this.onDrop}
+                  imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                  maxFileSize={5242880}
+                />
               </Col>
               <Col xs={6}>
                 <label style={styles.label}>Title</label>
                 <input
                   type="text"
                   name="title"
-                  class="form-control"
+                  className="form-control"
                   maxLength="100"
+                  value={title}
+                  onChange={onChangeTitle}
                   placeholder="Your Title"
                 />
                 <label style={styles.label}>Category</label>
-                <select class="form-control" onChange={onChangeCategory}>
-                  {categories.map(category => (
-                    <option
-                      selected={categorySelected === category.value && "selected"}
-                      value={category.value}>
+                <select
+                  className="form-control"
+                  value={categorySelected}
+                  onChange={onChangeCategory}>
+                  {categories.map((category, key) => (
+                    <option key={key} value={category.value}>
                       {category.category}
                     </option>
                   ))}
                 </select>
                 <label style={styles.label}>Type</label>
-                <select class="form-control" onChange={onChangeType}>
-                  {types.map(type => (
-                    <option
-                      selected={typeSelected === type.value && "selected"}
-                      value={type.value}>
+                <select
+                  className="form-control"
+                  value={typeSelected}
+                  onChange={onChangeType}>
+                  {types.map((type, key) => (
+                    <option key={key} value={type.value}>
                       {type.type}
                     </option>
                   ))}
@@ -63,15 +70,15 @@ const AddBanner = ({
             </Row>
             <Row>
               <Col xs={12}>
-                <div style={{ marginTop: 10, float: "right" }}>
-                  <button class="btn btn-warning">Cancel</button>
-                  <button class="btn btn-info" style={{ marginLeft: 10 }}>
+                <div style={styles.divButton}>
+                  <button className="btn btn-warning">Cancel</button>
+                  <button className="btn btn-info" style={styles.buttonSave}>
                     Save
                   </button>
                 </div>
               </Col>
             </Row>
-          </form>
+          </div>
         }
       />
     </Col>
@@ -79,16 +86,23 @@ const AddBanner = ({
 )
 
 const styles = {
-  imageBanners:{
-    width:'100%', 
+  imageBanners: {
+    width: "100%",
     maxHeight: 400
   },
-  label:{
+  label: {
     marginTop: 20
   },
   pictureUpload: {
     marginTop: 10,
     marginBottom: 10
+  },
+  divButton: {
+    marginTop: 10,
+    float: "right"
+  },
+  buttonSave: {
+    marginLeft: 10
   }
 }
 
