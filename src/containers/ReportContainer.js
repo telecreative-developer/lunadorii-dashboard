@@ -18,12 +18,9 @@ class ReportContainer extends React.Component {
 	}
 }
 
-const mapStateToProps = state => {
-	console.log(state.reports)
-	return {
-		reports: state.reports
-	}
-}
+const mapStateToProps = state => ({
+	reports: state.reports
+})
 
 const mapDispatchToProps = dispacth => ({
 	fetchReports: ({ accessToken }) => dispacth(fetchReports({ accessToken }))

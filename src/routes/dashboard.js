@@ -1,21 +1,21 @@
-import Dashboard from "../views/Dashboard/Dashboard"
-import Users from "../views/Users/Users"
+import DashboardContainer from "../containers/DashboardContainer"
+import UserContainer from "../containers/UserContainer"
 import ReportContainer from "../containers/ReportContainer"
 import Icons from "../views/Icons/Icons"
-import Banners from "../views/Banners/Banners"
+import BannerContainer from "../containers/BannerContainer"
 
 const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
     icon: "pe-7s-graph",
-    component: Dashboard
+    component: DashboardContainer
   },
   {
     path: "/banners",
     name: "Banners",
     icon: "pe-7s-photo",
-    component: Banners
+    component: BannerContainer
   },
   {
     path: "/products",
@@ -27,7 +27,7 @@ const dashboardRoutes = [
     path: "/users",
     name: "Users",
     icon: "pe-7s-users",
-    component: Users
+    component: UserContainer
   },
   {
     path: "/reports",
