@@ -31,3 +31,34 @@ const fetchBannersSuccess = data => ({
 	type: "FETCH_BANNERS_SUCCESS",
 	payload: data
 })
+
+export const addBanner = ({
+	title,
+	thumbnail_url,
+	type,
+	category,
+	accessToken
+}) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "ADD_BANNER" }))
+		return reduxFetch
+			.post({
+				url: server + "/banners",
+				accessToken: accessToken,
+				body: {
+					title,
+					thumbnail_url,
+					type,
+					category
+				}
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(setFailedAndBackToDefault(res.message, "ADD_BANNER"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "ADD_BANNER"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "ADD_BANNER")))
+	}
+}
