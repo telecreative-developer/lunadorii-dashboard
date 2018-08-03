@@ -1,5 +1,5 @@
 import React from "react"
-import { Grid, Row, Col, Table } from "react-bootstrap"
+import { Grid, Row, Col, Table, OverlayTrigger, Tooltip } from "react-bootstrap"
 import moment from "moment"
 import Card from "../../components/Card/Card"
 
@@ -13,6 +13,31 @@ const tableHead = [
   "Active",
   "Action"
 ]
+
+const tooltipRemove = (
+  <Tooltip id="tooltip">
+    <strong>Remove</strong>
+  </Tooltip>
+);
+
+const tooltipEdit = (
+  <Tooltip id="tooltip">
+    <strong>Remove</strong>
+  </Tooltip>
+);
+
+const tooltipUnActive = (
+  <Tooltip id="tooltip">
+    <strong>Set Unactive</strong>
+  </Tooltip>
+);
+
+const tooltipActive = (
+  <Tooltip id="tooltip">
+    <strong>Set Active</strong>
+  </Tooltip>
+);
+
 
 const Banner = ({ banners, onAddBanner }) => (
   <div className="content">
@@ -59,29 +84,37 @@ const Banner = ({ banners, onAddBanner }) => (
                         }
                       </td>
                       <td>
-                        <button
-                          className="btn btn-info"
-                          style={styles.btnEdit}>
-                          Edit
-                        </button>
+                        <OverlayTrigger placement="top" overlay={tooltipEdit}>
+                          <button
+                            class="btn btn-info"
+                            style={styles.btnEdit}>
+                            <i class="pe-7s-eyedropper" style={{color: '#fff'}}></i>
+                          </button>
+                        </OverlayTrigger>
                         {banner.active ? (
-                          <button
-                            className="btn btn-warning"
-                            style={styles.btnEdit}>
-                            Set Unactive
-                          </button>
+                          <OverlayTrigger placement="top" overlay={tooltipUnActive}>
+                            <button
+                              class="btn btn-danger"
+                              style={styles.btnDanger}>
+                              <i class="pe-7s-close-circle" style={{color: '#fff'}}></i>
+                            </button>
+                          </OverlayTrigger>
                         ) : (
-                          <button
-                            className="btn btn-success"
-                            style={styles.btnEdit}>
-                            Set Active
-                          </button>
+                          <OverlayTrigger placement="top" overlay={tooltipActive}>
+                            <button
+                              class="btn btn-success"
+                              style={styles.btnSuccess}>
+                              <i class="pe-7s-check" style={{color: '#fff'}}></i>
+                            </button>
+                          </OverlayTrigger>
                         )}
-                        <button
-                          className="btn btn-danger"
-                          style={styles.btnEdit}>
-                          Remove
-                        </button>
+                        <OverlayTrigger placement="top" overlay={tooltipRemove}>
+                          <button
+                            class="btn btn-default"
+                            style={styles.btnDefault}>
+                            <i class="pe-7s-trash" style={{color: '#fff'}}></i>
+                          </button>
+                        </OverlayTrigger>
                       </td>
                     </tr>
                   ))}
@@ -99,19 +132,25 @@ const styles = {
   bannerThumbnail: {
     width: 100
   },
-  btnAdd:{
-    marginTop: 10,
-    marginBottom: 10,
-    float:'right'
+  btnEdit:{
+    background: '#59c1de',
+    border: 'none',
+    marginRight: 10
   },
-  btnEdit: {
-    width: 120,
-    marginLeft: 5,
-    marginRight: 5
+  btnDefault:{
+    background: '#6d6d6d',
+    border: 'none',
+    marginRight: 10
   },
-  btnRemove: {
-    marginLeft: 5,
-    marginRight: 5
+  btnSuccess:{
+    background: '#5bb95b',
+    border: 'none',
+    marginRight: 10
+  },
+  btnDanger:{
+    background: '#da534e',
+    border: 'none',
+    marginRight: 10
   },
   btnActive:{
     background: '#46a946', 
