@@ -51,8 +51,13 @@ const Banner = ({ banners, onAddBanner }) => (
                       <td>{banner.title}</td>
                       <td>{banner.type}</td>
                       <td>{banner.category}</td>
-                      <td>{banner.active ? "Active" : "Not Active"}</td>
                       <td>{moment(banner.created_at).format("LLL")}</td>
+                      <td>
+                        {banner.active ? 
+                          <button style={styles.btnActive}>Active</button> : 
+                          <button style={styles.btnNotActive}>Not Active</button>
+                        }
+                      </td>
                       <td>
                         <button
                           className="btn btn-info"
@@ -63,13 +68,13 @@ const Banner = ({ banners, onAddBanner }) => (
                           <button
                             className="btn btn-warning"
                             style={styles.btnEdit}>
-                            Unactive
+                            Set Unactive
                           </button>
                         ) : (
                           <button
                             className="btn btn-success"
                             style={styles.btnEdit}>
-                            Active
+                            Set Active
                           </button>
                         )}
                         <button
@@ -100,13 +105,31 @@ const styles = {
     float:'right'
   },
   btnEdit: {
-    width: 90,
+    width: 120,
     marginLeft: 5,
     marginRight: 5
   },
   btnRemove: {
     marginLeft: 5,
     marginRight: 5
+  },
+  btnActive:{
+    background: '#46a946', 
+    color: '#fff', 
+    width: 90, 
+    borderRadius: 13, 
+    border:'none', 
+    fontSize: 12, 
+    padding: 5
+  },
+  btnNotActive:{
+    background: '#f14d4d', 
+    color: '#fff', 
+    width: 90, 
+    borderRadius: 13, 
+    border:'none', 
+    fontSize: 12, 
+    padding: 5
   }
 }
 

@@ -46,9 +46,9 @@ const User = ({ users }) => (
                       <td>{moment(user.joined_at).format("LL")}</td>
                       <td>
                         {user.verified ? (
-                          <button className="btn btn-success">Verified</button>
+                          <button style={styles.btnActive}>Verified</button>
                         ) : (
-                          <button className="btn btn-danger">Unverified</button>
+                          <button style={styles.btnNotActive}>Unverified</button>
                         )}
                       </td>
                     </tr>
@@ -67,6 +67,24 @@ const styles = {
   userAvatar: {
     width: 50,
     height: 50
+  },
+  btnActive:{
+    background: '#46a946', 
+    color: '#fff', 
+    width: 90, 
+    borderRadius: 13, 
+    border:'none', 
+    fontSize: 12, 
+    padding: 5
+  },
+  btnNotActive:{
+    background: '#f14d4d', 
+    color: '#fff', 
+    width: 90, 
+    borderRadius: 13, 
+    border:'none', 
+    fontSize: 12, 
+    padding: 5
   }
 }
 

@@ -137,9 +137,6 @@ const styles = {
   buttonSave: {
     marginLeft: 10
   },
-  form: {
-    padding: 20
-  },
   pIconCamera: {
     textAlign: "center"
   },
@@ -153,6 +150,9 @@ const styles = {
   thumbnailBanner: {
     width: "100%",
     maxHeight: 225
+  },
+  form: {
+    paddingRight: 20
   }
 }
 
