@@ -118,7 +118,7 @@ const styles = {
     marginLeft: 10
   },
   form:{
-    padding: 20
+    paddingRight: 20
   }
 }
 
