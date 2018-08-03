@@ -3,7 +3,7 @@ import UserContainer from "../containers/UserContainer"
 import ReportContainer from "../containers/ReportContainer"
 import Icons from "../views/Icons/Icons"
 import BannerContainer from "../containers/BannerContainer"
-import Product from "../views/Product/AddProduct"
+import ProductContainer from "../containers/ProductContainer"
 
 const dashboardRoutes = [
   {
@@ -22,7 +22,7 @@ const dashboardRoutes = [
     path: "/products",
     name: "Products",
     icon: "pe-7s-box1",
-    component: Product
+    component: ProductContainer
   },
   {
     path: "/users",

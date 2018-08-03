@@ -3,15 +3,26 @@ import moment from "moment"
 import { Grid, Row, Col, Table } from "react-bootstrap"
 import Card from "../../components/Card/Card"
 
-const tableHead = ["No", "Picture", "Product", "Description", "Price", "Discount", "Sub Category", "Brand", "Action"]
+const tableHead = [
+  "No",
+  "Picture",
+  "Product",
+  "Description",
+  "Price",
+  "Discount",
+  "Category",
+  "Brand",
+  "Reviews",
+  "Action"
+]
 
-const Product = ({ product }) => (
+const Product = ({ products }) => (
   <div className="content">
     <Grid fluid>
       <Row>
         <Col xs={12}>
           <button className="btn btn-primary" style={styles.btnAdd}>
-            Add Products
+            Add Product
           </button>
         </Col>
       </Row>
@@ -29,23 +40,33 @@ const Product = ({ product }) => (
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td><img src="https://www.optidaily.com/wp-content/uploads/2017/11/4-Merek-Produk-Kecantikan-Korea-yang-Populer-.jpg" style={{width: 100}}/></td>
-                    <td>L'Oreal Paris Voluminous Lash Paradise Waterproof Mascara - Black</td>
-                    <td>L'Oreal Paris Lash Paradise Mascara!</td>
-                    <td>102900</td>
-                    <td>100</td>
-                    <td>Face</td>
-                    <td>Zara</td>
-                    <td>
-                      <button
-                        className="btn btn-info"
-                        style={styles.btnEdit}>
-                        Edit
-                      </button>
-                    </td>
-                  </tr>
+                  {products.map((product, key) => (
+                    <tr key={key}>
+                      <td>{key + 1}</td>
+                      <td>
+                        <img
+                          src={product.thumbnails[0].thumbnail_url}
+                          style={{ width: 100 }}
+                        />
+                      </td>
+                      <td>{product.product}</td>
+                      <td>{product.description}</td>
+                      <td>{product.price}</td>
+                      <td>{product.discount_percentage}</td>
+                      <td>{product.subcategories[0].subcategory}</td>
+                      <td>{product.brands[0].brand}</td>
+                      <td>
+                        {product.reviews.length
+                          ? product.reviews.length
+                          : "Not yet"}
+                      </td>
+                      <td>
+                        <button className="btn btn-info" style={styles.btnEdit}>
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             }
@@ -57,17 +78,16 @@ const Product = ({ product }) => (
 )
 
 const styles = {
-  btnAdd:{
+  btnAdd: {
     marginTop: 10,
     marginBottom: 10,
-    float:'right'
+    float: "right"
   },
   btnEdit: {
     width: 90,
     marginLeft: 5,
     marginRight: 5
-  },
+  }
 }
-
 
 export default Product

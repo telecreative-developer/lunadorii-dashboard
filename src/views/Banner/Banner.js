@@ -19,8 +19,11 @@ const Banner = ({ banners, onAddBanner }) => (
     <Grid fluid>
       <Row>
         <Col xs={12}>
-          <button onClick={onAddBanner} className="btn btn-primary" style={styles.btnAdd}>
-            Add Banners
+          <button
+            onClick={onAddBanner}
+            className="btn btn-primary"
+            style={styles.btnAdd}>
+            Add Banner
           </button>
         </Col>
       </Row>
@@ -53,15 +56,16 @@ const Banner = ({ banners, onAddBanner }) => (
                       <td>{banner.category}</td>
                       <td>{moment(banner.created_at).format("LLL")}</td>
                       <td>
-                        {banner.active ? 
-                          <button style={styles.btnActive}>Active</button> : 
-                          <button style={styles.btnNotActive}>Not Active</button>
-                        }
+                        {banner.active ? (
+                          <button style={styles.btnActive}>Active</button>
+                        ) : (
+                          <button style={styles.btnNotActive}>
+                            Not Active
+                          </button>
+                        )}
                       </td>
                       <td>
-                        <button
-                          className="btn btn-info"
-                          style={styles.btnEdit}>
+                        <button className="btn btn-info" style={styles.btnEdit}>
                           Edit
                         </button>
                         {banner.active ? (
@@ -99,10 +103,10 @@ const styles = {
   bannerThumbnail: {
     width: 100
   },
-  btnAdd:{
+  btnAdd: {
     marginTop: 10,
     marginBottom: 10,
-    float:'right'
+    float: "right"
   },
   btnEdit: {
     width: 120,
@@ -113,22 +117,22 @@ const styles = {
     marginLeft: 5,
     marginRight: 5
   },
-  btnActive:{
-    background: '#46a946', 
-    color: '#fff', 
-    width: 90, 
-    borderRadius: 13, 
-    border:'none', 
-    fontSize: 12, 
+  btnActive: {
+    background: "#46a946",
+    color: "#fff",
+    width: 90,
+    borderRadius: 13,
+    border: "none",
+    fontSize: 12,
     padding: 5
   },
-  btnNotActive:{
-    background: '#f14d4d', 
-    color: '#fff', 
-    width: 90, 
-    borderRadius: 13, 
-    border:'none', 
-    fontSize: 12, 
+  btnNotActive: {
+    background: "#f14d4d",
+    color: "#fff",
+    width: 90,
+    borderRadius: 13,
+    border: "none",
+    fontSize: 12,
     padding: 5
   }
 }
