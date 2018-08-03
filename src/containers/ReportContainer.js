@@ -1,7 +1,8 @@
 import React from "react"
 import PouchDB from "pouchdb"
 import { connect } from "react-redux"
-import Report from "../views/Report/Report"
+// import Report from "../views/Report/Report"
+import DetailReport from "../views/Report/DetailReport"
 import { fetchReports } from "../actions/reports"
 const db = new PouchDB("lunadorii")
 
@@ -14,7 +15,7 @@ class ReportContainer extends React.Component {
 
 	render() {
 		const { reports } = this.props
-		return <Report reports={reports} />
+		return <DetailReport reports={reports} />
 	}
 }
 

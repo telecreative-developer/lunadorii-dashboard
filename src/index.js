@@ -18,8 +18,8 @@ ReactDOM.render(
 		<Provider store={store}>
 			<HashRouter>
 				<Switch>
-					<Route to="/login" component={LoginContainer} />
 					<Route exact to="/" component={Dashboard} />
+					<Route to="/login" component={LoginContainer} />
 				</Switch>
 			</HashRouter>
 		</Provider>
