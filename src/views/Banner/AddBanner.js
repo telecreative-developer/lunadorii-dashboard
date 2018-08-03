@@ -25,47 +25,60 @@ const AddBanner = ({
           <div>
             <Row>
               <Col xs={6}>
-                <ImageUploader
-                  withIcon={true}
-                  buttonText="Choose images"
-                  onChange={this.onDrop}
-                  imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-                  maxFileSize={5242880}
-                />
+                {/* <div className="imageUploader">
+                  <p style={{textAlign: 'center'}}><i class="pe-7s-camera" style={{fontSize: 40, marginTop: 20}}></i></p>
+                  <ImageUploader
+                    withIcon={false}
+                    buttonText="Choose images"
+                    label="Max Image size 5 Mb, Accepted .jpg, .gif, .png"
+                    onChange={this.onDrop}
+                    imgExtension={[".jpg", ".gif", ".png"]}
+                    maxFileSize={5242880}
+                    style={{marginTop: 0}}
+                  />
+                </div> */}
+                <div class="profile">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Facebook_New_Logo_%282015%29.svg/2000px-Facebook_New_Logo_%282015%29.svg.png" style={{width: '100%', maxHeight: 225}}/>
+                  <div class="overlay">
+                    <center><p>Cancel</p></center>
+                  </div>
+                </div>
               </Col>
               <Col xs={6}>
-                <label style={styles.label}>Title</label>
-                <input
-                  type="text"
-                  name="title"
-                  className="form-control"
-                  maxLength="100"
-                  value={title}
-                  onChange={onChangeTitle}
-                  placeholder="Your Title"
-                />
-                <label style={styles.label}>Category</label>
-                <select
-                  className="form-control"
-                  value={categorySelected}
-                  onChange={onChangeCategory}>
-                  {categories.map((category, key) => (
-                    <option key={key} value={category.value}>
-                      {category.category}
-                    </option>
-                  ))}
-                </select>
-                <label style={styles.label}>Type</label>
-                <select
-                  className="form-control"
-                  value={typeSelected}
-                  onChange={onChangeType}>
-                  {types.map((type, key) => (
-                    <option key={key} value={type.value}>
-                      {type.type}
-                    </option>
-                  ))}
-                </select>
+                <div style={styles.form}>
+                  <label>Title</label>
+                  <input
+                    type="text"
+                    name="title"
+                    className="form-control"
+                    maxLength="100"
+                    value={title}
+                    onChange={onChangeTitle}
+                    placeholder="Your Title"
+                  />
+                  <label style={styles.label}>Category</label>
+                  <select
+                    className="form-control"
+                    value={categorySelected}
+                    onChange={onChangeCategory}>
+                    {categories.map((category, key) => (
+                      <option key={key} value={category.value}>
+                        {category.category}
+                      </option>
+                    ))}
+                  </select>
+                  <label style={styles.label}>Type</label>
+                  <select
+                    className="form-control"
+                    value={typeSelected}
+                    onChange={onChangeType}>
+                    {types.map((type, key) => (
+                      <option key={key} value={type.value}>
+                        {type.type}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </Col>
             </Row>
             <Row>
@@ -98,11 +111,14 @@ const styles = {
     marginBottom: 10
   },
   divButton: {
-    marginTop: 10,
+    margin: 20,
     float: "right"
   },
   buttonSave: {
     marginLeft: 10
+  },
+  form:{
+    padding: 20
   }
 }
 
