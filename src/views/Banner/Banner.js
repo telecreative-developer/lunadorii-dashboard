@@ -18,10 +18,14 @@ const Banner = ({ banners, onAddBanner }) => (
   <div className="content">
     <Grid fluid>
       <Row>
-        <Col md={12}>
-          <button onClick={onAddBanner} className="btn btn-primary">
-            Add Mode
+        <Col xs={12}>
+          <button onClick={onAddBanner} className="btn btn-primary" style={styles.btnAdd}>
+            Add Banners
           </button>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={12}>
           <Card
             title="All Banners"
             ctTableFullWidth
@@ -51,13 +55,13 @@ const Banner = ({ banners, onAddBanner }) => (
                       <td>{moment(banner.created_at).format("LLL")}</td>
                       <td>
                         <button
-                          className="btn btn-warning"
+                          className="btn btn-info"
                           style={styles.btnEdit}>
                           Edit
                         </button>
                         {banner.active ? (
                           <button
-                            className="btn btn-danger"
+                            className="btn btn-warning"
                             style={styles.btnEdit}>
                             Unactive
                           </button>
@@ -89,6 +93,11 @@ const Banner = ({ banners, onAddBanner }) => (
 const styles = {
   bannerThumbnail: {
     width: 100
+  },
+  btnAdd:{
+    marginTop: 10,
+    marginBottom: 10,
+    float:'right'
   },
   btnEdit: {
     marginLeft: 5,
