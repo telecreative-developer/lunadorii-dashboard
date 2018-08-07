@@ -43,10 +43,7 @@ const Banner = ({ banners, onAddBanner, onSetUnactive, onSetActive }) => (
     <Grid fluid>
       <Row>
         <Col xs={12}>
-          <button
-            onClick={onAddBanner}
-            className="btn btn-primary"
-            style={styles.btnAdd}>
+          <button onClick={onAddBanner} className="btn btn-primary" style={styles.btnAdd}>
             Add Banner
           </button>
         </Col>
@@ -157,9 +154,16 @@ const styles = {
   bannerThumbnail: {
     width: 100
   },
-  btnEdit: {
-    background: "#59c1de",
-    border: "none",
+  btnAdd:{
+    background: '#3279b8',
+    border: 'none',
+    float: 'right',
+    marginBottom: 10,
+    color: '#fff'
+  },
+  btnEdit:{
+    background: '#59c1de',
+    border: 'none',
     marginRight: 10
   },
   btnDefault: {
@@ -177,22 +181,22 @@ const styles = {
     border: "none",
     marginRight: 10
   },
-  btnActive: {
-    background: "#46a946",
-    color: "#fff",
-    width: 90,
-    borderRadius: 13,
-    border: "none",
-    fontSize: 12,
+  btnActive:{
+    background: '#80c67b', 
+    color: '#fff', 
+    width: 90, 
+    borderRadius: 13, 
+    border:'none', 
+    fontSize: 12, 
     padding: 5
   },
-  btnNotActive: {
-    background: "#f14d4d",
-    color: "#fff",
-    width: 90,
-    borderRadius: 13,
-    border: "none",
-    fontSize: 12,
+  btnNotActive:{
+    background: '#e47672', 
+    color: '#fff', 
+    width: 90, 
+    borderRadius: 13, 
+    border:'none', 
+    fontSize: 12, 
     padding: 5
   }
 }
