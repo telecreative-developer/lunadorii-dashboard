@@ -1,7 +1,9 @@
 import React from "react"
+import PouchDB from "pouchdb"
 import { connect } from "react-redux"
 import Login from "../layouts/Login/Login"
 import { login } from "../actions/login"
+const db = new PouchDB("lunadorii")
 
 class LoginContainer extends React.Component {
 	constructor() {
@@ -9,8 +11,15 @@ class LoginContainer extends React.Component {
 
 		this.state = {
 			username: "",
-			password: ""
+			password: "",
+			loading: true
 		}
+	}
+
+	componentDidMount() {
+		db.get("session")
+			.then(doc => window.location.replace("/"))
+			.catch(err => this.setState({ loading: false }))
 	}
 
 	getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -32,7 +41,7 @@ class LoginContainer extends React.Component {
 				snapshot.payload.status &&
 				snapshot.payload.process_on === "LOGIN"
 			) {
-				alert(snapshot.payload.message)
+				window.location.href = "/"
 			}
 
 			if (
@@ -55,7 +64,12 @@ class LoginContainer extends React.Component {
 	}
 
 	render() {
-		const { username, password } = this.state
+		const { username, password, loading } = this.state
+
+		if (loading) {
+			return <h1>loading</h1>
+		}
+
 		return (
 			<Login
 				username={username}
