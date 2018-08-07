@@ -50,7 +50,7 @@ const DetailReport = ({ DetailReport }) => (
             placeholder="Write.."
           />
           <button className="btn btn-primary" style={styles.btnSend}>
-            <i className="pe-7s-mail" style={styles.iconSend} /> Send
+            Send
           </button>
         </Col>
       </Row>
@@ -60,8 +60,11 @@ const DetailReport = ({ DetailReport }) => (
 
 const styles = {
   btnSend: {
-    float: "right",
-    marginTop: 10
+    background: '#3279b8',
+    border: 'none',
+    float: 'right',
+    marginTop: 10,
+    color: '#fff'
   },
   iconSend: {
     fontSize: 18

@@ -78,10 +78,12 @@ const Product = ({ products }) => (
 )
 
 const styles = {
-  btnAdd: {
-    marginTop: 10,
+  btnAdd:{
+    background: '#3279b8',
+    border: 'none',
+    float: 'right',
     marginBottom: 10,
-    float: "right"
+    color: '#fff'
   },
   btnEdit: {
     width: 90,

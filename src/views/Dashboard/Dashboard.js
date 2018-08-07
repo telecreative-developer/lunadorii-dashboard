@@ -8,7 +8,7 @@ const Dashboard = ({ users, products, orders, reports }) => (
       <Row>
         <Col lg={3} sm={6}>
           <StatsCard
-            bigIcon={<i className="pe-7s-users text-warning" />}
+            bigIcon={<i className="pe-7s-id text-warning" />}
             statsText="Users"
             statsValue={users.users_length}
             statsIconText={`${
@@ -18,7 +18,7 @@ const Dashboard = ({ users, products, orders, reports }) => (
         </Col>
         <Col lg={3} sm={6}>
           <StatsCard
-            bigIcon={<i className="pe-7s-box1 text-success" />}
+            bigIcon={<i className="pe-7s-box2 text-danger" />}
             statsText="Products"
             statsValue={products.products_length}
             statsIconText={`${
@@ -28,7 +28,7 @@ const Dashboard = ({ users, products, orders, reports }) => (
         </Col>
         <Col lg={3} sm={6}>
           <StatsCard
-            bigIcon={<i className="pe-7s-graph1 text-danger" />}
+            bigIcon={<i className="pe-7s-credit text-success" />}
             statsText="Transaction"
             statsValue={orders.orders_length}
             statsIconText={`${orders.orders_checkout_length} Checkout status`}
@@ -36,7 +36,7 @@ const Dashboard = ({ users, products, orders, reports }) => (
         </Col>
         <Col lg={3} sm={6}>
           <StatsCard
-            bigIcon={<i className="pe-7s-mail-open-file text-primary" />}
+            bigIcon={<i className="pe-7s-note2 text-info" />}
             statsText="Reports"
             statsValue={reports.reports_length}
             statsIconText={`${reports.reports_not_read_length} Reports unread`}

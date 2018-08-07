@@ -4,6 +4,7 @@ import ReportContainer from "../containers/ReportContainer"
 import Icons from "../views/Icons/Icons"
 import BannerContainer from "../containers/BannerContainer"
 import ProductContainer from "../containers/ProductContainer"
+import TransactionContainer from "../views/Transaction/Transaction"
 
 const dashboardRoutes = [
   {
@@ -15,25 +16,31 @@ const dashboardRoutes = [
   {
     path: "/banners",
     name: "Banners",
-    icon: "pe-7s-photo",
+    icon: "pe-7s-display1",
     component: BannerContainer
   },
   {
     path: "/products",
     name: "Products",
-    icon: "pe-7s-box1",
+    icon: "pe-7s-box2",
     component: ProductContainer
   },
   {
     path: "/users",
     name: "Users",
-    icon: "pe-7s-users",
+    icon: "pe-7s-id",
     component: UserContainer
+  },
+  {
+    path: "/transaction",
+    name: "Transaction",
+    icon: "pe-7s-credit",
+    component: TransactionContainer
   },
   {
     path: "/reports",
     name: "Reports",
-    icon: "pe-7s-mail-open-file",
+    icon: "pe-7s-note2",
     component: ReportContainer
   },
   {
