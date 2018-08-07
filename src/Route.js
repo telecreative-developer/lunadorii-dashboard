@@ -1,43 +1,18 @@
 import React from "react"
 import { Get } from "react-pouchdb"
-import { Route, Redirect } from "react-router-dom"
+import { Route } from "react-router-dom"
 
-export const PrivateRoute = ({ component: Component, ...rest }) => {
+export const PrivateRoute = ({ component: Component, ...props }) => {
 	return (
-		<Route
-			{...rest}
-			render={props => (
-				<Get
-					id="session"
-					children={({ exists }) => {
-						if (exists) {
-							return <Component {...props} />
-						} else {
-							return props.history.push("/")
-						}
-					}}
-				/>
-			)}
-		/>
-	)
-}
+		<Get
+			id="session"
+			children={({ doc }) => {
+				if (doc) {
+					return <Route {...props} component={Component} />
+				}
 
-export const LoginRoute = ({ component: Component, ...rest }) => {
-	return (
-		<Route
-			{...rest}
-			render={props => (
-				<Get
-					id="session"
-					children={({ exists }) => {
-						if (exists) {
-							return props.history.push("/")
-						} else {
-							return <Component {...props} />
-						}
-					}}
-				/>
-			)}
+				return window.location.replace("/login")
+			}}
 		/>
 	)
 }

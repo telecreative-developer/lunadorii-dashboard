@@ -4,7 +4,7 @@ import Header from "../../components/Header/Header"
 import Sidebar from "../../components/Sidebar/Sidebar"
 import dashboardRoutes from "../../routes/dashboard"
 
-class Dashboard extends Component {
+class Home extends Component {
   render() {
     return (
       <div className="wrapper">
@@ -28,4 +28,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard
+export default Home
