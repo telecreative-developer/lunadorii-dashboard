@@ -1,5 +1,4 @@
 import React from "react"
-import moment from "moment"
 import { Grid, Row, Col, Table } from "react-bootstrap"
 import Card from "../../components/Card/Card"
 
@@ -45,6 +44,7 @@ const Product = ({ products }) => (
                       <td>{key + 1}</td>
                       <td>
                         <img
+                          alt="product-thumbnail"
                           src={product.thumbnails[0].thumbnail_url}
                           style={{ width: 100 }}
                         />

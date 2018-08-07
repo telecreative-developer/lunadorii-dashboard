@@ -13,7 +13,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
 						if (exists) {
 							return <Component {...props} />
 						} else {
-							return <Redirect to="/login" />
+							return props.history.push("/")
 						}
 					}}
 				/>
@@ -31,7 +31,7 @@ export const LoginRoute = ({ component: Component, ...rest }) => {
 					id="session"
 					children={({ exists }) => {
 						if (exists) {
-							return <Redirect to="/" />
+							return props.history.push("/")
 						} else {
 							return <Component {...props} />
 						}

@@ -22,7 +22,7 @@ const tooltipRemove = (
 
 const tooltipEdit = (
   <Tooltip id="tooltip">
-    <strong>Remove</strong>
+    <strong>Edit</strong>
   </Tooltip>
 )
 
@@ -38,7 +38,7 @@ const tooltipActive = (
   </Tooltip>
 )
 
-const Banner = ({ banners, onAddBanner }) => (
+const Banner = ({ banners, onAddBanner, onSetUnactive, onSetActive }) => (
   <div className="content">
     <Grid fluid>
       <Row>
@@ -81,18 +81,18 @@ const Banner = ({ banners, onAddBanner }) => (
                       <td>{moment(banner.created_at).format("LLL")}</td>
                       <td>
                         {banner.active ? (
-                          <button style={styles.btnActive}>Active</button>
+                          <div style={styles.btnActive}>Active</div>
                         ) : (
-                          <button style={styles.btnNotActive}>
-                            Not Active
-                          </button>
+                          <div style={styles.btnNotActive}>Not Active</div>
                         )}
                       </td>
                       <td>
                         <OverlayTrigger placement="top" overlay={tooltipEdit}>
-                          <button class="btn btn-info" style={styles.btnEdit}>
+                          <button
+                            className="btn btn-info"
+                            style={styles.btnEdit}>
                             <i
-                              class="pe-7s-eyedropper"
+                              className="pe-7s-eyedropper"
                               style={{ color: "#fff" }}
                             />
                           </button>
@@ -102,10 +102,13 @@ const Banner = ({ banners, onAddBanner }) => (
                             placement="top"
                             overlay={tooltipUnActive}>
                             <button
-                              class="btn btn-danger"
+                              data-banner-id={banner.banner_id}
+                              className="btn btn-danger"
+                              onClick={onSetUnactive}
                               style={styles.btnDanger}>
                               <i
-                                class="pe-7s-close-circle"
+                                data-banner-id={banner.banner_id}
+                                className="pe-7s-close-circle"
                                 style={{ color: "#fff" }}
                               />
                             </button>
@@ -115,10 +118,13 @@ const Banner = ({ banners, onAddBanner }) => (
                             placement="top"
                             overlay={tooltipActive}>
                             <button
-                              class="btn btn-success"
+                              data-banner-id={banner.banner_id}
+                              onClick={onSetActive}
+                              className="btn btn-success"
                               style={styles.btnSuccess}>
                               <i
-                                class="pe-7s-check"
+                                data-banner-id={banner.banner_id}
+                                className="pe-7s-check"
                                 style={{ color: "#fff" }}
                               />
                             </button>
@@ -126,9 +132,12 @@ const Banner = ({ banners, onAddBanner }) => (
                         )}
                         <OverlayTrigger placement="top" overlay={tooltipRemove}>
                           <button
-                            class="btn btn-default"
+                            className="btn btn-default"
                             style={styles.btnDefault}>
-                            <i class="pe-7s-trash" style={{ color: "#fff" }} />
+                            <i
+                              className="pe-7s-trash"
+                              style={{ color: "#fff" }}
+                            />
                           </button>
                         </OverlayTrigger>
                       </td>

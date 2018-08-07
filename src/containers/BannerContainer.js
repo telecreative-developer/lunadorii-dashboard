@@ -43,6 +43,22 @@ class BannerContainer extends React.Component {
 		this.props.uploadImageBannerToS3(thumbnail)
 	}
 
+	handleActiveBanner(data) {
+		const banner_id = data.target.attributes.getNamedItem("data-banner-id")
+			.value
+		db.get("session").then(doc =>
+			this.props.setActiveBanner(banner_id, doc.accessToken)
+		)
+	}
+
+	handleUnactiveBanner(data) {
+		const banner_id = data.target.attributes.getNamedItem("data-banner-id")
+			.value
+		db.get("session").then(doc =>
+			this.props.setUnactiveBanner(banner_id, doc.accessToken)
+		)
+	}
+
 	render() {
 		const {
 			thumbnail,
@@ -85,6 +101,8 @@ class BannerContainer extends React.Component {
 		return (
 			<Banner
 				banners={banners}
+				onSetActive={this.handleActiveBanner.bind(this)}
+				onSetUnactive={this.handleUnactiveBanner.bind(this)}
 				onAddBanner={() => this.props.setNavigation({ banner: "add-banner" })}
 			/>
 		)

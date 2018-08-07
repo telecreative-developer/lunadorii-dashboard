@@ -95,6 +95,7 @@ export const updateBanner = (data, accessToken) => {
 export const setActiveBanner = (banner_id, accessToken) => {
 	return dispatch => {
 		dispatch(setLoading({ status: true, process_on: "SET_ACTIVE_BANNER" }))
+		dispatch(setActiveBannerReducer(banner_id))
 		return reduxFetch
 			.put({
 				url: server + "/banner/" + banner_id + "/active",
@@ -113,9 +114,15 @@ export const setActiveBanner = (banner_id, accessToken) => {
 	}
 }
 
+const setActiveBannerReducer = banner_id => ({
+	type: "SET_ACTIVE_BANNER_REDUCER",
+	banner_id: parseInt(banner_id, 10)
+})
+
 export const setUnactiveBanner = (banner_id, accessToken) => {
 	return dispatch => {
 		dispatch(setLoading({ status: true, process_on: "SET_UNACTIVE_BANNER" }))
+		dispatch(setUnactiveBannerReducer(banner_id))
 		return reduxFetch
 			.put({
 				url: server + "/banner/" + banner_id + "/unactive",
@@ -137,6 +144,11 @@ export const setUnactiveBanner = (banner_id, accessToken) => {
 			)
 	}
 }
+
+const setUnactiveBannerReducer = banner_id => ({
+	type: "SET_UNACTIVE_BANNER_REDUCER",
+	banner_id: parseInt(banner_id, 10)
+})
 
 export const deleteBanner = (banner_id, accessToken) => {
 	return dispatch => {
