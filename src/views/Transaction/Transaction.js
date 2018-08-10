@@ -1,14 +1,19 @@
 import React from "react"
 import { Grid, Row, Col, Table, OverlayTrigger, Tooltip } from "react-bootstrap"
+import moment from "moment"
 import Card from "../../components/Card/Card"
 
 const tableHead = [
   "No",
-  "No Rek",
+  "Billing Code",
+  "Order Status",
   "Payment Method",
+  "Resi Number",
+  "Delivery Service",
+  "Delivery Price",
+  "Total",
   "Transaction Time",
-  "Status",
-  "Action"
+  "Actions"
 ]
 
 const tooltipRemove = (
@@ -29,7 +34,25 @@ const tooltipDetail = (
   </Tooltip>
 )
 
-const Transaction = ({ transaction }) => (
+const convertToIDR = number => {
+  let idr = ""
+  let numberRev = number
+    .toString()
+    .split("")
+    .reverse()
+    .join("")
+  for (let i = 0; i < numberRev.length; i++)
+    if (i % 3 === 0) idr += numberRev.substr(i, 3) + "."
+  return (
+    "Rp. " +
+    idr
+      .split("", idr.length - 1)
+      .reverse()
+      .join("")
+  )
+}
+
+const Transaction = ({ transactions }) => (
   <div className="content">
     <Grid fluid>
       <Row>
@@ -46,61 +69,27 @@ const Transaction = ({ transaction }) => (
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>1666 2222 3333 4412</td>
-                    <td>Credit Card</td>
-                    <td>21 Januari 2018</td>
-                    <td>Waiting for payments</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>211039283712322</td>
-                    <td>BCA</td>
-                    <td>21 Februari 2018</td>
-                    <td>Waiting for approval</td>
-                    <td>
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={tooltipDetail}>
-                        <button
-                          className="btn btn-primary"
-                          style={styles.btnDetail}>
-                          <i
-                            className="pe-7s-look"
-                            style={{ color: "#fff" }}
-                          />
-                        </button>
-                      </OverlayTrigger>
-
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={tooltipAccept}>
-                        <button
-                          className="btn btn-success"
-                          style={styles.btnSuccess}>
-                          <i
-                            className="pe-7s-check"
-                            style={{ color: "#fff" }}
-                          />
-                        </button>
-                      </OverlayTrigger>
-
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={tooltipRemove}>
-                        <button
-                          className="btn btn-danger"
-                          style={styles.btnDanger}>
-                          <i
-                            className="pe-7s-close-circle"
-                            style={{ color: "#fff" }}
-                          />
-                        </button>
-                      </OverlayTrigger>
-                    </td>
-                  </tr>
+                  {transactions.map((transaction, key) => (
+                    <tr key={key}>
+                      <td>{key + 1}</td>
+                      <td>{transaction.billing_code}</td>
+                      <td>{transaction.order_status}</td>
+                      <td>
+                        {transaction.paid_method === "credit_card"
+                          ? "Credit Card"
+                          : `${transaction.paid_method} (${transaction.bank})`}
+                      </td>
+                      <td>
+                        {transaction.receipt_number
+                          ? transaction.receipt_number
+                          : "Not yet"}
+                      </td>
+                      <td>{transaction.delivery_service}</td>
+                      <td>{convertToIDR(transaction.delivery_price)}</td>
+                      <td>{convertToIDR(transaction.total)}</td>
+                      <td>{moment(transaction.created_at).format("LLL")}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             }
@@ -112,9 +101,9 @@ const Transaction = ({ transaction }) => (
 )
 
 const styles = {
-  btnDetail:{
-    background: '#3472F7',
-    border: 'none',
+  btnDetail: {
+    background: "#3472F7",
+    border: "none",
     marginRight: 10
   },
   btnSuccess: {
@@ -126,7 +115,7 @@ const styles = {
     background: "#da534e",
     border: "none",
     marginRight: 10
-  },
+  }
 }
 
 export default Transaction

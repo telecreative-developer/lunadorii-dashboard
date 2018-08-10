@@ -12,9 +12,21 @@ const initialStateLoading = {
 const initialStateNavigation = {
 	dashboard: "dashboard",
 	banner: "banner",
+	banner_data: null,
 	product: "product",
+	product_data: null,
 	user: "user",
-	report: "report"
+	user_data: null,
+	report: "report",
+	report_data: {
+		report_id: "",
+		name: "",
+		email: "",
+		subject: "",
+		content: "",
+		date: "",
+		reply: []
+	}
 }
 
 export const navigation = (state = initialStateNavigation, action) => {

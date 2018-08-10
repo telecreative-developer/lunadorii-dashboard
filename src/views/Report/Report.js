@@ -3,9 +3,19 @@ import moment from "moment"
 import { Grid, Row, Col, Table } from "react-bootstrap"
 import Card from "../../components/Card/Card"
 
-const tableHead = ["No", "Name", "Email", "Subject", "Content", "Reported At"]
+const tableHead = [
+  "No",
+  "Name",
+  "Email",
+  "Subject",
+  "Content",
+  "Reported At",
+  "Read",
+  "Reply",
+  "Action"
+]
 
-const Report = ({ reports }) => (
+const Report = ({ reports, onShowReport }) => (
   <div className="content">
     <Grid fluid>
       <Row>
@@ -30,6 +40,22 @@ const Report = ({ reports }) => (
                       <td>{report.subject}</td>
                       <td>{report.content}</td>
                       <td>{moment(report.created_at).format("LLL")}</td>
+                      <td>{report.read ? "Read" : "Unread"}</td>
+                      <td>{report.reply.length ? "Answered" : "Unanswered"}</td>
+                      <td>
+                        <button
+                          data-report-id={report.report_id}
+                          data-report-name={report.name}
+                          data-report-email={report.email}
+                          data-report-subject={report.subject}
+                          data-report-content={report.content}
+                          data-report-read={report.read}
+                          data-report-date={report.created_at}
+                          data-report-reply={JSON.stringify(report.reply)}
+                          onClick={onShowReport}>
+                          Show Report
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

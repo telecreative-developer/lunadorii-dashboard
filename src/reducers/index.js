@@ -5,6 +5,7 @@ import { users } from "./users"
 import { banners } from "./banners"
 import { dashboardInfo } from "./dashboard"
 import { products } from "./product"
+import { transactions } from "./transaction"
 
 const rootReducers = combineReducers({
 	navigation,
@@ -15,7 +16,8 @@ const rootReducers = combineReducers({
 	reports,
 	banners,
 	dashboardInfo,
-	products
+	products,
+	transactions
 })
 
 export default rootReducers
