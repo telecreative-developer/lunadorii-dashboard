@@ -174,11 +174,11 @@ const AddProduct = ({
             <Row>
               <Col xs={12}>
                 <div style={styles.divButton}>
-                  <button className="btn btn-warning">Cancel</button>
+                  <button className="btn btn-warning" style={styles.btnCancel}>Cancel</button>
                   <button
-                    className="btn btn-info"
+                    className="btn btn-primary"
                     onClick={handleAddProduct}
-                    style={styles.buttonSave}>
+                    style={styles.btnSave}>
                     Save
                   </button>
                 </div>
@@ -214,8 +214,18 @@ const styles = {
     margin: 20,
     float: "right"
   },
-  buttonSave: {
-    marginLeft: 10
+  btnSave: {
+    background: "#3279b8",
+    border: "none",
+    float: "right",
+    marginLeft: 10,
+    color: "#fff"
+  },
+  btnCancel: {
+    background: "#ffc107",
+    border: "none",
+    marginLeft: 10,
+    color: "#000"
   },
   form: {
     paddingRight: 20

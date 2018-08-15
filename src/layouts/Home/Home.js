@@ -25,7 +25,14 @@ class Home extends Component {
 
   render() {
     if (this.state.loading) {
-      return <h1>loading</h1>
+      return (
+        <div className="loading">
+          <div className="loading center">
+            <div className="loading-bar">
+            </div>
+          </div>
+        </div>
+      )
     }
 
     return (

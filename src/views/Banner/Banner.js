@@ -211,6 +211,7 @@ const styles = {
     width: 90,
     borderRadius: 13,
     border: "none",
+    textAlign: 'center',
     fontSize: 12,
     padding: 5
   },
@@ -220,6 +221,7 @@ const styles = {
     width: 90,
     borderRadius: 13,
     border: "none",
+    textAlign: 'center',
     fontSize: 12,
     padding: 5
   }

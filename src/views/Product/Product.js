@@ -1,5 +1,5 @@
 import React from "react"
-import { Grid, Row, Col, Table } from "react-bootstrap"
+import { Grid, Row, Col, Table, OverlayTrigger, Tooltip } from "react-bootstrap"
 import Card from "../../components/Card/Card"
 import { convertToIDR } from "../../lib/conversion"
 
@@ -15,6 +15,12 @@ const tableHead = [
   "Reviews",
   "Action"
 ]
+
+const tooltipEdit = (
+  <Tooltip id="tooltip">
+    <strong>Edit</strong>
+  </Tooltip>
+)
 
 const Product = ({ products, onAddProduct }) => (
   <div className="content">
@@ -65,9 +71,14 @@ const Product = ({ products, onAddProduct }) => (
                           : "Not yet"}
                       </td>
                       <td>
-                        <button className="btn btn-info" style={styles.btnEdit}>
-                          Edit
-                        </button>
+                        <OverlayTrigger placement="top" overlay={tooltipEdit}>
+                          <button className="btn btn-info" style={styles.btnEdit}>
+                            <i
+                              className="pe-7s-eyedropper"
+                              style={{ color: "#fff" }}
+                            />
+                          </button>
+                        </OverlayTrigger>
                       </td>
                     </tr>
                   ))}
@@ -90,9 +101,9 @@ const styles = {
     color: "#fff"
   },
   btnEdit: {
-    width: 90,
-    marginLeft: 5,
-    marginRight: 5
+    background: "#59c1de",
+    border: "none",
+    marginRight: 10
   }
 }
 
