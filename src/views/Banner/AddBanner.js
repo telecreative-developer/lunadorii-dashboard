@@ -62,7 +62,7 @@ const AddBanner = ({
                   <div className="imageUploader">
                     <Dropzone
                       accept="image/jpeg, image/jpg, image/png"
-                      onDrop={onChangeThumbnail}>
+                      onDrop={onChangeThumbnail} style={{width: '100%', paddingBottom: 60}}>
                       <p style={styles.pIconCamera}>
                         <i className="pe-7s-camera" style={styles.iconCamera} />
                       </p>
@@ -110,20 +110,20 @@ const AddBanner = ({
             <Row>
               <Col xs={12}>
                 <div style={styles.divButton}>
-                  <button className="btn btn-warning" onClick={handleCancel}>
+                  <button className="btn btn-warning" onClick={handleCancel} style={styles.btnCancel}>
                     Cancel
                   </button>
                   {submitType === "add-banner" ? (
                     <button
-                      className="btn btn-info"
-                      style={styles.buttonSave}
+                      className="btn btn-primary"
+                      style={styles.btnSave}
                       onClick={handleAddBanner}>
                       Save
                     </button>
                   ) : (
                     <button
-                      className="btn btn-info"
-                      style={styles.buttonSave}
+                      className="btn btn-warning"
+                      style={styles.btnCancel}
                       onClick={handleUpdateBanner}>
                       Update
                     </button>
@@ -154,18 +154,29 @@ const styles = {
     margin: 20,
     float: "right"
   },
-  buttonSave: {
-    marginLeft: 10
+  btnSave: {
+    background: "#3279b8",
+    border: "none",
+    float: "right",
+    marginLeft: 10,
+    color: "#fff"
+  },
+  btnCancel: {
+    background: "#ffc107",
+    border: "none",
+    marginLeft: 10,
+    color: "#000"
   },
   pIconCamera: {
     textAlign: "center"
   },
   iconCamera: {
     fontSize: 40,
-    marginTop: 20
+    marginTop: 60
   },
   imageUploader: {
-    marginTop: 0
+    marginTop: 0,
+    width: '100%'
   },
   thumbnailBanner: {
     width: "100%",
