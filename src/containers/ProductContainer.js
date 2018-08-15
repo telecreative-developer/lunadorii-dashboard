@@ -8,7 +8,8 @@ import {
 	addProduct,
 	fetchProducts,
 	fetchSubcategories,
-	fetchBrands
+	fetchBrands,
+	addProductThumbnail
 } from "../actions/product"
 const db = new PouchDB("lunadorii")
 
@@ -39,10 +40,7 @@ class ProductContainer extends React.Component {
 			discount_percentage,
 			weight_gram,
 			product_subcategory_id,
-			product_brand_id,
-			thumbnail1: [],
-			thumbnail2: [],
-			thumbnail3: []
+			product_brand_id
 		}
 	}
 
@@ -66,6 +64,10 @@ class ProductContainer extends React.Component {
 		})
 	}
 
+	handleAddThumbnail(thumbnail) {
+		this.props.addProductThumbnail(thumbnail[0])
+	}
+
 	handleAddProduct() {
 		const {
 			title,
@@ -80,6 +82,8 @@ class ProductContainer extends React.Component {
 			product_brand_id
 		} = this.state
 
+		const { productThumbnails } = this.props
+
 		db.get("session").then(doc => {
 			this.props.addProduct(
 				{
@@ -92,7 +96,8 @@ class ProductContainer extends React.Component {
 					weight_gram,
 					discount_percentage,
 					product_subcategory_id,
-					product_brand_id
+					product_brand_id,
+					thumbnails: productThumbnails
 				},
 				doc.accessToken
 			)
@@ -100,14 +105,14 @@ class ProductContainer extends React.Component {
 	}
 
 	render() {
-		const { products, subcategories, brands, navigationProduct } = this.props
 		const {
-			product_subcategory_id,
-			product_brand_id,
-			thumbnail1,
-			thumbnail2,
-			thumbnail3
-		} = this.state
+			products,
+			productThumbnails,
+			subcategories,
+			brands,
+			navigationProduct
+		} = this.props
+		const { product_subcategory_id, product_brand_id } = this.state
 
 		if (
 			navigationProduct === "add-product" ||
@@ -136,12 +141,8 @@ class ProductContainer extends React.Component {
 					onChangeBrand={e =>
 						this.setState({ product_brand_id: e.target.value })
 					}
-					thumbnail1={thumbnail1}
-					onChangeThumbnail1={thumbnail1 => this.setState({ thumbnail1 })}
-					thumbnail2={thumbnail2}
-					onChangeThumbnail2={thumbnail2 => this.setState({ thumbnail2 })}
-					thumbnail3={thumbnail3}
-					onChangeThumbnail3={thumbnail3 => this.setState({ thumbnail3 })}
+					thumbnails={productThumbnails}
+					onChangeThumbnail={thumbnail => this.handleAddThumbnail(thumbnail)}
 					handleAddProduct={() => this.handleAddProduct()}
 				/>
 			)
@@ -158,6 +159,7 @@ class ProductContainer extends React.Component {
 
 const mapStateToProps = state => ({
 	products: state.products,
+	productThumbnails: state.productThumbnails,
 	subcategories: state.subcategories,
 	brands: state.brands,
 	navigationProduct: state.navigation.product,
@@ -166,6 +168,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispacth => ({
 	setNavigation: navigation => dispacth(setNavigation(navigation)),
+	addProductThumbnail: thumbnail => dispacth(addProductThumbnail(thumbnail)),
 	addProduct: (data, accessToken) => dispacth(addProduct(data, accessToken)),
 	fetchProducts: accessToken => dispacth(fetchProducts(accessToken)),
 	fetchSubcategories: () => dispacth(fetchSubcategories()),

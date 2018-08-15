@@ -38,7 +38,7 @@ const fetchBannersSuccess = data => ({
 	payload: data
 })
 
-export const uploadImageBannerToS3 = thumbnails => {
+const uploadImageBannerToS3 = thumbnails => {
 	return s3
 		.upload({
 			ACL: "public-read",

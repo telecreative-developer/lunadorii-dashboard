@@ -17,16 +17,8 @@ const AddProduct = ({
   onChangePrice,
   onChangeWeight,
   onChangeDiscount,
-  thumbnail1,
-  onChangeThumbnail1,
-  thumbnail2,
-  onChangeThumbnail2,
-  thumbnail3,
-  onChangeThumbnail3,
-  thumbnail4,
-  onChangeThumbnail4,
-  thumbnail5,
-  onChangeThumbnail5,
+  thumbnails,
+  onChangeThumbnail,
   handleAddProduct
 }) => (
   <div className="contentAdd">
@@ -42,16 +34,16 @@ const AddProduct = ({
                 <Row>
                   <Col xs={12}>
                     <div style={styles.headerGroup}>
-                      {thumbnail1.length ? (
+                      {thumbnails.length ? (
                         <img
-                          src={URL.createObjectURL(thumbnail1[0])}
-                          alt="thumbnail1"
+                          src={thumbnails[0].thumbnail_url}
+                          alt="product-thumbnail"
                           style={{ width: 500, height: 300 }}
                         />
                       ) : (
                         <Dropzone
                           accept="image/jpeg, image/jpg, image/png"
-                          onDrop={onChangeThumbnail1}>
+                          onDrop={onChangeThumbnail}>
                           <div className="group" />
                         </Dropzone>
                       )}
@@ -59,68 +51,26 @@ const AddProduct = ({
                     <Row>
                       <Col xs={3}>
                         <div className="groupRight" style={styles.groupRight}>
-                          {thumbnail2.length ? (
-                            <img
-                              src={URL.createObjectURL(thumbnail2[0])}
-                              alt="thumbnail2"
-                              style={{ width: 100, height: 100 }}
-                            />
-                          ) : (
+                          {thumbnails.length > 1 &&
+                            thumbnails
+                              .filter(d => d.key !== 0)
+                              .map((d, key) => (
+                                <img
+                                  key={key}
+                                  src={d.thumbnail_url}
+                                  alt="product-thumbnail"
+                                  style={{ width: 100, height: 100 }}
+                                />
+                              ))}
+                          {thumbnails.length && thumbnails.length < 5 ? (
                             <Dropzone
                               accept="image/jpeg, image/jpg, image/png"
-                              onDrop={onChangeThumbnail2}>
+                              onDrop={onChangeThumbnail}>
                               <div className="group" />
                             </Dropzone>
+                          ) : (
+                            <div />
                           )}
-                        </div>
-                      </Col>
-                      <Col xs={3}>
-                        <div className="groupRight" style={styles.groupRight}>
-                          <div id="groupcropRight">
-                            {thumbnail3.length ? (
-                              <img
-                                src={URL.createObjectURL(thumbnail3[0])}
-                                alt="thumbnail3"
-                                style={{ width: 100, height: 100 }}
-                              />
-                            ) : (
-                              <Dropzone
-                                accept="image/jpeg, image/jpg, image/png"
-                                onDrop={onChangeThumbnail3}>
-                                <div className="group" />
-                              </Dropzone>
-                            )}
-                          </div>
-                        </div>
-                      </Col>
-                      <Col xs={3}>
-                        <div className="groupRight" style={styles.groupRight}>
-                          <div id="groupcropRight">
-                            <div className="VPcropRight">
-                              <input
-                                className="VPcropintRight"
-                                id="VPcropintRight"
-                                name="input"
-                                type="file"
-                                accept="image/x-png, image/gif, image/jpeg"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col xs={3}>
-                        <div className="groupRight" style={styles.groupRight}>
-                          <div id="groupcropRight">
-                            <div className="VPcropRight">
-                              <input
-                                className="VPcropintRight"
-                                id="VPcropintRight"
-                                name="input"
-                                type="file"
-                                accept="image/x-png, image/gif, image/jpeg"
-                              />
-                            </div>
-                          </div>
                         </div>
                       </Col>
                     </Row>

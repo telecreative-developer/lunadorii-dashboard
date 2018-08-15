@@ -7,6 +7,15 @@ export const products = (state = [], action) => {
 	}
 }
 
+export const productThumbnails = (state = [], action) => {
+	switch (action.type) {
+		case "ADD_PRODUCT_THUMBNAIL":
+			return state.concat(action.payload)
+		default:
+			return state
+	}
+}
+
 export const subcategories = (state = [], action) => {
 	switch (action.type) {
 		case "FETCH_SUBCATEGORIES_SUCCESS":

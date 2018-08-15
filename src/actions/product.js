@@ -1,10 +1,16 @@
 import server from "./lib/server"
 import ReduxFetch from "./lib/reduxfetch"
+import AWS from "aws-sdk"
+import awsConfig from "./lib/awsconfig"
 import {
 	setFailedAndBackToDefault,
 	setSuccessAndBackToDefault,
 	setLoading
 } from "./processor"
+const s3 = new AWS.S3({
+	accessKeyId: awsConfig.accessKeyId,
+	secretAccessKey: awsConfig.secretAccessKey
+})
 const reduxFetch = new ReduxFetch()
 
 export const fetchProducts = accessToken => {
@@ -32,12 +38,64 @@ const fetchProductsSuccess = data => ({
 	payload: data
 })
 
+const uploadImageProductToS3 = (product_id, thumbnails, accessToken) => {
+	return dispatch => {
+		return thumbnails.map(thumbnail => {
+			return s3.upload(
+				{
+					ACL: "public-read",
+					Body: thumbnail.thumbnail_origin,
+					Key: `product-${Date.now()}.${
+						thumbnail.thumbnail_origin.type.split("/")[1]
+					}`,
+					Bucket: awsConfig.bucket
+				},
+				(err, res) => {
+					return reduxFetch
+						.post({
+							url: server + "/product-thumbnails",
+							accessToken: accessToken,
+							body: {
+								product_id,
+								thumbnail_url: res.Location
+							}
+						})
+						.then(response => {
+							if (response.status !== 201) {
+								dispatch(
+									setFailedAndBackToDefault(response.message, "ADD_PRODUCT")
+								)
+							} else {
+								dispatch(setSuccessAndBackToDefault(res.message, "ADD_PRODUCT"))
+							}
+						})
+						.catch(err =>
+							dispatch(setFailedAndBackToDefault(err, "ADD_PRODUCT"))
+						)
+				}
+			)
+		})
+	}
+}
+
+let keyProductThumbnail = 0
+export const addProductThumbnail = thumbnail => {
+	return {
+		type: "ADD_PRODUCT_THUMBNAIL",
+		payload: {
+			key: keyProductThumbnail++,
+			thumbnail_url: URL.createObjectURL(thumbnail),
+			thumbnail_origin: thumbnail
+		}
+	}
+}
+
 export const addProduct = (data, accessToken) => {
 	return dispatch => {
 		dispatch(setLoading({ status: true, process_on: "ADD_PRODUCT" }))
 		return reduxFetch
 			.post({
-				url: server + "/banner",
+				url: server + "/product",
 				accessToken: accessToken,
 				body: {
 					product: data.title,
@@ -54,12 +112,18 @@ export const addProduct = (data, accessToken) => {
 			})
 			.then(res => {
 				if (res.status !== 201) {
-					dispatch(setFailedAndBackToDefault(res.message, "ADD_REPORT"))
+					dispatch(setFailedAndBackToDefault(res.message, "ADD_PRODUCT"))
 				} else {
-					dispatch(setSuccessAndBackToDefault(res.message, "ADD_REPORT"))
+					dispatch(
+						uploadImageProductToS3(
+							parseInt(res.data.product_id, 10),
+							data.thumbnails,
+							accessToken
+						)
+					)
 				}
 			})
-			.catch(err => dispatch(setFailedAndBackToDefault(err, "ADD_REPORT")))
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "ADD_PRODUCT")))
 	}
 }
 

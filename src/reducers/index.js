@@ -4,7 +4,7 @@ import { reports } from "./reports"
 import { users } from "./users"
 import { banners } from "./banners"
 import { dashboardInfo } from "./dashboard"
-import { products, subcategories, brands } from "./product"
+import { products, subcategories, brands, productThumbnails } from "./product"
 import { transactions } from "./transaction"
 
 const rootReducers = combineReducers({
@@ -17,6 +17,7 @@ const rootReducers = combineReducers({
 	banners,
 	dashboardInfo,
 	products,
+	productThumbnails,
 	subcategories,
 	brands,
 	transactions
