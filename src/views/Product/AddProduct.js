@@ -38,14 +38,20 @@ const AddProduct = ({
                         <img
                           src={thumbnails[0].thumbnail_url}
                           alt="product-thumbnail"
-                          style={{ width: 500, height: 300 }}
+                          style={{ width: '100%', height: 300 }}
                         />
                       ) : (
-                        <Dropzone
-                          accept="image/jpeg, image/jpg, image/png"
-                          onDrop={onChangeThumbnail}>
-                          <div className="group" />
-                        </Dropzone>
+                        <div className="imageUploader">
+                          <Dropzone
+                            style={{width: '100%', paddingBottom: 60}}
+                            accept="image/jpeg, image/jpg, image/png"
+                            onDrop={onChangeThumbnail}>
+                            <p style={styles.pIconCamera}>
+                              <i className="pe-7s-camera" style={styles.iconCamera} />
+                            </p>
+                            <div className="group" />
+                          </Dropzone>
+                        </div>
                       )}
                     </div>
                     <Row>
@@ -209,6 +215,13 @@ const styles = {
   pictureUpload: {
     marginTop: 10,
     marginBottom: 10
+  },
+  pIconCamera: {
+    textAlign: "center"
+  },
+  iconCamera: {
+    fontSize: 40,
+    marginTop: 60
   },
   divButton: {
     margin: 20,
