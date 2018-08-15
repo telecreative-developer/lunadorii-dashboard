@@ -1,12 +1,16 @@
 import server from "./lib/server"
 import ReduxFetch from "./lib/reduxfetch"
-import S3FileUpload from "react-s3"
-import { configBanner } from "./lib/s3"
+import AWS from "aws-sdk"
+import awsConfig from "./lib/awsconfig"
 import {
 	setFailedAndBackToDefault,
 	setSuccessAndBackToDefault,
 	setLoading
 } from "./processor"
+const s3 = new AWS.S3({
+	accessKeyId: awsConfig.accessKeyId,
+	secretAccessKey: awsConfig.secretAccessKey
+})
 const reduxFetch = new ReduxFetch()
 
 export const fetchBanners = accessToken => {
@@ -34,27 +38,32 @@ const fetchBannersSuccess = data => ({
 	payload: data
 })
 
-export const uploadImageBannerToS3 = thumbnail => {
-	return () => {
-		return S3FileUpload.uploadFile(thumbnail, configBanner)
-			.then(data => console.log(data))
-			.catch(err => console.log(err))
-	}
+export const uploadImageBannerToS3 = thumbnails => {
+	return s3
+		.upload({
+			ACL: "public-read",
+			Body: thumbnails[0],
+			Key: `banner-${Date.now()}.${thumbnails[0].type.split("/")[1]}`,
+			Bucket: awsConfig.bucket
+		})
+		.promise()
 }
 
 export const addBanner = (data, accessToken) => {
 	return dispatch => {
 		dispatch(setLoading({ status: true, process_on: "ADD_BANNER" }))
-		return reduxFetch
-			.post({
-				url: server + "/banner",
-				accessToken: accessToken,
-				body: {
-					title: data.title,
-					thumbnail_url: data.thumbnail_url,
-					type: data.type,
-					category: data.category
-				}
+		return uploadImageBannerToS3(data.thumbnails)
+			.then(res => {
+				return reduxFetch.post({
+					url: server + "/banner",
+					accessToken: accessToken,
+					body: {
+						title: data.title,
+						thumbnail_url: res.Location,
+						type: data.type,
+						category: data.category
+					}
+				})
 			})
 			.then(res => {
 				if (res.status !== 201) {
@@ -64,6 +73,33 @@ export const addBanner = (data, accessToken) => {
 				}
 			})
 			.catch(err => dispatch(setFailedAndBackToDefault(err, "ADD_BANNER")))
+	}
+}
+
+export const updateBannerWithImage = (data, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "UPDATE_BANNER" }))
+		return uploadImageBannerToS3(data.thumbnails)
+			.then(res => {
+				return reduxFetch.put({
+					url: server + "/banner/" + data.banner_id,
+					accessToken: accessToken,
+					body: {
+						title: data.title,
+						thumbnail_url: res.Location,
+						type: data.type,
+						category: data.category
+					}
+				})
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(setFailedAndBackToDefault(res.message, "UPDATE_BANNER"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "UPDATE_BANNER"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "UPDATE_BANNER")))
 	}
 }
 
@@ -153,6 +189,7 @@ const setUnactiveBannerReducer = banner_id => ({
 export const deleteBanner = (banner_id, accessToken) => {
 	return dispatch => {
 		dispatch(setLoading({ status: true, process_on: "DELETE_BANNER" }))
+		dispatch(deleteBannerReducer(banner_id))
 		return reduxFetch
 			.delete({
 				url: server + "/banner/" + banner_id,
@@ -168,3 +205,8 @@ export const deleteBanner = (banner_id, accessToken) => {
 			.catch(err => dispatch(setFailedAndBackToDefault(err, "DELETE_BANNER")))
 	}
 }
+
+const deleteBannerReducer = banner_id => ({
+	type: "DELETE_BANNER_REDUCER",
+	banner_id: parseInt(banner_id, 10)
+})

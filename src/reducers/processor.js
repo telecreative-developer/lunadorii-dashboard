@@ -12,9 +12,25 @@ const initialStateLoading = {
 const initialStateNavigation = {
 	dashboard: "dashboard",
 	banner: "banner",
-	banner_data: null,
+	banner_data: {
+		banner_id: "",
+		thumbnails: [],
+		thumbanil_url: "",
+		category: "general",
+		type: "web"
+	},
 	product: "product",
-	product_data: null,
+	product_data: {
+		title: "",
+		description: "",
+		detail: "",
+		price: 0,
+		how_to_use: "",
+		discount_percentage: 0,
+		weight_gram: 0,
+		product_subcategory_id: 1,
+		product_brand_id: 1
+	},
 	user: "user",
 	user_data: null,
 	report: "report",

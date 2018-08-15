@@ -2,6 +2,7 @@ import React from "react"
 import { Grid, Row, Col, Table, OverlayTrigger, Tooltip } from "react-bootstrap"
 import moment from "moment"
 import Card from "../../components/Card/Card"
+import { convertToIDR } from "../../lib/conversion"
 
 const tableHead = [
   "No",
@@ -33,24 +34,6 @@ const tooltipDetail = (
     <strong>Detail Items</strong>
   </Tooltip>
 )
-
-const convertToIDR = number => {
-  let idr = ""
-  let numberRev = number
-    .toString()
-    .split("")
-    .reverse()
-    .join("")
-  for (let i = 0; i < numberRev.length; i++)
-    if (i % 3 === 0) idr += numberRev.substr(i, 3) + "."
-  return (
-    "Rp. " +
-    idr
-      .split("", idr.length - 1)
-      .reverse()
-      .join("")
-  )
-}
 
 const Transaction = ({ transactions }) => (
   <div className="content">

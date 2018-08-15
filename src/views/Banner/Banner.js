@@ -38,12 +38,22 @@ const tooltipActive = (
   </Tooltip>
 )
 
-const Banner = ({ banners, onAddBanner, onSetUnactive, onSetActive }) => (
+const Banner = ({
+  banners,
+  onAddBanner,
+  onUpdateBanner,
+  onSetUnactive,
+  onSetActive,
+  onDeleteBanner
+}) => (
   <div className="content">
     <Grid fluid>
       <Row>
         <Col xs={12}>
-          <button onClick={onAddBanner} className="btn btn-primary" style={styles.btnAdd}>
+          <button
+            onClick={onAddBanner}
+            className="btn btn-primary"
+            style={styles.btnAdd}>
             Add Banner
           </button>
         </Col>
@@ -86,9 +96,20 @@ const Banner = ({ banners, onAddBanner, onSetUnactive, onSetActive }) => (
                       <td>
                         <OverlayTrigger placement="top" overlay={tooltipEdit}>
                           <button
+                            data-banner-id={banner.banner_id}
+                            data-banner-title={banner.title}
+                            data-banner-thumbnail={banner.thumbnail_url}
+                            data-banner-type={banner.type}
+                            data-banner-category={banner.category}
                             className="btn btn-info"
+                            onClick={onUpdateBanner}
                             style={styles.btnEdit}>
                             <i
+                              data-banner-id={banner.banner_id}
+                              data-banner-title={banner.title}
+                              data-banner-thumbnail={banner.thumbnail_url}
+                              data-banner-type={banner.type}
+                              data-banner-category={banner.category}
                               className="pe-7s-eyedropper"
                               style={{ color: "#fff" }}
                             />
@@ -129,9 +150,12 @@ const Banner = ({ banners, onAddBanner, onSetUnactive, onSetActive }) => (
                         )}
                         <OverlayTrigger placement="top" overlay={tooltipRemove}>
                           <button
+                            data-banner-id={banner.banner_id}
                             className="btn btn-default"
+                            onClick={onDeleteBanner}
                             style={styles.btnDefault}>
                             <i
+                              data-banner-id={banner.banner_id}
                               className="pe-7s-trash"
                               style={{ color: "#fff" }}
                             />
@@ -154,16 +178,16 @@ const styles = {
   bannerThumbnail: {
     width: 100
   },
-  btnAdd:{
-    background: '#3279b8',
-    border: 'none',
-    float: 'right',
+  btnAdd: {
+    background: "#3279b8",
+    border: "none",
+    float: "right",
     marginBottom: 10,
-    color: '#fff'
+    color: "#fff"
   },
-  btnEdit:{
-    background: '#59c1de',
-    border: 'none',
+  btnEdit: {
+    background: "#59c1de",
+    border: "none",
     marginRight: 10
   },
   btnDefault: {
@@ -181,22 +205,22 @@ const styles = {
     border: "none",
     marginRight: 10
   },
-  btnActive:{
-    background: '#80c67b', 
-    color: '#fff', 
-    width: 90, 
-    borderRadius: 13, 
-    border:'none', 
-    fontSize: 12, 
+  btnActive: {
+    background: "#80c67b",
+    color: "#fff",
+    width: 90,
+    borderRadius: 13,
+    border: "none",
+    fontSize: 12,
     padding: 5
   },
-  btnNotActive:{
-    background: '#e47672', 
-    color: '#fff', 
-    width: 90, 
-    borderRadius: 13, 
-    border:'none', 
-    fontSize: 12, 
+  btnNotActive: {
+    background: "#e47672",
+    color: "#fff",
+    width: 90,
+    borderRadius: 13,
+    border: "none",
+    fontSize: 12,
     padding: 5
   }
 }

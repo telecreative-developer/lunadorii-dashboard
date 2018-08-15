@@ -3,15 +3,7 @@ import { Grid, Row, Col, Table } from "react-bootstrap"
 import moment from "moment"
 import Card from "../../components/Card/Card"
 
-const tableHead = [
-  "No",
-  "User ID",
-  "Avatar",
-  "Fullname",
-  "Email",
-  "Joined At",
-  "Verified"
-]
+const tableHead = ["No", "Avatar", "Fullname", "Email", "Joined At", "Verified"]
 
 const User = ({ users }) => (
   <div className="content">
@@ -33,7 +25,6 @@ const User = ({ users }) => (
                   {users.map((user, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
-                      <td>{user.id}</td>
                       <td>
                         <img
                           alt="user-avatar"
@@ -48,7 +39,9 @@ const User = ({ users }) => (
                         {user.verified ? (
                           <button style={styles.btnActive}>Verified</button>
                         ) : (
-                          <button style={styles.btnNotActive}>Unverified</button>
+                          <button style={styles.btnNotActive}>
+                            Unverified
+                          </button>
                         )}
                       </td>
                     </tr>
@@ -68,22 +61,22 @@ const styles = {
     width: 50,
     height: 50
   },
-  btnActive:{
-    background: '#80c67b', 
-    color: '#fff', 
-    width: 90, 
-    borderRadius: 13, 
-    border:'none', 
-    fontSize: 12, 
+  btnActive: {
+    background: "#80c67b",
+    color: "#fff",
+    width: 90,
+    borderRadius: 13,
+    border: "none",
+    fontSize: 12,
     padding: 5
   },
-  btnNotActive:{
-    background: '#e47672', 
-    color: '#fff', 
-    width: 90, 
-    borderRadius: 13, 
-    border:'none', 
-    fontSize: 12, 
+  btnNotActive: {
+    background: "#e47672",
+    color: "#fff",
+    width: 90,
+    borderRadius: 13,
+    border: "none",
+    fontSize: 12,
     padding: 5
   }
 }

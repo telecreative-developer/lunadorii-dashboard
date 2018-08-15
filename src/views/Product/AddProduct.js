@@ -1,8 +1,34 @@
 import React from "react"
 import { Row, Col } from "react-bootstrap"
+import Dropzone from "react-dropzone"
 import Card from "../../components/Card/Card"
 
-const AddProduct = ({ addProduct }) => (
+const AddProduct = ({
+  subcategories,
+  subcategorySelected,
+  onChangeSubcategory,
+  brands,
+  brandSelected,
+  onChangeBrand,
+  onChangeTitle,
+  onChangeDescription,
+  onChangeDetail,
+  onChangeHowToUse,
+  onChangePrice,
+  onChangeWeight,
+  onChangeDiscount,
+  thumbnail1,
+  onChangeThumbnail1,
+  thumbnail2,
+  onChangeThumbnail2,
+  thumbnail3,
+  onChangeThumbnail3,
+  thumbnail4,
+  onChangeThumbnail4,
+  thumbnail5,
+  onChangeThumbnail5,
+  handleAddProduct
+}) => (
   <div className="contentAdd">
     <Col xs={12}>
       <Card
@@ -16,47 +42,83 @@ const AddProduct = ({ addProduct }) => (
                 <Row>
                   <Col xs={12}>
                     <div style={styles.headerGroup}>
-                      <div className='group'>
-                        <div id='groupcrop'>
-                          <div className='VPcrop'>
-                            <input className='VPcropint' id='VPcropint' name='input'type='file' accept="image/x-png, image/gif, image/jpeg"/>
-                          </div>
-                        </div>
-                      </div>
+                      {thumbnail1.length ? (
+                        <img
+                          src={URL.createObjectURL(thumbnail1[0])}
+                          alt="thumbnail1"
+                          style={{ width: 500, height: 300 }}
+                        />
+                      ) : (
+                        <Dropzone
+                          accept="image/jpeg, image/jpg, image/png"
+                          onDrop={onChangeThumbnail1}>
+                          <div className="group" />
+                        </Dropzone>
+                      )}
                     </div>
                     <Row>
                       <Col xs={3}>
-                        <div className='groupRight' style={styles.groupRight}>
-                          <div id='groupcropRight'>
-                            <div className='VPcropRight'>
-                              <input className='VPcropintRight' id='VPcropintRight' name='input'type='file' accept="image/x-png, image/gif, image/jpeg"/>
+                        <div className="groupRight" style={styles.groupRight}>
+                          {thumbnail2.length ? (
+                            <img
+                              src={URL.createObjectURL(thumbnail2[0])}
+                              alt="thumbnail2"
+                              style={{ width: 100, height: 100 }}
+                            />
+                          ) : (
+                            <Dropzone
+                              accept="image/jpeg, image/jpg, image/png"
+                              onDrop={onChangeThumbnail2}>
+                              <div className="group" />
+                            </Dropzone>
+                          )}
+                        </div>
+                      </Col>
+                      <Col xs={3}>
+                        <div className="groupRight" style={styles.groupRight}>
+                          <div id="groupcropRight">
+                            {thumbnail3.length ? (
+                              <img
+                                src={URL.createObjectURL(thumbnail3[0])}
+                                alt="thumbnail3"
+                                style={{ width: 100, height: 100 }}
+                              />
+                            ) : (
+                              <Dropzone
+                                accept="image/jpeg, image/jpg, image/png"
+                                onDrop={onChangeThumbnail3}>
+                                <div className="group" />
+                              </Dropzone>
+                            )}
+                          </div>
+                        </div>
+                      </Col>
+                      <Col xs={3}>
+                        <div className="groupRight" style={styles.groupRight}>
+                          <div id="groupcropRight">
+                            <div className="VPcropRight">
+                              <input
+                                className="VPcropintRight"
+                                id="VPcropintRight"
+                                name="input"
+                                type="file"
+                                accept="image/x-png, image/gif, image/jpeg"
+                              />
                             </div>
                           </div>
                         </div>
                       </Col>
                       <Col xs={3}>
-                        <div className='groupRight' style={styles.groupRight}>
-                          <div id='groupcropRight'>
-                            <div className='VPcropRight'>
-                              <input className='VPcropintRight' id='VPcropintRight' name='input'type='file' accept="image/x-png, image/gif, image/jpeg"/>
-                            </div>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col xs={3}>
-                        <div className='groupRight' style={styles.groupRight}>
-                          <div id='groupcropRight'>
-                            <div className='VPcropRight'>
-                              <input className='VPcropintRight' id='VPcropintRight' name='input'type='file' accept="image/x-png, image/gif, image/jpeg"/>
-                            </div>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col xs={3}>
-                        <div className='groupRight' style={styles.groupRight}>
-                          <div id='groupcropRight'>
-                            <div className='VPcropRight'>
-                              <input className='VPcropintRight' id='VPcropintRight' name='input'type='file' accept="image/x-png, image/gif, image/jpeg"/>
+                        <div className="groupRight" style={styles.groupRight}>
+                          <div id="groupcropRight">
+                            <div className="VPcropRight">
+                              <input
+                                className="VPcropintRight"
+                                id="VPcropintRight"
+                                name="input"
+                                type="file"
+                                accept="image/x-png, image/gif, image/jpeg"
+                              />
                             </div>
                           </div>
                         </div>
@@ -72,35 +134,89 @@ const AddProduct = ({ addProduct }) => (
                     type="text"
                     name="title"
                     className="form-control"
-                    placeholder="Your Title"
+                    onKeyUp={onChangeTitle}
+                    placeholder="Title"
                   />
                   <label style={styles.label}>Description</label>
-                  <textarea class="form-control" rows="5" required="ON" maxlength="255" placeholder="Description"></textarea>
-                  
+                  <textarea
+                    className="form-control"
+                    rows="5"
+                    required="ON"
+                    maxLength="255"
+                    onKeyUp={onChangeDescription}
+                    placeholder="Description"
+                  />
+
                   <label style={styles.label}>Detail</label>
-                  <textarea class="form-control" rows="5" required="ON" maxlength="255" placeholder="Detail"></textarea>
-                  
+                  <textarea
+                    className="form-control"
+                    rows="5"
+                    required="ON"
+                    maxLength="255"
+                    onKeyUp={onChangeDetail}
+                    placeholder="Detail"
+                  />
+
                   <label style={styles.label}>How to use</label>
-                  <textarea class="form-control" rows="5" required="ON" maxlength="255" placeholder="How to use"></textarea>
-                  
+                  <textarea
+                    className="form-control"
+                    rows="5"
+                    required="ON"
+                    maxLength="255"
+                    onKeyUp={onChangeHowToUse}
+                    placeholder="How to use"
+                  />
+
+                  <label style={styles.label}>Price (IDR)</label>
+                  <input
+                    type="number"
+                    name="price"
+                    className="form-control"
+                    onKeyUp={onChangePrice}
+                    placeholder="Price"
+                  />
+
+                  <label style={styles.label}>Weight (gram)</label>
+                  <input
+                    type="number"
+                    name="weight"
+                    className="form-control"
+                    onKeyUp={onChangeWeight}
+                    placeholder="Weight"
+                  />
+
                   <label style={styles.label}>Discount Percentage</label>
                   <input
                     type="number"
                     name="discount"
                     className="form-control"
+                    onKeyUp={onChangeDiscount}
                     placeholder="Your Discount"
                   />
 
                   <label style={styles.label}>Categories</label>
-                  <select class="form-control">
-                    <option value="volvo">Face</option>
-                    <option value="saab">Cream</option>
+                  <select
+                    className="form-control"
+                    value={subcategorySelected}
+                    onChange={onChangeSubcategory}>
+                    {subcategories.map((subcategory, key) => (
+                      <option
+                        key={key}
+                        value={subcategory.product_subcategory_id}>
+                        {subcategory.subcategory}
+                      </option>
+                    ))}
                   </select>
-
                   <label style={styles.label}>Brands</label>
-                  <select class="form-control">
-                    <option value="volvo">Zara</option>
-                    <option value="saab">Garnier</option>
+                  <select
+                    className="form-control"
+                    value={brandSelected}
+                    onChange={onChangeBrand}>
+                    {brands.map((brand, key) => (
+                      <option key={key} value={brand.product_brand_id}>
+                        {brand.brand}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </Col>
@@ -109,7 +225,10 @@ const AddProduct = ({ addProduct }) => (
               <Col xs={12}>
                 <div style={styles.divButton}>
                   <button className="btn btn-warning">Cancel</button>
-                  <button className="btn btn-info" style={styles.buttonSave}>
+                  <button
+                    className="btn btn-info"
+                    onClick={handleAddProduct}
+                    style={styles.buttonSave}>
                     Save
                   </button>
                 </div>
@@ -127,11 +246,12 @@ const styles = {
     width: "100%",
     maxHeight: 400
   },
-  headerGroup:{
+  headerGroup: {
     marginLeft: 15
   },
-  groupRight:{
-    marginLeft: 15, marginTop: 15
+  groupRight: {
+    marginLeft: 15,
+    marginTop: 15
   },
   label: {
     marginTop: 10
@@ -147,7 +267,7 @@ const styles = {
   buttonSave: {
     marginLeft: 10
   },
-  form:{
+  form: {
     paddingRight: 20
   }
 }

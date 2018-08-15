@@ -1,6 +1,7 @@
 import React from "react"
 import { Grid, Row, Col, Table } from "react-bootstrap"
 import Card from "../../components/Card/Card"
+import { convertToIDR } from "../../lib/conversion"
 
 const tableHead = [
   "No",
@@ -15,12 +16,15 @@ const tableHead = [
   "Action"
 ]
 
-const Product = ({ products }) => (
+const Product = ({ products, onAddProduct }) => (
   <div className="content">
     <Grid fluid>
       <Row>
         <Col xs={12}>
-          <button className="btn btn-primary" style={styles.btnAdd}>
+          <button
+            className="btn btn-primary"
+            onClick={onAddProduct}
+            style={styles.btnAdd}>
             Add Product
           </button>
         </Col>
@@ -51,7 +55,7 @@ const Product = ({ products }) => (
                       </td>
                       <td>{product.product}</td>
                       <td>{product.description}</td>
-                      <td>{product.price}</td>
+                      <td>{convertToIDR(product.price)}</td>
                       <td>{product.discount_percentage}</td>
                       <td>{product.subcategories[0].subcategory}</td>
                       <td>{product.brands[0].brand}</td>
@@ -78,12 +82,12 @@ const Product = ({ products }) => (
 )
 
 const styles = {
-  btnAdd:{
-    background: '#3279b8',
-    border: 'none',
-    float: 'right',
+  btnAdd: {
+    background: "#3279b8",
+    border: "none",
+    float: "right",
     marginBottom: 10,
-    color: '#fff'
+    color: "#fff"
   },
   btnEdit: {
     width: 90,

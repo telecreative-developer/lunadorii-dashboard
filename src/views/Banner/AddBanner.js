@@ -1,7 +1,7 @@
 import React from "react"
 import { Row, Col } from "react-bootstrap"
 import Card from "../../components/Card/Card"
-import ImageUploader from "react-images-upload"
+import Dropzone from "react-dropzone"
 
 const AddBanner = ({
   categories,
@@ -12,12 +12,15 @@ const AddBanner = ({
   typeSelected,
   onChangeThumbnail,
   thumbnail,
+  thumbnailUrl,
   onChangeTitle,
   title,
   formType,
   handleAddBanner,
+  handleUpdateBanner,
   onClearImage,
-  handleCancel
+  handleCancel,
+  submitType
 }) => (
   <div className="contentAdd">
     <Col xs={12}>
@@ -29,33 +32,41 @@ const AddBanner = ({
           <div>
             <Row>
               <Col xs={6}>
-                {thumbnail ? (
+                {thumbnailUrl ? (
                   <div className="profile">
                     <img
                       alt="banner-thumbnail"
-                      src={thumbnail}
+                      src={thumbnailUrl}
                       style={styles.thumbnailBanner}
                     />
                     <div className="overlay" onClick={onClearImage}>
                       <center>
-                        <p>Cancel</p>
+                        <p>Remove</p>
+                      </center>
+                    </div>
+                  </div>
+                ) : thumbnail.length ? (
+                  <div className="profile">
+                    <img
+                      alt="banner-thumbnail"
+                      src={URL.createObjectURL(thumbnail[0])}
+                      style={styles.thumbnailBanner}
+                    />
+                    <div className="overlay" onClick={onClearImage}>
+                      <center>
+                        <p>Remove</p>
                       </center>
                     </div>
                   </div>
                 ) : (
                   <div className="imageUploader">
-                    <p style={styles.pIconCamera}>
-                      <i className="pe-7s-camera" style={styles.iconCamera} />
-                    </p>
-                    <ImageUploader
-                      withIcon={false}
-                      buttonText="Choose Image"
-                      label="Max Image size 5 Mb, Accepted .jpg, .gif, .png"
-                      onChange={onChangeThumbnail}
-                      imgExtension={[".jpg", ".gif", ".png"]}
-                      maxFileSize={5242880}
-                      style={styles.imageUploader}
-                    />
+                    <Dropzone
+                      accept="image/jpeg, image/jpg, image/png"
+                      onDrop={onChangeThumbnail}>
+                      <p style={styles.pIconCamera}>
+                        <i className="pe-7s-camera" style={styles.iconCamera} />
+                      </p>
+                    </Dropzone>
                   </div>
                 )}
               </Col>
@@ -102,12 +113,21 @@ const AddBanner = ({
                   <button className="btn btn-warning" onClick={handleCancel}>
                     Cancel
                   </button>
-                  <button
-                    className="btn btn-info"
-                    style={styles.buttonSave}
-                    onClick={handleAddBanner}>
-                    Save
-                  </button>
+                  {submitType === "add-banner" ? (
+                    <button
+                      className="btn btn-info"
+                      style={styles.buttonSave}
+                      onClick={handleAddBanner}>
+                      Save
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-info"
+                      style={styles.buttonSave}
+                      onClick={handleUpdateBanner}>
+                      Update
+                    </button>
+                  )}
                 </div>
               </Col>
             </Row>
