@@ -1,5 +1,5 @@
 import React from "react"
-import { Row, Col, Modal } from "react-bootstrap"
+import { Row, Col } from "react-bootstrap"
 import Card from "../../components/Card/Card"
 import Dropzone from "react-dropzone"
 
@@ -152,7 +152,7 @@ const AddBanner = ({
                     ) : (
                       <button
                         className="btn btn-warning"
-                        style={styles.btnCancel}
+                        style={styles.btnSave}
                         onClick={handleUpdateBanner}>
                         Update
                       </button>

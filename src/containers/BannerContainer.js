@@ -58,7 +58,7 @@ class BannerContainer extends React.Component {
 	}
 
 	getSnapshotBeforeUpdate(prevProps, prevState) {
-		const { success, failed, banners } = prevProps
+		const { success, failed } = prevProps
 
 		if (success.status && success.process_on === "ADD_BANNER") {
 			return "ADD_BANNER_SUCCESS"
@@ -80,7 +80,6 @@ class BannerContainer extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		const { success, failed } = prevProps
 		if (snapshot !== null) {
 			if (snapshot === "ADD_BANNER_SUCCESS") {
 				sweetAlert("Success Add Banner", "success", "Close").then(res => {

@@ -1,5 +1,5 @@
 import React from "react"
-import { Grid, Row, Col, Modal, OverlayTrigger, Button } from "react-bootstrap"
+import { Grid, Row, Col } from "react-bootstrap"
 import { StatsCard } from "../../components/StatsCard/StatsCard"
 
 const Dashboard = ({ users, products, orders, reports }) => (
