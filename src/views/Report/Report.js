@@ -69,9 +69,20 @@ const Report = ({ reports, onShowReport }) => (
                             data-report-date={report.created_at}
                             data-report-reply={JSON.stringify(report.reply)}
                             onClick={onShowReport}
-                            style={styles.btnShow}
-                          >
-                            <i class="pe-7s-look"></i>
+                            style={styles.btnShow}>
+                            <i
+                              className="btn btn-primary"
+                              data-report-id={report.report_id}
+                              data-report-name={report.name}
+                              data-report-email={report.email}
+                              data-report-subject={report.subject}
+                              data-report-content={report.content}
+                              data-report-read={report.read}
+                              data-report-date={report.created_at}
+                              data-report-reply={JSON.stringify(report.reply)}
+                              onClick={onShowReport}
+                              class="pe-7s-look"
+                            />
                           </button>
                         </OverlayTrigger>
                       </td>
@@ -109,7 +120,7 @@ const styles = {
   btnShow: {
     background: "#3279b8",
     border: "none",
-    color: '#fff',
+    color: "#fff",
     marginRight: 10
   }
 }
