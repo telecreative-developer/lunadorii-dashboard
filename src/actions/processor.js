@@ -12,8 +12,8 @@ export const setSuccessAndBackToDefault = (message, process_on) => {
 				process_on
 			})
 		)
-		dispatch(setSuccess({ status: false, message: null, process_on: null }))
 		dispatch(setLoading({ status: false, process_on: null }))
+		dispatch(setSuccess({ status: false, message: null, process_on: null }))
 	}
 }
 
@@ -26,8 +26,8 @@ export const setFailedAndBackToDefault = (message, process_on) => {
 				process_on
 			})
 		)
-		dispatch(setFailed({ status: false, message: null, process_on: null }))
 		dispatch(setLoading({ status: false, process_on: null }))
+		dispatch(setFailed({ status: false, message: null, process_on: null }))
 	}
 }
 

@@ -1,5 +1,5 @@
 import React from "react"
-import { Grid, Row, Col, Modal,OverlayTrigger, Button } from "react-bootstrap"
+import { Grid, Row, Col, Modal, OverlayTrigger, Button } from "react-bootstrap"
 import { StatsCard } from "../../components/StatsCard/StatsCard"
 
 const Dashboard = ({ users, products, orders, reports }) => (
@@ -44,18 +44,17 @@ const Dashboard = ({ users, products, orders, reports }) => (
         </Col>
       </Row>
     </Grid>
-    
-    <Modal show={true} className="modalLoading">
+    {/*<Modal show={true} className="modalLoading">
       <Modal.Body>
-      <div className="loadingAlert">
-        <div className="loading-bro">
-          <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">
-            <circle id="loading-inner" cx="75" cy="75" r="60"/>
-        </svg>
+        <div className="loadingAlert">
+          <div className="loading-bro">
+            <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">
+              <circle id="loading-inner" cx="75" cy="75" r="60" />
+            </svg>
+          </div>
         </div>
-      </div>
       </Modal.Body>
-    </Modal>
+    </Modal>*/}
   </div>
 )
 

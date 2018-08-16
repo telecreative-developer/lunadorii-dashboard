@@ -44,7 +44,8 @@ const Banner = ({
   onUpdateBanner,
   onSetUnactive,
   onSetActive,
-  onDeleteBanner
+  onDeleteBanner,
+  loadingDeleteBanner
 }) => (
   <div className="content">
     <Grid fluid>
@@ -149,17 +150,29 @@ const Banner = ({
                           </OverlayTrigger>
                         )}
                         <OverlayTrigger placement="top" overlay={tooltipRemove}>
-                          <button
-                            data-banner-id={banner.banner_id}
-                            className="btn btn-default"
-                            onClick={onDeleteBanner}
-                            style={styles.btnDefault}>
-                            <i
+                          {loadingDeleteBanner ? (
+                            <button
+                              className="btn btn-default"
+                              onClick={onDeleteBanner}
+                              style={styles.btnDefault}>
+                              <i
+                                className="ppe-7s-refresh-2"
+                                style={{ color: "#fff" }}
+                              />
+                            </button>
+                          ) : (
+                            <button
                               data-banner-id={banner.banner_id}
-                              className="pe-7s-trash"
-                              style={{ color: "#fff" }}
-                            />
-                          </button>
+                              className="btn btn-default"
+                              onClick={onDeleteBanner}
+                              style={styles.btnDefault}>
+                              <i
+                                data-banner-id={banner.banner_id}
+                                className="pe-7s-trash"
+                                style={{ color: "#fff" }}
+                              />
+                            </button>
+                          )}
                         </OverlayTrigger>
                       </td>
                     </tr>
@@ -211,7 +224,7 @@ const styles = {
     width: 90,
     borderRadius: 13,
     border: "none",
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 12,
     padding: 5
   },
@@ -221,7 +234,7 @@ const styles = {
     width: 90,
     borderRadius: 13,
     border: "none",
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 12,
     padding: 5
   }

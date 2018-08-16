@@ -18,6 +18,10 @@ import {
 const db = new PouchDB("lunadorii")
 const ReactSwal = withReactContent(Swal)
 
+const sweetAlert = (title, type, confirmButtonText) => {
+	return ReactSwal.fire({ title, type, confirmButtonText })
+}
+
 class BannerContainer extends React.Component {
 	constructor(props) {
 		super(props)
@@ -47,10 +51,61 @@ class BannerContainer extends React.Component {
 				{ value: "product", type: "Product" }
 			]
 		}
+
+		if (!props.banners.length) {
+			db.get("session").then(doc => this.props.fetchBanners(doc.accessToken))
+		}
 	}
 
-	componentWillMount() {
-		db.get("session").then(doc => this.props.fetchBanners(doc.accessToken))
+	getSnapshotBeforeUpdate(prevProps, prevState) {
+		const { success, failed, banners } = prevProps
+
+		if (success.status && success.process_on === "ADD_BANNER") {
+			return "ADD_BANNER_SUCCESS"
+		}
+
+		if (failed.status && failed.process_on === "ADD_BANNER") {
+			return "ADD_BANNER_FAILED"
+		}
+
+		if (success.status && success.process_on === "DELETE_BANNER") {
+			return "DELETE_BANNER_SUCCESS"
+		}
+
+		if (failed.status && failed.process_on === "DELETE_BANNER") {
+			return "DELETE_BANNER_FAILED"
+		}
+
+		return null
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		const { success, failed } = prevProps
+		if (snapshot !== null) {
+			if (snapshot === "ADD_BANNER_SUCCESS") {
+				sweetAlert("Success Add Banner", "success", "Close").then(res => {
+					return window.location.reload()
+				})
+			}
+
+			if (snapshot === "ADD_BANNER_FAILED") {
+				sweetAlert("Failed Add Banner", "error", "Close").then(res => {
+					return window.location.reload()
+				})
+			}
+
+			if (snapshot === "DELETE_BANNER_SUCCESS") {
+				sweetAlert("Success Delete Banner", "success", "Close").then(res => {
+					return window.location.reload()
+				})
+			}
+
+			if (snapshot === "DELETE_BANNER_FAILED") {
+				sweetAlert("Failed Delete Banner", "error", "Close").then(res => {
+					return window.location.reload()
+				})
+			}
+		}
 	}
 
 	onNavigateAddBanner(data) {
@@ -91,19 +146,15 @@ class BannerContainer extends React.Component {
 	handleAddBanner() {
 		const { title, thumbnails, typeSelected, categorySelected } = this.state
 		db.get("session")
+			.then(doc => {
+				return doc
+			})
 			.then(doc =>
 				this.props.addBanner(
 					{ title, thumbnails, type: typeSelected, category: categorySelected },
 					doc.accessToken
 				)
 			)
-			.then(res => {
-				return ReactSwal.fire({
-					title: "Banner Added",
-					type: "success",
-					confirmButtonText: "Close"
-				}).then(res => window.location.reload())
-			})
 	}
 
 	handleUpdateBanner() {
@@ -174,18 +225,12 @@ class BannerContainer extends React.Component {
 			text: "Are you sure?",
 			type: "warning",
 			confirmButtonText: "Delete",
-			showCancelButton: true,
-			preConfirm: () => {
-				return db
-					.get("session")
-					.then(doc => this.props.deleteBanner(banner_id, doc.accessToken))
-			}
+			showCancelButton: true
 		}).then(res => {
 			if (res.value) {
-				return ReactSwal.fire({
-					title: "Banner Deleted",
-					type: "success"
-				})
+				db.get("session").then(doc =>
+					this.props.deleteBanner(banner_id, doc.accessToken)
+				)
 			}
 		})
 	}
@@ -200,7 +245,7 @@ class BannerContainer extends React.Component {
 			categorySelected,
 			typeSelected
 		} = this.state
-		const { navigationBanner, banners } = this.props
+		const { navigationBanner, loading, banners } = this.props
 
 		if (
 			navigationBanner === "add-banner" ||
@@ -229,6 +274,10 @@ class BannerContainer extends React.Component {
 					}
 					handleCancel={() => this.props.setNavigation({ banner: "banner" })}
 					submitType={navigationBanner}
+					loadingBanner={
+						(loading.status && loading.process_on === "ADD_BANNER") ||
+						(loading.status && loading.process_on === "UPDATE_BANNER")
+					}
 				/>
 			)
 		}
@@ -241,6 +290,9 @@ class BannerContainer extends React.Component {
 				onAddBanner={this.onNavigateAddBanner.bind(this)}
 				onUpdateBanner={this.onNavigateUpdateBanner.bind(this)}
 				onDeleteBanner={this.handleDeleteBanner.bind(this)}
+				loadingDeleteBanner={
+					loading.status && loading.process_on === "DELETE_BANNER"
+				}
 			/>
 		)
 	}
@@ -249,7 +301,10 @@ class BannerContainer extends React.Component {
 const mapStateToProps = state => ({
 	banners: state.banners,
 	navigationBanner: state.navigation.banner,
-	navigationBannerData: state.navigation.banner_data
+	navigationBannerData: state.navigation.banner_data,
+	loading: state.loading,
+	failed: state.failed,
+	success: state.success
 })
 
 const mapDispatchToProps = dispacth => ({

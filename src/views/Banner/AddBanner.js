@@ -1,5 +1,5 @@
 import React from "react"
-import { Row, Col } from "react-bootstrap"
+import { Row, Col, Modal } from "react-bootstrap"
 import Card from "../../components/Card/Card"
 import Dropzone from "react-dropzone"
 
@@ -20,7 +20,8 @@ const AddBanner = ({
   handleUpdateBanner,
   onClearImage,
   handleCancel,
-  submitType
+  submitType,
+  loadingBanner
 }) => (
   <div className="contentAdd">
     <Col xs={12}>
@@ -62,7 +63,8 @@ const AddBanner = ({
                   <div className="imageUploader">
                     <Dropzone
                       accept="image/jpeg, image/jpg, image/png"
-                      onDrop={onChangeThumbnail} style={{width: '100%', paddingBottom: 60}}>
+                      onDrop={onChangeThumbnail}
+                      style={{ width: "100%", paddingBottom: 60 }}>
                       <p style={styles.pIconCamera}>
                         <i className="pe-7s-camera" style={styles.iconCamera} />
                       </p>
@@ -109,26 +111,54 @@ const AddBanner = ({
             </Row>
             <Row>
               <Col xs={12}>
-                <div style={styles.divButton}>
-                  <button className="btn btn-warning" onClick={handleCancel} style={styles.btnCancel}>
-                    Cancel
-                  </button>
-                  {submitType === "add-banner" ? (
+                {loadingBanner ? (
+                  <div style={styles.divButton}>
                     <button
-                      className="btn btn-primary"
-                      style={styles.btnSave}
-                      onClick={handleAddBanner}>
-                      Save
+                      className="btn btn-default"
+                      style={styles.btnDefault}>
+                      Cancel
                     </button>
-                  ) : (
+                    {submitType === "add-banner" ? (
+                      <button
+                        className="btn btn-default"
+                        style={styles.btnDefault}
+                        onClick={handleAddBanner}>
+                        Save
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-default"
+                        style={styles.btnDefault}
+                        onClick={handleUpdateBanner}>
+                        Update
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <div style={styles.divButton}>
                     <button
                       className="btn btn-warning"
-                      style={styles.btnCancel}
-                      onClick={handleUpdateBanner}>
-                      Update
+                      onClick={handleCancel}
+                      style={styles.btnCancel}>
+                      Cancel
                     </button>
-                  )}
-                </div>
+                    {submitType === "add-banner" ? (
+                      <button
+                        className="btn btn-primary"
+                        style={styles.btnSave}
+                        onClick={handleAddBanner}>
+                        Save
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-warning"
+                        style={styles.btnCancel}
+                        onClick={handleUpdateBanner}>
+                        Update
+                      </button>
+                    )}
+                  </div>
+                )}
               </Col>
             </Row>
           </div>
@@ -154,6 +184,11 @@ const styles = {
     margin: 20,
     float: "right"
   },
+  btnDefault: {
+    background: "#6d6d6d",
+    border: "none",
+    marginRight: 10
+  },
   btnSave: {
     background: "#3279b8",
     border: "none",
@@ -176,7 +211,7 @@ const styles = {
   },
   imageUploader: {
     marginTop: 0,
-    width: '100%'
+    width: "100%"
   },
   thumbnailBanner: {
     width: "100%",
