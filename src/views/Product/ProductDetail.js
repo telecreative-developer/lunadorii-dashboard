@@ -25,29 +25,29 @@ const ProductDetail = ({
                 <Row>
                   <Col xs={12}>
                     <Row>
-                      <Col xs={4}>
+                      <Col xs={4} style={styles.wrapImage}>
                         <img src="https://ecs7.tokopedia.net/img/cache/700/product-1/2018/3/3/136907/136907_e71f52f2-b6e5-415e-950a-2b680f0b8cf0_1080_1080.jpeg" 
-                        style={{width: '100%', maxHeight: 380}}
+                        style={styles.imgProduct}
                         />
-                        <Row style={{marginTop: 10}}>
+                        <Row style={styles.wrapSubImage}>
                           <Col xs={3}>
                             <img src="http://jutanhakindonesia.com/images/Ossion-Milky-Angel-Series.jpg" 
-                              style={{width: '100%', maxHeight: 150}}
+                              style={styles.imgSubProduct}
                               />
                           </Col>
                           <Col xs={3}>
                             <img src="http://jutanhakindonesia.com/images/Ossion-Milky-Angel-Series.jpg" 
-                              style={{width: '100%', maxHeight: 150}}
+                              style={styles.imgSubProduct}
                               />
                           </Col>
                           <Col xs={3}>
                             <img src="https://ecs7.tokopedia.net/img/cache/700/product-1/2018/3/3/136907/136907_e71f52f2-b6e5-415e-950a-2b680f0b8cf0_1080_1080.jpeg" 
-                              style={{width: '100%', maxHeight: 150}}
+                              style={styles.imgSubProduct}
                               />
                           </Col>
                           <Col xs={3}>
                             <img src="https://ecs7.tokopedia.net/img/cache/700/product-1/2018/3/3/136907/136907_e71f52f2-b6e5-415e-950a-2b680f0b8cf0_1080_1080.jpeg" 
-                              style={{width: '100%', maxHeight: 150}}
+                              style={styles.imgSubProduct}
                               />
                           </Col>
                         </Row>
@@ -115,6 +115,20 @@ const styles = {
   },
   txtDiscount:{
     color: '#b18209'
+  },
+  wrapImage:{
+    paddingLeft: 40
+  },
+  wrapSubImage:{
+    marginTop: 10
+  },
+  imgProduct:{
+    width: '100%', 
+    maxHeight: 380
+  },
+  imgSubProduct:{
+    width: '100%', 
+    maxHeight: 100
   }
 }
 
