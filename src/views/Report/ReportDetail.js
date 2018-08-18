@@ -59,6 +59,11 @@ const ReportDetail = ({
                 style={styles.btnSend}>
                 Send
               </button>
+              <button
+                className="btn btn-warning"
+                style={styles.btnCancel}>
+                Cancel
+              </button>
             </div>
           ) : (
             <Card
@@ -96,6 +101,14 @@ const styles = {
     float: "right",
     marginTop: 10,
     color: "#fff"
+  },
+  btnCancel:{
+    background: "#ffc107",
+    border: "none",
+    float: "right",
+    marginTop: 10,
+    marginRight: 10,
+    color: "#000"
   },
   iconSend: {
     fontSize: 18

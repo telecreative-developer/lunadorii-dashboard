@@ -15,6 +15,15 @@
 
  */
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+.dropzone {
+  width: 150px !important;
+  height: 150px !important;
+  display: inline-block; }
+
+.img-dropzone {
+  vertical-align: top !important;
+  margin-right: 10px; }
+
 .swal2-popup {
   width: 45em; }
 

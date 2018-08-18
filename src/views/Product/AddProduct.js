@@ -55,27 +55,28 @@ const AddProduct = ({
                       )}
                     </div>
                     <Row>
-                      <Col xs={3}>
+                      <Col xs={12}>
                         <div className="groupRight" style={styles.groupRight}>
                           {thumbnails.length > 1 &&
                             thumbnails
                               .filter(d => d.key !== 0)
                               .map((d, key) => (
                                 <img
+                                  className="img-dropzone"
                                   key={key}
                                   src={d.thumbnail_url}
                                   alt="product-thumbnail"
-                                  style={{ width: 100, height: 100 }}
+                                  style={{ width: 150, height: 150 }}
                                 />
                               ))}
                           {thumbnails.length && thumbnails.length < 5 ? (
-                            <Dropzone
+                            <Dropzone class="dropzone"
                               accept="image/jpeg, image/jpg, image/png"
                               onDrop={onChangeThumbnail}>
                               <div className="group" />
                             </Dropzone>
                           ) : (
-                            <div />
+                            <div/>
                           )}
                         </div>
                       </Col>
@@ -207,7 +208,8 @@ const styles = {
   },
   groupRight: {
     marginLeft: 15,
-    marginTop: 15
+    marginTop: 15,
+    display: 'inline-block'
   },
   label: {
     marginTop: 10
