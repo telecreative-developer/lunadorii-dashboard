@@ -66,7 +66,7 @@ const AddProduct = ({
                                   key={key}
                                   src={d.thumbnail_url}
                                   alt="product-thumbnail"
-                                  style={{ width: 150, height: 150 }}
+                                  style={{ width: 100, height: 100 }}
                                 />
                               ))}
                           {thumbnails.length && thumbnails.length < 5 ? (
