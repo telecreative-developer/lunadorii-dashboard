@@ -116,21 +116,19 @@ const AddBanner = ({
                     <button
                       className="btn btn-default"
                       style={styles.btnDefault}>
-                      Cancel
+                      Loading...
                     </button>
                     {submitType === "add-banner" ? (
                       <button
                         className="btn btn-default"
-                        style={styles.btnDefault}
-                        onClick={handleAddBanner}>
-                        Save
+                        style={styles.btnDefault}>
+                        Loading...
                       </button>
                     ) : (
                       <button
                         className="btn btn-default"
-                        style={styles.btnDefault}
-                        onClick={handleUpdateBanner}>
-                        Update
+                        style={styles.btnDefault}>
+                        Loading...
                       </button>
                     )}
                   </div>
