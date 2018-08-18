@@ -156,14 +156,26 @@ const AddProduct = ({
                     placeholder="Weight"
                   />
 
-                  <label style={styles.label}>Discount Percentage</label>
-                  <input
-                    type="number"
-                    name="discount"
-                    className="form-control"
-                    onKeyUp={onChangeDiscount}
-                    placeholder="Your Discount"
-                  />
+                  <label style={styles.label} >Discount Percentage</label>
+                  <Row>
+                    <Col md={9}>
+                      <input
+                        type="number"
+                        name="discount"
+                        className="form-control"
+                        onKeyUp={onChangeDiscount}
+                        placeholder="Your Discount"
+                      />
+                    </Col>
+                    <Col md={3}>
+                      <div class="switch-button">
+                        <label class="switch">
+                          <input type="checkbox" />
+                          <span class="slider round"></span>
+                        </label>
+                      </div>
+                    </Col>
+                  </Row>
 
                   <label style={styles.label}>Categories</label>
                   <select
