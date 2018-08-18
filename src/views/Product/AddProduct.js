@@ -19,7 +19,8 @@ const AddProduct = ({
   onChangeDiscount,
   thumbnails,
   onChangeThumbnail,
-  handleAddProduct
+  handleAddProduct,
+  loadingProduct
 }) => (
   <div className="contentAdd">
     <Col xs={12}>
@@ -39,7 +40,7 @@ const AddProduct = ({
                           <img
                             src={thumbnails[0].thumbnail_url}
                             alt="product-thumbnail"
-                            style={{ width: '100%', maxHeight: 225 }}
+                            style={{ width: "100%", maxHeight: 225 }}
                           />
                           <div className="overlay">
                             <center>
@@ -50,11 +51,14 @@ const AddProduct = ({
                       ) : (
                         <div className="imageUploader">
                           <Dropzone
-                            style={{width: '100%', paddingBottom: 60}}
+                            style={{ width: "100%", paddingBottom: 60 }}
                             accept="image/jpeg, image/jpg, image/png"
                             onDrop={onChangeThumbnail}>
                             <p style={styles.pIconCamera}>
-                              <i className="pe-7s-camera" style={styles.iconCamera} />
+                              <i
+                                className="pe-7s-camera"
+                                style={styles.iconCamera}
+                              />
                             </p>
                             <div className="group" />
                           </Dropzone>
@@ -84,13 +88,14 @@ const AddProduct = ({
                                 </div>
                               ))}
                           {thumbnails.length && thumbnails.length < 5 ? (
-                            <Dropzone class="dropzone"
+                            <Dropzone
+                              class="dropzone"
                               accept="image/jpeg, image/jpg, image/png"
                               onDrop={onChangeThumbnail}>
                               <div className="group" />
                             </Dropzone>
                           ) : (
-                            <div/>
+                            <div />
                           )}
                         </div>
                       </Col>
@@ -194,15 +199,34 @@ const AddProduct = ({
             </Row>
             <Row>
               <Col xs={12}>
-                <div style={styles.divButton}>
-                  <button className="btn btn-warning" style={styles.btnCancel}>Cancel</button>
-                  <button
-                    className="btn btn-primary"
-                    onClick={handleAddProduct}
-                    style={styles.btnSave}>
-                    Save
-                  </button>
-                </div>
+                {loadingProduct ? (
+                  <div style={styles.divButton}>
+                    <button
+                      className="btn btn-default"
+                      style={styles.btnDefault}>
+                      Loading...
+                    </button>
+                    <button
+                      className="btn btn-default"
+                      style={styles.btnDefault}>
+                      Loading...
+                    </button>
+                  </div>
+                ) : (
+                  <div style={styles.divButton}>
+                    <button
+                      className="btn btn-warning"
+                      style={styles.btnCancel}>
+                      Cancel
+                    </button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={handleAddProduct}
+                      style={styles.btnSave}>
+                      Save
+                    </button>
+                  </div>
+                )}
               </Col>
             </Row>
           </div>
@@ -217,13 +241,18 @@ const styles = {
     width: "100%",
     maxHeight: 400
   },
+  btnDefault: {
+    background: "#6d6d6d",
+    border: "none",
+    marginRight: 10
+  },
   headerGroup: {
     marginLeft: 15
   },
   groupRight: {
     marginLeft: 15,
     marginTop: 15,
-    display: 'inline-block'
+    display: "inline-block"
   },
   label: {
     marginTop: 10

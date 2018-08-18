@@ -1,6 +1,8 @@
 import React from "react"
 import PouchDB from "pouchdb"
 import { connect } from "react-redux"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
 import { setNavigation } from "../actions/processor"
 import Product from "../views/Product/Product"
 import AddProduct from "../views/Product/AddProduct"
@@ -12,6 +14,11 @@ import {
 	addProductThumbnail
 } from "../actions/product"
 const db = new PouchDB("lunadorii")
+const ReactSwal = withReactContent(Swal)
+
+const sweetAlert = (title, type, confirmButtonText) => {
+	return ReactSwal.fire({ title, type, confirmButtonText })
+}
 
 class ProductContainer extends React.Component {
 	constructor(props) {
@@ -42,14 +49,88 @@ class ProductContainer extends React.Component {
 			product_subcategory_id,
 			product_brand_id
 		}
+
+		if (!props.products.length) {
+			db.get("session").then(doc => {
+				this.props.fetchProducts(doc.accessToken)
+			})
+		}
+
+		if (!props.subcategories.length) {
+			this.props.fetchSubcategories()
+		}
+
+		if (!props.brands.length) {
+			this.props.fetchBrands()
+		}
 	}
 
-	componentWillMount() {
-		db.get("session").then(async doc => {
-			await this.props.fetchProducts(doc.accessToken)
-			await this.props.fetchSubcategories()
-			await this.props.fetchBrands()
-		})
+	getSnapshotBeforeUpdate(prevProps, prevState) {
+		const { success, failed } = prevProps
+
+		if (success.status && success.process_on === "ADD_PRODUCT") {
+			return "ADD_PRODUCT_SUCCESS"
+		}
+
+		if (failed.status && failed.process_on === "ADD_PRODUCT") {
+			return "ADD_PRODUCT_FAILED"
+		}
+
+		if (success.status && success.process_on === "UPDATE_PRODUCT") {
+			return "UPDATE_PRODUCT_SUCCESS"
+		}
+
+		if (failed.status && failed.process_on === "UPDATE_PRODUCT") {
+			return "UPDATE_PRODUCT_FAILED"
+		}
+
+		if (success.status && success.process_on === "DELETE_PRODUCT") {
+			return "DELETE_PRODUCT_SUCCESS"
+		}
+
+		if (failed.status && failed.process_on === "DELETE_PRODUCT") {
+			return "DELETE_PRODUCT_FAILED"
+		}
+
+		return null
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (snapshot === "ADD_PRODUCT_SUCCESS") {
+			sweetAlert("Success Add Product", "success", "Close").then(res => {
+				return window.location.reload()
+			})
+		}
+
+		if (snapshot === "ADD_PRODUCT_FAILED") {
+			sweetAlert("Failed Add Product", "error", "Close").then(res => {
+				return window.location.reload()
+			})
+		}
+
+		if (snapshot === "UPDATE_PRODUCT_SUCCESS") {
+			sweetAlert("Success Update Product", "success", "Close").then(res => {
+				return window.location.reload()
+			})
+		}
+
+		if (snapshot === "UPDATE_PRODUCT_FAILED") {
+			sweetAlert("Failed Update Product", "error", "Close").then(res => {
+				return window.location.reload()
+			})
+		}
+
+		if (snapshot === "DELETE_PRODUCT_SUCCESS") {
+			sweetAlert("Success Delete Product", "success", "Close").then(res => {
+				return window.location.reload()
+			})
+		}
+
+		if (snapshot === "DELETE_PRODUCT_FAILED") {
+			sweetAlert("Failed Delete Product", "error", "Close").then(res => {
+				return window.location.reload()
+			})
+		}
 	}
 
 	onNavigateAddProduct() {
@@ -110,7 +191,8 @@ class ProductContainer extends React.Component {
 			productThumbnails,
 			subcategories,
 			brands,
-			navigationProduct
+			navigationProduct,
+			loading
 		} = this.props
 		const { product_subcategory_id, product_brand_id } = this.state
 
@@ -144,6 +226,10 @@ class ProductContainer extends React.Component {
 					thumbnails={productThumbnails}
 					onChangeThumbnail={thumbnail => this.handleAddThumbnail(thumbnail)}
 					handleAddProduct={() => this.handleAddProduct()}
+					loadingProduct={
+						(loading.status && loading.process_on === "ADD_PRODUCT") ||
+						(loading.status && loading.process_on === "UPDATE_PRODUCT")
+					}
 				/>
 			)
 		}
@@ -152,6 +238,9 @@ class ProductContainer extends React.Component {
 			<Product
 				products={products}
 				onAddProduct={this.onNavigateAddProduct.bind(this)}
+				loadingDeleteProduct={
+					loading.status && loading.process_on === "DELETE_PRODUCT"
+				}
 			/>
 		)
 	}
@@ -163,7 +252,10 @@ const mapStateToProps = state => ({
 	subcategories: state.subcategories,
 	brands: state.brands,
 	navigationProduct: state.navigation.product,
-	navigationProductData: state.navigation.product_data
+	navigationProductData: state.navigation.product_data,
+	success: state.success,
+	failed: state.failed,
+	loading: state.loading
 })
 
 const mapDispatchToProps = dispacth => ({

@@ -68,6 +68,14 @@ class BannerContainer extends React.Component {
 			return "ADD_BANNER_FAILED"
 		}
 
+		if (success.status && success.process_on === "UPDATE_BANNER") {
+			return "UPDATE_BANNER_SUCCESS"
+		}
+
+		if (failed.status && failed.process_on === "UPDATE_BANNER") {
+			return "UPDATE_BANNER_FAILED"
+		}
+
 		if (success.status && success.process_on === "DELETE_BANNER") {
 			return "DELETE_BANNER_SUCCESS"
 		}
@@ -89,6 +97,18 @@ class BannerContainer extends React.Component {
 
 			if (snapshot === "ADD_BANNER_FAILED") {
 				sweetAlert("Failed Add Banner", "error", "Close").then(res => {
+					return window.location.reload()
+				})
+			}
+
+			if (snapshot === "UPDATE_BANNER_SUCCESS") {
+				sweetAlert("Success Update Banner", "success", "Close").then(res => {
+					return window.location.reload()
+				})
+			}
+
+			if (snapshot === "UPDATE_BANNER_FAILED") {
+				sweetAlert("Failed Update Banner", "error", "Close").then(res => {
 					return window.location.reload()
 				})
 			}
@@ -166,37 +186,29 @@ class BannerContainer extends React.Component {
 			categorySelected
 		} = this.state
 
-		db.get("session")
-			.then(doc => {
-				return thumbnail_url
-					? this.props.updateBanner(
-							{
-								banner_id,
-								title,
-								thumbnail_url,
-								type: typeSelected,
-								category: categorySelected
-							},
-							doc.accessToken
-					  )
-					: this.props.updateBannerWithImage(
-							{
-								banner_id,
-								title,
-								thumbnails,
-								type: typeSelected,
-								category: categorySelected
-							},
-							doc.accessToken
-					  )
-			})
-			.then(res => {
-				return ReactSwal.fire({
-					title: "Banner Updated",
-					type: "success",
-					confirmButtonText: "Close"
-				}).then(res => window.location.reload())
-			})
+		db.get("session").then(doc => {
+			return thumbnail_url
+				? this.props.updateBanner(
+						{
+							banner_id,
+							title,
+							thumbnail_url,
+							type: typeSelected,
+							category: categorySelected
+						},
+						doc.accessToken
+				  )
+				: this.props.updateBannerWithImage(
+						{
+							banner_id,
+							title,
+							thumbnails,
+							type: typeSelected,
+							category: categorySelected
+						},
+						doc.accessToken
+				  )
+		})
 	}
 
 	handleActiveBanner(data) {
