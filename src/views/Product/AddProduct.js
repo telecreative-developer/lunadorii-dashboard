@@ -35,11 +35,18 @@ const AddProduct = ({
                   <Col xs={12}>
                     <div style={styles.headerGroup}>
                       {thumbnails.length ? (
-                        <img
-                          src={thumbnails[0].thumbnail_url}
-                          alt="product-thumbnail"
-                          style={{ width: '100%', height: 300 }}
-                        />
+                        <div className="product-banner">
+                          <img
+                            src={thumbnails[0].thumbnail_url}
+                            alt="product-thumbnail"
+                            style={{ width: '100%', maxHeight: 225 }}
+                          />
+                          <div className="overlay">
+                            <center>
+                              <p>Remove</p>
+                            </center>
+                          </div>
+                        </div>
                       ) : (
                         <div className="imageUploader">
                           <Dropzone
@@ -61,13 +68,20 @@ const AddProduct = ({
                             thumbnails
                               .filter(d => d.key !== 0)
                               .map((d, key) => (
-                                <img
-                                  className="img-dropzone"
-                                  key={key}
-                                  src={d.thumbnail_url}
-                                  alt="product-thumbnail"
-                                  style={{ width: 100, height: 100 }}
-                                />
+                                <div className="product">
+                                  <img
+                                    className="img-dropzone"
+                                    key={key}
+                                    src={d.thumbnail_url}
+                                    alt="product-thumbnail"
+                                    style={{ width: 100, height: 100 }}
+                                  />
+                                  <div className="overlay">
+                                    <center>
+                                      <p>Remove</p>
+                                    </center>
+                                  </div>
+                                </div>
                               ))}
                           {thumbnails.length && thumbnails.length < 5 ? (
                             <Dropzone class="dropzone"
