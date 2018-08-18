@@ -7,7 +7,6 @@ const tableHead = [
   "No",
   "Picture",
   "Product",
-  "Description",
   "Price",
   "Discount",
   "Category",
@@ -15,6 +14,12 @@ const tableHead = [
   "Reviews",
   "Action"
 ]
+
+const tooltipShow = (
+  <Tooltip id="tooltip">
+    <strong>Show Product</strong>
+  </Tooltip>
+)
 
 const tooltipRemove = (
   <Tooltip id="tooltip">
@@ -71,9 +76,8 @@ const Product = ({
                         />
                       </td>
                       <td>{product.product}</td>
-                      <td>{product.description}</td>
                       <td>{convertToIDR(product.price)}</td>
-                      <td>{product.discount_percentage}</td>
+                      <td>{product.discount_percentage}%</td>
                       <td>{product.subcategories[0].subcategory}</td>
                       <td>{product.brands[0].brand}</td>
                       <td>
@@ -82,6 +86,16 @@ const Product = ({
                           : "Not yet"}
                       </td>
                       <td>
+                        <OverlayTrigger placement="top" overlay={tooltipShow}>
+                          <button
+                            className="btn btn-primary"
+                            style={styles.btnShow}>
+                            <i
+                              className="btn btn-primary"
+                              class="pe-7s-look"
+                            />
+                          </button>
+                        </OverlayTrigger>
                         <OverlayTrigger placement="top" overlay={tooltipEdit}>
                           <button
                             className="btn btn-info"
@@ -136,6 +150,12 @@ const styles = {
     float: "right",
     marginBottom: 10,
     color: "#fff"
+  },
+  btnShow: {
+    background: "#3279b8",
+    border: "none",
+    color: "#fff",
+    marginRight: 10
   },
   btnEdit: {
     background: "#59c1de",

@@ -3,7 +3,7 @@ import UserContainer from "../containers/UserContainer"
 import ReportContainer from "../containers/ReportContainer"
 import Icons from "../views/Icons/Icons"
 import BannerContainer from "../containers/BannerContainer"
-import ProductContainer from "../containers/ProductContainer"
+import ProductContainer from "../views/Product/ProductDetail"
 import TransactionContainer from "../containers/TransactionContainer"
 
 const dashboardRoutes = [
