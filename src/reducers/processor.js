@@ -26,6 +26,7 @@ const initialStateNavigation = {
 		detail: "",
 		price: 0,
 		how_to_use: "",
+		discount: false,
 		discount_percentage: 0,
 		weight_gram: 0,
 		product_subcategory_id: 1,

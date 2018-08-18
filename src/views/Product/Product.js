@@ -28,7 +28,12 @@ const tooltipEdit = (
   </Tooltip>
 )
 
-const Product = ({ products, onAddProduct }) => (
+const Product = ({
+  products,
+  onAddProduct,
+  onDeleteProduct,
+  loadingDeleteProduct
+}) => (
   <div className="content">
     <Grid fluid>
       <Row>
@@ -78,7 +83,9 @@ const Product = ({ products, onAddProduct }) => (
                       </td>
                       <td>
                         <OverlayTrigger placement="top" overlay={tooltipEdit}>
-                          <button className="btn btn-info" style={styles.btnEdit}>
+                          <button
+                            className="btn btn-info"
+                            style={styles.btnEdit}>
                             <i
                               className="pe-7s-eyedropper"
                               style={{ color: "#fff" }}
@@ -86,14 +93,28 @@ const Product = ({ products, onAddProduct }) => (
                           </button>
                         </OverlayTrigger>
                         <OverlayTrigger placement="top" overlay={tooltipRemove}>
-                          <button
-                            className="btn btn-default"
-                            style={styles.btnDefault}>
-                            <i
-                              className="pe-7s-trash"
-                              style={{ color: "#fff" }}
-                            />
-                          </button>
+                          {loadingDeleteProduct ? (
+                            <button
+                              className="btn btn-default"
+                              style={styles.btnDefault}>
+                              <i
+                                className="pe-7s-trash"
+                                style={{ color: "#fff" }}
+                              />
+                            </button>
+                          ) : (
+                            <button
+                              data-product-id={product.product_id}
+                              className="btn btn-default"
+                              onClick={onDeleteProduct}
+                              style={styles.btnDefault}>
+                              <i
+                                data-product-id={product.product_id}
+                                className="pe-7s-trash"
+                                style={{ color: "#fff" }}
+                              />
+                            </button>
+                          )}
                         </OverlayTrigger>
                       </td>
                     </tr>
@@ -125,7 +146,7 @@ const styles = {
     background: "#6d6d6d",
     border: "none",
     marginRight: 10
-  },
+  }
 }
 
 export default Product

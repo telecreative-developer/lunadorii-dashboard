@@ -2,6 +2,8 @@ export const products = (state = [], action) => {
 	switch (action.type) {
 		case "FETCH_PRODUCTS_SUCCESS":
 			return action.payload
+		case "DELETE_PRODUCT_REDUCER":
+			return state.filter(product => product.product_id !== action.product_id)
 		default:
 			return state
 	}

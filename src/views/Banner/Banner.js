@@ -153,10 +153,9 @@ const Banner = ({
                           {loadingDeleteBanner ? (
                             <button
                               className="btn btn-default"
-                              onClick={onDeleteBanner}
                               style={styles.btnDefault}>
                               <i
-                                className="ppe-7s-refresh-2"
+                                className="pe-7s-trash"
                                 style={{ color: "#fff" }}
                               />
                             </button>

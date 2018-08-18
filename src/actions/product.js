@@ -127,6 +127,32 @@ export const addProduct = (data, accessToken) => {
 	}
 }
 
+export const deleteProduct = (product_id, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "DELETE_PRODUCT" }))
+
+		return reduxFetch
+			.delete({
+				url: server + "/product/" + product_id,
+				accessToken: accessToken
+			})
+			.then(res => {
+				if (res.status !== 200) {
+					dispatch(setFailedAndBackToDefault(res.message, "DELETE_PRODUCT"))
+				} else {
+					dispatch(deleteProductReducer(product_id))
+					dispatch(setSuccessAndBackToDefault(res.message, "DELETE_PRODUCT"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "DELETE_PRODUCT")))
+	}
+}
+
+const deleteProductReducer = product_id => ({
+	type: "DELETE_PRODUCT_REDUCER",
+	product_id: parseInt(product_id, 10)
+})
+
 export const fetchSubcategories = () => {
 	return dispatch => {
 		dispatch(setLoading({ status: true, process_on: "FETCH_SUBCATEGORIES" }))

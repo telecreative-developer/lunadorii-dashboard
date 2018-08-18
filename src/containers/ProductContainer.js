@@ -11,7 +11,8 @@ import {
 	fetchProducts,
 	fetchSubcategories,
 	fetchBrands,
-	addProductThumbnail
+	addProductThumbnail,
+	deleteProduct
 } from "../actions/product"
 const db = new PouchDB("lunadorii")
 const ReactSwal = withReactContent(Swal)
@@ -43,7 +44,7 @@ class ProductContainer extends React.Component {
 			detail,
 			how_to_use,
 			price,
-			discount: false,
+			discount,
 			discount_percentage,
 			weight_gram,
 			product_subcategory_id,
@@ -185,6 +186,25 @@ class ProductContainer extends React.Component {
 		})
 	}
 
+	handleDeleteProduct(data) {
+		const product_id = data.target.attributes.getNamedItem("data-product-id")
+			.value
+
+		ReactSwal.fire({
+			title: "Delete Product",
+			text: "Are you sure?",
+			type: "warning",
+			confirmButtonText: "Delete",
+			showCancelButton: true
+		}).then(res => {
+			if (res.value) {
+				db.get("session").then(doc =>
+					this.props.deleteProduct(product_id, doc.accessToken)
+				)
+			}
+		})
+	}
+
 	render() {
 		const {
 			products,
@@ -194,7 +214,7 @@ class ProductContainer extends React.Component {
 			navigationProduct,
 			loading
 		} = this.props
-		const { product_subcategory_id, product_brand_id } = this.state
+		const { discount, product_subcategory_id, product_brand_id } = this.state
 
 		if (
 			navigationProduct === "add-product" ||
@@ -212,6 +232,13 @@ class ProductContainer extends React.Component {
 					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
 					onChangeDiscount={e =>
 						this.setState({ discount_percentage: e.target.value })
+					}
+					discountCondition={discount}
+					onChangeDiscountCondition={e =>
+						this.setState({
+							discount: !this.state.discount,
+							discount_percentage: 1
+						})
 					}
 					subcategories={subcategories}
 					subcategorySelected={product_subcategory_id}
@@ -238,6 +265,7 @@ class ProductContainer extends React.Component {
 			<Product
 				products={products}
 				onAddProduct={this.onNavigateAddProduct.bind(this)}
+				onDeleteProduct={this.handleDeleteProduct.bind(this)}
 				loadingDeleteProduct={
 					loading.status && loading.process_on === "DELETE_PRODUCT"
 				}
@@ -262,6 +290,8 @@ const mapDispatchToProps = dispacth => ({
 	setNavigation: navigation => dispacth(setNavigation(navigation)),
 	addProductThumbnail: thumbnail => dispacth(addProductThumbnail(thumbnail)),
 	addProduct: (data, accessToken) => dispacth(addProduct(data, accessToken)),
+	deleteProduct: (product_id, accessToken) =>
+		dispacth(deleteProduct(product_id, accessToken)),
 	fetchProducts: accessToken => dispacth(fetchProducts(accessToken)),
 	fetchSubcategories: () => dispacth(fetchSubcategories()),
 	fetchBrands: () => dispacth(fetchBrands())

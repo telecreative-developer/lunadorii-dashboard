@@ -19,6 +19,8 @@ const AddProduct = ({
   onChangeDiscount,
   thumbnails,
   onChangeThumbnail,
+  onChangeDiscountCondition,
+  discountCondition,
   handleAddProduct,
   loadingProduct
 }) => (
@@ -89,7 +91,7 @@ const AddProduct = ({
                               ))}
                           {thumbnails.length && thumbnails.length < 5 ? (
                             <Dropzone
-                              class="dropzone"
+                              className="dropzone"
                               accept="image/jpeg, image/jpg, image/png"
                               onDrop={onChangeThumbnail}>
                               <div className="group" />
@@ -111,15 +113,16 @@ const AddProduct = ({
                     name="title"
                     className="form-control"
                     onKeyUp={onChangeTitle}
+                    disabled={loadingProduct}
                     placeholder="Title"
                   />
                   <label style={styles.label}>Description</label>
                   <textarea
                     className="form-control"
                     rows="5"
-                    required="ON"
                     maxLength="255"
                     onKeyUp={onChangeDescription}
+                    disabled={loadingProduct}
                     placeholder="Description"
                   />
 
@@ -127,9 +130,9 @@ const AddProduct = ({
                   <textarea
                     className="form-control"
                     rows="5"
-                    required="ON"
                     maxLength="255"
                     onKeyUp={onChangeDetail}
+                    disabled={loadingProduct}
                     placeholder="Detail"
                   />
 
@@ -137,9 +140,9 @@ const AddProduct = ({
                   <textarea
                     className="form-control"
                     rows="5"
-                    required="ON"
                     maxLength="255"
                     onKeyUp={onChangeHowToUse}
+                    disabled={loadingProduct}
                     placeholder="How to use"
                   />
 
@@ -149,6 +152,7 @@ const AddProduct = ({
                     name="price"
                     className="form-control"
                     onKeyUp={onChangePrice}
+                    disabled={loadingProduct}
                     placeholder="Price"
                   />
 
@@ -158,25 +162,32 @@ const AddProduct = ({
                     name="weight"
                     className="form-control"
                     onKeyUp={onChangeWeight}
+                    disabled={loadingProduct}
                     placeholder="Weight"
                   />
 
-                  <label style={styles.label} >Discount Percentage</label>
+                  <label style={styles.label}>Discount Percentage</label>
                   <Row>
                     <Col md={9}>
                       <input
                         type="number"
                         name="discount"
                         className="form-control"
+                        disabled={!discountCondition || loadingProduct}
                         onKeyUp={onChangeDiscount}
-                        placeholder="Your Discount"
+                        placeholder="0 %"
                       />
                     </Col>
                     <Col md={3}>
-                      <div class="switch-button">
-                        <label class="switch">
-                          <input type="checkbox" />
-                          <span class="slider round"></span>
+                      <div className="switch-button">
+                        <label className="switch">
+                          <input
+                            type="checkbox"
+                            disabled={loadingProduct}
+                            onChange={onChangeDiscountCondition}
+                            checked={discountCondition}
+                          />
+                          <span className="slider round" />
                         </label>
                       </div>
                     </Col>
@@ -186,6 +197,7 @@ const AddProduct = ({
                   <select
                     className="form-control"
                     value={subcategorySelected}
+                    disabled={loadingProduct}
                     onChange={onChangeSubcategory}>
                     {subcategories.map((subcategory, key) => (
                       <option
@@ -199,6 +211,7 @@ const AddProduct = ({
                   <select
                     className="form-control"
                     value={brandSelected}
+                    disabled={loadingProduct}
                     onChange={onChangeBrand}>
                     {brands.map((brand, key) => (
                       <option key={key} value={brand.product_brand_id}>
@@ -215,11 +228,13 @@ const AddProduct = ({
                   <div style={styles.divButton}>
                     <button
                       className="btn btn-default"
+                      disabled={loadingProduct}
                       style={styles.btnDefault}>
                       Loading...
                     </button>
                     <button
                       className="btn btn-default"
+                      disabled={loadingProduct}
                       style={styles.btnDefault}>
                       Loading...
                     </button>
