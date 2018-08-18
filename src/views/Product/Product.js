@@ -16,6 +16,12 @@ const tableHead = [
   "Action"
 ]
 
+const tooltipRemove = (
+  <Tooltip id="tooltip">
+    <strong>Remove</strong>
+  </Tooltip>
+)
+
 const tooltipEdit = (
   <Tooltip id="tooltip">
     <strong>Edit</strong>
@@ -79,6 +85,16 @@ const Product = ({ products, onAddProduct }) => (
                             />
                           </button>
                         </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={tooltipRemove}>
+                          <button
+                            className="btn btn-default"
+                            style={styles.btnDefault}>
+                            <i
+                              className="pe-7s-trash"
+                              style={{ color: "#fff" }}
+                            />
+                          </button>
+                        </OverlayTrigger>
                       </td>
                     </tr>
                   ))}
@@ -104,7 +120,12 @@ const styles = {
     background: "#59c1de",
     border: "none",
     marginRight: 10
-  }
+  },
+  btnDefault: {
+    background: "#6d6d6d",
+    border: "none",
+    marginRight: 10
+  },
 }
 
 export default Product
