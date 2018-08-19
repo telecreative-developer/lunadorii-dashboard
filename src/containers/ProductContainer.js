@@ -6,6 +6,7 @@ import withReactContent from "sweetalert2-react-content"
 import { setNavigation } from "../actions/processor"
 import Product from "../views/Product/Product"
 import AddProduct from "../views/Product/AddProduct"
+import ProductDetail from "../views/Product/ProductDetail"
 import {
 	addProduct,
 	fetchProducts,
@@ -29,26 +30,32 @@ class ProductContainer extends React.Component {
 			title,
 			description,
 			detail,
-			how_to_use,
+			to_use,
 			price,
 			discount,
 			discount_percentage,
 			weight_gram,
+			subcategory,
 			product_subcategory_id,
-			product_brand_id
+			brand,
+			product_brand_id,
+			thumbnails
 		} = props.navigationProductData
 
 		this.state = {
 			title,
 			description,
 			detail,
-			how_to_use,
+			to_use,
 			price,
 			discount,
 			discount_percentage,
 			weight_gram,
+			subcategory,
 			product_subcategory_id,
-			product_brand_id
+			brand,
+			product_brand_id,
+			thumbnails
 		}
 
 		if (!props.products.length) {
@@ -140,6 +147,68 @@ class ProductContainer extends React.Component {
 		})
 	}
 
+	onNavigateDetailProduct(data) {
+		const title = data.target.attributes.getNamedItem("data-product-title")
+			.value
+		const detail = data.target.attributes.getNamedItem("data-product-detail")
+			.value
+		const description = data.target.attributes.getNamedItem(
+			"data-product-description"
+		).value
+		const to_use = data.target.attributes.getNamedItem("data-product-howtouse")
+			.value
+		const price = data.target.attributes.getNamedItem("data-product-price")
+			.value
+		const discount = data.target.attributes.getNamedItem(
+			"data-product-discount"
+		).value
+		const discount_percentage = data.target.attributes.getNamedItem(
+			"data-product-discount-percentage"
+		).value
+		const brand = data.target.attributes.getNamedItem("data-product-brand")
+			.value
+		const subcategory = data.target.attributes.getNamedItem(
+			"data-product-subcategory"
+		).value
+		const weight_gram = data.target.attributes.getNamedItem(
+			"data-product-weight"
+		).value
+		const thumbnails = JSON.parse(
+			data.target.attributes.getNamedItem("data-product-thumbnails").value
+		)
+
+		this.setState({
+			title,
+			detail,
+			description,
+			to_use,
+			price,
+			discount,
+			discount_percentage,
+			weight_gram,
+			brand,
+			subcategory,
+			thumbnails
+		})
+
+		this.props.setNavigation({
+			product: "product-detail",
+			product_data: {
+				title,
+				detail,
+				description,
+				to_use,
+				price,
+				discount,
+				discount_percentage,
+				weight_gram,
+				brand,
+				subcategory,
+				thumbnails
+			}
+		})
+	}
+
 	onNavigateUpdateProduct() {
 		this.props.setNavigation({
 			product: "update-product"
@@ -214,7 +283,21 @@ class ProductContainer extends React.Component {
 			navigationProduct,
 			loading
 		} = this.props
-		const { discount, product_subcategory_id, product_brand_id } = this.state
+		const {
+			title,
+			detail,
+			description,
+			to_use,
+			price,
+			discount,
+			discount_percentage,
+			weight_gram,
+			brand,
+			subcategory,
+			product_subcategory_id,
+			product_brand_id,
+			thumbnails
+		} = this.state
 
 		if (
 			navigationProduct === "add-product" ||
@@ -227,7 +310,7 @@ class ProductContainer extends React.Component {
 						this.setState({ description: e.target.value })
 					}
 					onChangeDetail={e => this.setState({ detail: e.target.value })}
-					onChangeHowToUse={e => this.setState({ how_to_use: e.target.value })}
+					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
 					onChangePrice={e => this.setState({ price: e.target.value })}
 					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
 					onChangeDiscount={e =>
@@ -261,9 +344,26 @@ class ProductContainer extends React.Component {
 			)
 		}
 
+		if (navigationProduct === "product-detail") {
+			return (
+				<ProductDetail
+					title={title}
+					brand={brand}
+					subcategory={subcategory}
+					discount={discount_percentage}
+					price={price}
+					description={description}
+					detail={detail}
+					howToUse={to_use}
+					thumbnails={thumbnails}
+				/>
+			)
+		}
+
 		return (
 			<Product
 				products={products}
+				onShowDetailProduct={this.onNavigateDetailProduct.bind(this)}
 				onAddProduct={this.onNavigateAddProduct.bind(this)}
 				onDeleteProduct={this.handleDeleteProduct.bind(this)}
 				loadingDeleteProduct={

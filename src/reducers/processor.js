@@ -25,12 +25,15 @@ const initialStateNavigation = {
 		description: "",
 		detail: "",
 		price: 0,
-		how_to_use: "",
+		to_use: "",
 		discount: false,
 		discount_percentage: 0,
 		weight_gram: 0,
+		subcategory: "",
 		product_subcategory_id: 1,
-		product_brand_id: 1
+		brand: "",
+		product_brand_id: 1,
+		thumbnails: []
 	},
 	user: "user",
 	user_data: null,

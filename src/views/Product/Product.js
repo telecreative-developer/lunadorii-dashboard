@@ -37,7 +37,8 @@ const Product = ({
   products,
   onAddProduct,
   onDeleteProduct,
-  loadingDeleteProduct
+  loadingDeleteProduct,
+  onShowDetailProduct
 }) => (
   <div className="content">
     <Grid fluid>
@@ -88,11 +89,45 @@ const Product = ({
                       <td>
                         <OverlayTrigger placement="top" overlay={tooltipShow}>
                           <button
+                            data-product-title={product.product}
+                            data-product-brand={product.brands[0].brand}
+                            data-product-subcategory={
+                              product.subcategories[0].subcategory
+                            }
+                            data-product-discount={product.discount}
+                            data-product-discount-percentage={
+                              product.discount_percentage
+                            }
+                            data-product-price={product.price}
+                            data-product-description={product.description}
+                            data-product-detail={product.detail}
+                            data-product-howtouse={product.to_use}
+                            data-product-weight={100}
+                            data-product-thumbnails={JSON.stringify(
+                              product.thumbnails
+                            )}
+                            onClick={onShowDetailProduct}
                             className="btn btn-primary"
                             style={styles.btnShow}>
                             <i
-                              className="btn btn-primary"
-                              class="pe-7s-look"
+                              data-product-title={product.product}
+                              data-product-brand={product.brands[0].brand}
+                              data-product-subcategory={
+                                product.subcategories[0].subcategory
+                              }
+                              data-product-discount={product.discount}
+                              data-product-discount-percentage={
+                                product.discount_percentage
+                              }
+                              data-product-price={product.price}
+                              data-product-description={product.description}
+                              data-product-detail={product.detail}
+                              data-product-howtouse={product.to_use}
+                              data-product-weight={100}
+                              data-product-thumbnails={JSON.stringify(
+                                product.thumbnails
+                              )}
+                              className="pe-7s-look"
                             />
                           </button>
                         </OverlayTrigger>
