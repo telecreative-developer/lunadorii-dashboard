@@ -1,7 +1,7 @@
-import React from "react"
-import { Grid, Row, Col } from "react-bootstrap"
-import { convertToIDR } from "../../lib/conversion"
-import Card from "../../components/Card/Card"
+import React from "react";
+import { Grid, Row, Col } from "react-bootstrap";
+import { convertToIDR } from "../../lib/conversion";
+import Card from "../../components/Card/Card";
 
 const ProductDetail = ({
   title,
@@ -29,16 +29,16 @@ const ProductDetail = ({
                       <Col xs={4}>
                         <img
                           src={thumbnails[0].thumbnail_url}
-                          style={{ width: "100%", maxHeight: 380 }}
+                          style={styles.imgProduct}
                         />
-                        <Row style={{ marginTop: 10 }}>
+                        <Row style={styles.wrapSubImage}>
                           {thumbnails
                             .filter((thumbnail, key) => key !== 0)
                             .map((thumbnail, key) => (
                               <Col xs={3}>
                                 <img
                                   src={thumbnail.thumbnail}
-                                  style={{ width: "100%", maxHeight: 150 }}
+                                  style={styles.imgSubProduct}
                                 />
                               </Col>
                             ))}
@@ -106,7 +106,7 @@ const ProductDetail = ({
       </Row>
     </Grid>
   </div>
-)
+);
 
 const styles = {
   txtPrice: {
@@ -116,7 +116,21 @@ const styles = {
   },
   txtDiscount: {
     color: "#b18209"
+  },
+  wrapImage: {
+    paddingLeft: 40
+  },
+  wrapSubImage: {
+    marginTop: 10
+  },
+  imgProduct: {
+    width: "100%",
+    maxHeight: 380
+  },
+  imgSubProduct: {
+    width: "100%",
+    maxHeight: 100
   }
-}
+};
 
-export default ProductDetail
+export default ProductDetail;
