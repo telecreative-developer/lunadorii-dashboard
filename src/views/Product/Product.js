@@ -77,7 +77,7 @@ const Product = ({
                         />
                       </td>
                       <td>{product.product}</td>
-                      <td>{convertToIDR(product.price)}</td>
+                      <td>{convertToIDR(product.price - (product.price * product.discount) / 100)}</td>
                       <td>{product.discount_percentage}%</td>
                       <td>{product.subcategories[0].subcategory}</td>
                       <td>{product.brands[0].brand}</td>
