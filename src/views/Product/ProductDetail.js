@@ -1,7 +1,13 @@
 import React from "react";
-import { Grid, Row, Col } from "react-bootstrap";
+import { Grid, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { convertToIDR } from "../../lib/conversion";
 import Card from "../../components/Card/Card";
+
+const tooltipClose = (
+  <Tooltip id="tooltip">
+    <strong>Close Product</strong>
+  </Tooltip>
+)
 
 const ProductDetail = ({
   title,
@@ -23,9 +29,15 @@ const ProductDetail = ({
             ctTableResponsive
             content={
               <div style={styles.wrapFullMessage}>
+              <OverlayTrigger placement="top" overlay={tooltipClose}>
+                <button
+                  style={styles.btnCancel}>
+                  <i class="pe-7s-close-circle"></i>
+                </button>
+              </OverlayTrigger>
                 <Row>
                   <Col xs={12}>
-                    <Row>
+                    <Row style={{paddingLeft: 30}}>
                       <Col xs={4}>
                         <img
                           src={thumbnails[0].thumbnail_url}
@@ -112,7 +124,8 @@ const styles = {
   txtPrice: {
     textDecoration: "line-through",
     color: "#999999",
-    fontsize: 12
+    fontsize: 12,
+    marginLeft: 10
   },
   txtDiscount: {
     color: "#b18209"
@@ -130,7 +143,16 @@ const styles = {
   imgSubProduct: {
     width: "100%",
     maxHeight: 100
-  }
+  },
+  btnCancel: {
+    background: "transparent",
+    border: "none",
+    float: "right",
+    marginTop: "-10px",
+    marginRight: 10,
+    fontSize: 25,
+    color: "#000"
+  },
 };
 
 export default ProductDetail;
