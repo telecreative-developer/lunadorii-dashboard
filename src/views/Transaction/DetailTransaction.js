@@ -4,7 +4,6 @@ import Card from "../../components/Card/Card"
 
 const tableHead = [
   "No",
-  "Picture",
   "Product",
   "Price",
   "Qty",
@@ -21,65 +20,74 @@ const DetailTransaction = ({ DetailTransaction }) => (
             ctTableFullWidth
             ctTableResponsive
             content={
-              <Table striped hover>
-                <thead>
-                  <tr>
-                    {tableHead.map((head, key) => <th key={key}>{head}</th>)}
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td className="text-danger" style={{fontSize: 16, fontWeight: 'bold'}}>
-                      Rp 2.200.000
-                    </td>
-                  </tr>
-                </tfoot>
-                <tbody>
+              <div style={styles.wrapBody}>
+                <Row>
+                  <Col md={6}>
+                    <div style={styles.divLeft}>
+                      <p style={styles.txtLabel}>Transaction Code : <span style={styles.span}>LDFEVBRMCDXOQ</span></p>
+                      <p style={styles.txtLabel}>Shipping Method : <span style={styles.span}>JNE</span></p>
+                      <p style={styles.txtLabel}>Status : <span style={styles.spanCheckout}>Checkout</span></p>
+                    </div>
+                  </Col>
+                  <Col md={6}>
+                    <div style={styles.divRight}>
+                      <p style={styles.txtLabel}>Total Price : <span style={styles.span}>LDFEVBRMCDXOQ</span></p>
+                      <p style={styles.txtLabel}>Payment Method : <span style={styles.span}>Bank Transfer</span></p>
+                      <p style={styles.txtLabel}>Payment Expired : <span style={styles.span}>Yesterday at 11:19 AM</span></p>
+                    </div>
+                  </Col>
+                </Row>
+                
+                <Table striped>
+                  <thead>
                     <tr>
-                      <td>1</td>
-                      <td>
-                        <img
-                          alt="product-thumbnail"
-                          src="https://cdn.popbela.com/content-images/post/20171230/hmgoepprod-74f1db24ccce932562be6322ef017396_750x500.jpg"
-                          style={{ width: 100 }}
-                        />
-                      </td>
-                      <td>Rose Lips Vaseline Lip Therapy Mini The Vaseline Petroleum Jell Ori</td>
-                      <td>Rp 100.000</td>
-                      <td>20</td>
-                      <td>Rp 2.000.000</td>
+                      {tableHead.map((head, key) => <th key={key}>{head}</th>)}
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>
-                        <img
-                          alt="product-thumbnail"
-                          src="https://cdn.popbela.com/content-images/post/20171230/hmgoepprod-74f1db24ccce932562be6322ef017396_750x500.jpg"
-                          style={{ width: 100 }}
-                        />
-                      </td>
-                      <td>Rose Lips Vaseline Lip Therapy Mini The Vaseline Petroleum Jell Ori</td>
-                      <td>Rp 100.000</td>
-                      <td>1</td>
-                      <td>Rp 200.000</td>
-                    </tr>
-                </tbody>
-                <thead>
-                    <tr>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th>Total Price</th>
-                    </tr>
-                </thead>
-              </Table>
+                  </thead>
+                  <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Rose Lips Vaseline Lip Therapy Mini The Vaseline Petroleum Jell Ori</td>
+                        <td>Rp 100.000</td>
+                        <td>20</td>
+                        <td>Rp 2.000.000</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>Rose Lips Vaseline Lip Therapy Mini The Vaseline Petroleum Jell Ori</td>
+                        <td>Rp 100.000</td>
+                        <td>1</td>
+                        <td>Rp 200.000</td>
+                      </tr>
+                  </tbody>
+                  <thead>
+                      <tr>
+                        <th className="borderBottom"></th>
+                        <th className="borderBottom"></th>
+                        <th className="borderBottom"></th>
+                        <th>Total Qty: </th>
+                        <th>Total Price</th>
+                      </tr>
+                      <tr>
+                        <th className="border"></th>
+                        <th className="border"></th>
+                        <th className="border"></th>
+                        <th style={styles.th}>21</th>
+                        <th style={styles.th}>Rp. 20.00.000</th>
+                      </tr>
+                  </thead>
+                </Table>
+                <Row>
+                  <Col md={10}/>
+                  <Col md={2}>
+                    <button
+                      className="btn btn-warning"
+                      style={styles.btnCancel}>
+                      Back
+                    </button>
+                  </Col>
+                </Row>
+              </div>
             }
           />
         </Col>
@@ -89,17 +97,35 @@ const DetailTransaction = ({ DetailTransaction }) => (
 )
 
 const styles = {
-  btnAdd:{
-    background: '#3279b8',
-    border: 'none',
-    float: 'right',
-    marginBottom: 10,
-    color: '#fff'
+  wrapBody:{
+    paddingLeft: 15, 
+    paddingRight: 15
   },
-  btnEdit: {
-    width: 90,
-    marginLeft: 5,
-    marginRight: 5
+  btnCancel: {
+    background: "#ffc107",
+    border: "none",
+    color: "#000",
+    float: 'right'
+  },
+  txtLabel:{
+    fontSize: 14
+  },
+  span:{
+    fontWeight: 'bold'
+  },
+  spanCheckout:{
+    color: '#d11e47', 
+    fontWeight: 'bold'
+  },
+  divLeft:{
+    float:'left'
+  },
+  divRight:{
+    float:'Right'
+  },
+  th:{
+    fontSize: 14, 
+    color:'#000'
   }
 }
 

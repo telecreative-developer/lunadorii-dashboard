@@ -569,6 +569,14 @@
   color: '#000';
 }
 
+th.border{
+  border-bottom: none !important;
+  border-top: none !important;
+}
+th.borderBottom{
+  border-bottom: none !important;
+}
+
 
 @import "lbd/variables";
 @import "lbd/mixins";
