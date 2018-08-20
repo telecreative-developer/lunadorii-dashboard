@@ -71,6 +71,28 @@ const Transaction = ({ transactions }) => (
                       <td>{convertToIDR(transaction.delivery_price)}</td>
                       <td>{convertToIDR(transaction.total)}</td>
                       <td>{moment(transaction.created_at).format("LLL")}</td>
+                      <td>
+                        <OverlayTrigger placement="top" overlay={tooltipDetail}>
+                          <button
+                            className="btn btn-primary"
+                            style={styles.btnShow}>
+                            <i
+                              className="pe-7s-look"
+                              style={{ color: "#fff" }}
+                            />
+                          </button>
+                        </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={tooltipRemove}>
+                          <button
+                            className="btn btn-danger"
+                            style={styles.btnDecline}>
+                            <i
+                              className="pe-7s-close-circle"
+                              style={{ color: "#fff" }}
+                            />
+                          </button>
+                        </OverlayTrigger>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -97,6 +119,18 @@ const styles = {
   btnDanger: {
     background: "#da534e",
     border: "none",
+    marginRight: 10
+  },
+  btnShow: {
+    background: "#3279b8",
+    border: "none",
+    color: "#fff",
+    marginRight: 10
+  },
+  btnDecline: {
+    background: "#e47672",
+    border: "none",
+    color: "#fff",
     marginRight: 10
   }
 }

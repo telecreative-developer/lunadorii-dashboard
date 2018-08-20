@@ -37,7 +37,7 @@ class ReportContainer extends React.Component {
 		db.get("session").then(doc => this.props.fetchReports(doc.accessToken))
 	}
 
-	async handleShowMode(data) {
+	async handleShowReportDetail(data) {
 		const attributes = data.target.attributes
 		const report_id = attributes.getNamedItem("data-report-id").value
 		const name = attributes.getNamedItem("data-report-name").value
@@ -76,6 +76,12 @@ class ReportContainer extends React.Component {
 				this.props.readReport(report_id, doc.accessToken)
 			)
 		}
+	}
+
+	handleCloseReportDetail() {
+		this.props.setNavigation({
+			report: "report"
+		})
 	}
 
 	handleSendReply() {
@@ -134,12 +140,16 @@ class ReportContainer extends React.Component {
 					onChangeReplyMessage={e =>
 						this.setState({ replyMessage: e.target.value })
 					}
+					onCloseReport={this.handleCloseReportDetail.bind(this)}
 				/>
 			)
 		}
 
 		return (
-			<Report reports={reports} onShowReport={this.handleShowMode.bind(this)} />
+			<Report
+				reports={reports}
+				onShowReport={this.handleShowReportDetail.bind(this)}
+			/>
 		)
 	}
 }

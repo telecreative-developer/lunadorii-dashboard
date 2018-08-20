@@ -1,13 +1,14 @@
-import React from "react";
-import { Grid, Row, Col } from "react-bootstrap";
-import { convertToIDR } from "../../lib/conversion";
-import Card from "../../components/Card/Card";
+import React from "react"
+import { Grid, Row, Col } from "react-bootstrap"
+import { convertToIDR } from "../../lib/conversion"
+import Card from "../../components/Card/Card"
 
 const ProductDetail = ({
   title,
   brand,
   subcategory,
   discount,
+  weightGram,
   price,
   description,
   detail,
@@ -29,6 +30,7 @@ const ProductDetail = ({
                       <Col xs={4}>
                         <img
                           src={thumbnails[0].thumbnail_url}
+                          alt={thumbnails[0].thumbnail_id}
                           style={styles.imgProduct}
                         />
                         <Row style={styles.wrapSubImage}>
@@ -38,6 +40,7 @@ const ProductDetail = ({
                               <Col xs={3}>
                                 <img
                                   src={thumbnail.thumbnail}
+                                  alt={thumbnail.thumbnail_id}
                                   style={styles.imgSubProduct}
                                 />
                               </Col>
@@ -60,6 +63,13 @@ const ProductDetail = ({
                         <label>Category</label>
                         <p>
                           <small>{subcategory}</small>
+                        </p>
+
+                        <label>Wieght (Gram)</label>
+                        <p style={styles.txtDiscount}>
+                          <b>
+                            <small>{weightGram}</small>
+                          </b>
                         </p>
 
                         <label>Discount</label>
@@ -106,7 +116,7 @@ const ProductDetail = ({
       </Row>
     </Grid>
   </div>
-);
+)
 
 const styles = {
   txtPrice: {
@@ -131,6 +141,6 @@ const styles = {
     width: "100%",
     maxHeight: 100
   }
-};
+}
 
-export default ProductDetail;
+export default ProductDetail

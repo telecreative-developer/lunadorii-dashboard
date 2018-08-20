@@ -351,6 +351,7 @@ class ProductContainer extends React.Component {
 					brand={brand}
 					subcategory={subcategory}
 					discount={discount_percentage}
+					weightGram={weight_gram}
 					price={price}
 					description={description}
 					detail={detail}

@@ -11,7 +11,8 @@ const ReportDetail = ({
   date,
   reply,
   onSendReply,
-  onChangeReplyMessage
+  onChangeReplyMessage,
+  onCloseReport
 }) => (
   <div className="content">
     <Grid fluid>
@@ -61,6 +62,7 @@ const ReportDetail = ({
               </button>
               <button
                 className="btn btn-warning"
+                onClick={onCloseReport}
                 style={styles.btnCancel}>
                 Cancel
               </button>
@@ -84,6 +86,12 @@ const ReportDetail = ({
                       </p>
                     </Col>
                   </Row>
+                  <button
+                    className="btn btn-warning"
+                    onClick={onCloseReport}
+                    style={styles.btnCancel}>
+                    Close
+                  </button>
                 </div>
               }
             />
@@ -102,7 +110,7 @@ const styles = {
     marginTop: 10,
     color: "#fff"
   },
-  btnCancel:{
+  btnCancel: {
     background: "#ffc107",
     border: "none",
     float: "right",
