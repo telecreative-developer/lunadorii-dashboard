@@ -11,7 +11,7 @@ const tableHead = [
   "Discount",
   "Category",
   "Brand",
-  "Reviews",
+  // "Reviews",
   "Action"
 ]
 
@@ -81,11 +81,11 @@ const Product = ({
                       <td>{product.discount_percentage}%</td>
                       <td>{product.subcategories[0].subcategory}</td>
                       <td>{product.brands[0].brand}</td>
-                      <td>
+                      {/* <td>
                         {product.reviews.length
                           ? product.reviews.length
                           : "Not yet"}
-                      </td>
+                      </td> */}
                       <td>
                         <OverlayTrigger placement="top" overlay={tooltipShow}>
                           <button

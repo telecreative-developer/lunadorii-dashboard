@@ -6,6 +6,7 @@ import withReactContent from "sweetalert2-react-content"
 import { setNavigation } from "../actions/processor"
 import Product from "../views/Product/Product"
 import AddProduct from "../views/Product/AddProduct"
+import EditProduct from "../views/Product/EditProduct"
 import ProductDetail from "../views/Product/ProductDetail"
 import {
 	addProduct,
@@ -300,11 +301,54 @@ class ProductContainer extends React.Component {
 		} = this.state
 
 		if (
-			navigationProduct === "add-product" ||
-			navigationProduct === "update-product"
+			navigationProduct === "add-product"
 		) {
 			return (
 				<AddProduct
+					onChangeTitle={e => this.setState({ title: e.target.value })}
+					onChangeDescription={e =>
+						this.setState({ description: e.target.value })
+					}
+					onChangeDetail={e => this.setState({ detail: e.target.value })}
+					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
+					onChangePrice={e => this.setState({ price: e.target.value })}
+					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
+					onChangeDiscount={e =>
+						this.setState({ discount_percentage: e.target.value })
+					}
+					discountCondition={discount}
+					onChangeDiscountCondition={e =>
+						this.setState({
+							discount: !this.state.discount,
+							discount_percentage: 1
+						})
+					}
+					subcategories={subcategories}
+					subcategorySelected={product_subcategory_id}
+					onChangeSubcategory={e =>
+						this.setState({ product_subcategory_id: e.target.value })
+					}
+					brands={brands}
+					brandSelected={product_brand_id}
+					onChangeBrand={e =>
+						this.setState({ product_brand_id: e.target.value })
+					}
+					thumbnails={productThumbnails}
+					onChangeThumbnail={thumbnail => this.handleAddThumbnail(thumbnail)}
+					handleAddProduct={() => this.handleAddProduct()}
+					loadingProduct={
+						(loading.status && loading.process_on === "ADD_PRODUCT") ||
+						(loading.status && loading.process_on === "UPDATE_PRODUCT")
+					}
+				/>
+			)
+		}
+
+		if (
+			navigationProduct === "update-product"
+		) {
+			return (
+				<EditProduct
 					onChangeTitle={e => this.setState({ title: e.target.value })}
 					onChangeDescription={e =>
 						this.setState({ description: e.target.value })

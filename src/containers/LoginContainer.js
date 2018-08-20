@@ -67,7 +67,14 @@ class LoginContainer extends React.Component {
 		const { username, password, loading } = this.state
 
 		if (loading) {
-			return <h1>loading</h1>
+			return(
+				<div className="loading">
+					<div className="loading center">
+						<div className="loading-bar">
+						</div>
+					</div>
+				</div>
+			)
 		}
 
 		return (
