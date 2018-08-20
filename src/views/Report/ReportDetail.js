@@ -89,7 +89,7 @@ const ReportDetail = ({
                   <button
                     className="btn btn-warning"
                     onClick={onCloseReport}
-                    style={styles.btnCancel}>
+                    style={styles.btnClose}>
                     Close
                   </button>
                 </div>
@@ -116,6 +116,13 @@ const styles = {
     float: "right",
     marginTop: 10,
     marginRight: 10,
+    color: "#000"
+  },
+  btnClose: {
+    background: "#ffc107",
+    border: "none",
+    float: "right",
+    marginTop: 20,
     color: "#000"
   },
   iconSend: {
