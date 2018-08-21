@@ -60,7 +60,8 @@
 .dropzone {
   width: 100px !important;
   height: 100px !important;
-  display: inline-block; }
+  display: inline-block;
+  border: 2px dashed #1f1f1f; }
 
 .img-dropzone {
   vertical-align: top !important;
