@@ -383,6 +383,7 @@ class ProductContainer extends React.Component {
 			navigationProduct,
 			loading
 		} = this.props
+
 		const {
 			title,
 			detail,
@@ -417,7 +418,7 @@ class ProductContainer extends React.Component {
 					onChangeDiscountCondition={e =>
 						this.setState({
 							discount: !this.state.discount,
-							discount_percentage: 1
+							discount_percentage: !this.state.discount ? 1 : 0
 						})
 					}
 					subcategories={subcategories}
@@ -466,20 +467,18 @@ class ProductContainer extends React.Component {
 					onChangeDiscountCondition={e =>
 						this.setState({
 							discount: !this.state.discount,
-							discount_percentage: 1
+							discount_percentage: !this.state.discount ? 1 : 0
 						})
 					}
 					subcategories={subcategories}
-					subcategorySelected={product_subcategory_id}
 					onChangeSubcategory={e =>
 						this.setState({ product_subcategory_id: e.target.value })
 					}
 					brands={brands}
-					brandSelected={product_brand_id}
 					onChangeBrand={e =>
 						this.setState({ product_brand_id: e.target.value })
 					}
-					thumbnails={productThumbnails}
+					thumbnails={thumbnails}
 					onChangeThumbnail={thumbnail => this.handleAddThumbnail(thumbnail)}
 					handleUpdateProduct={() => this.handleUpdateProduct()}
 					loadingProduct={

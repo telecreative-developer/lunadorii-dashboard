@@ -160,13 +160,13 @@ const mapStateToProps = state => ({
 	navigationReportData: state.navigation.report_data
 })
 
-const mapDispatchToProps = dispacth => ({
-	setNavigation: navigation => dispacth(setNavigation(navigation)),
-	fetchReports: accessToken => dispacth(fetchReports(accessToken)),
+const mapDispatchToProps = dispatch => ({
+	setNavigation: navigation => dispatch(setNavigation(navigation)),
+	fetchReports: accessToken => dispatch(fetchReports(accessToken)),
 	sendReportReply: (data, accessToken) =>
-		dispacth(sendReportReply(data, accessToken)),
+		dispatch(sendReportReply(data, accessToken)),
 	readReport: (admin_id, accessToken) =>
-		dispacth(readReport(admin_id, accessToken))
+		dispatch(readReport(admin_id, accessToken))
 })
 
 export default connect(

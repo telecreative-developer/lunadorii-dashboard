@@ -104,7 +104,7 @@ export const addProduct = (data, accessToken) => {
 					to_use: data.to_use,
 					price: data.price,
 					discount: data.discount,
-					discount_percentage: data.discount_percentage,
+					discount_percentage: data.discount ? data.discount_percentage : 0,
 					product_subcategory_id: data.product_subcategory_id,
 					product_brand_id: data.product_brand_id,
 					weight_gram: data.weight_gram

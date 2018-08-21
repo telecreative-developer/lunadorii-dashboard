@@ -186,8 +186,10 @@ const EditProduct = ({
                         type="number"
                         name="discount"
                         className="form-control"
-                        disabled={!discountCondition || loadingProduct}
-                        value={discount}
+                        disabled={
+                          !JSON.parse(discountCondition) || loadingProduct
+                        }
+                        value={JSON.parse(discountCondition) ? discount : 0}
                         onChange={onChangeDiscount}
                         placeholder="0 %"
                       />
@@ -199,7 +201,7 @@ const EditProduct = ({
                             type="checkbox"
                             disabled={loadingProduct}
                             onChange={onChangeDiscountCondition}
-                            checked={discountCondition}
+                            checked={JSON.parse(discountCondition)}
                           />
                           <span className="slider round" />
                         </label>
@@ -264,7 +266,7 @@ const EditProduct = ({
                       className="btn btn-primary"
                       onClick={handleUpdateProduct}
                       style={styles.btnSave}>
-                      Save
+                      Update
                     </button>
                   </div>
                 )}

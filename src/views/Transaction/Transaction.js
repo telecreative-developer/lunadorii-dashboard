@@ -35,7 +35,7 @@ const tooltipDetail = (
   </Tooltip>
 )
 
-const Transaction = ({ transactions }) => (
+const Transaction = ({ transactions, onNavigateTransactionDetail }) => (
   <div className="content">
     <Grid fluid>
       <Row>
@@ -75,19 +75,12 @@ const Transaction = ({ transactions }) => (
                         <OverlayTrigger placement="top" overlay={tooltipDetail}>
                           <button
                             className="btn btn-primary"
+                            data-order-id={transaction.order_id}
+                            onClick={onNavigateTransactionDetail}
                             style={styles.btnShow}>
                             <i
                               className="pe-7s-look"
-                              style={{ color: "#fff" }}
-                            />
-                          </button>
-                        </OverlayTrigger>
-                        <OverlayTrigger placement="top" overlay={tooltipRemove}>
-                          <button
-                            className="btn btn-danger"
-                            style={styles.btnDecline}>
-                            <i
-                              className="pe-7s-close-circle"
+                              data-order-id={transaction.order_id}
                               style={{ color: "#fff" }}
                             />
                           </button>

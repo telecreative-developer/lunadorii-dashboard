@@ -71,7 +71,6 @@ const Report = ({ reports, onShowReport }) => (
                             onClick={onShowReport}
                             style={styles.btnShow}>
                             <i
-                              className="btn btn-primary"
                               data-report-id={report.report_id}
                               data-report-name={report.name}
                               data-report-email={report.email}
@@ -81,7 +80,7 @@ const Report = ({ reports, onShowReport }) => (
                               data-report-date={report.created_at}
                               data-report-reply={JSON.stringify(report.reply)}
                               onClick={onShowReport}
-                              class="pe-7s-look"
+                              className="pe-7s-look"
                             />
                           </button>
                         </OverlayTrigger>
