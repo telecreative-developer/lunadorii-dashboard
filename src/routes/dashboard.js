@@ -4,7 +4,7 @@ import ReportContainer from "../containers/ReportContainer"
 import Icons from "../views/Icons/Icons"
 import BannerContainer from "../containers/BannerContainer"
 import ProductContainer from "../containers/ProductContainer"
-import TransactionContainer from "../containers/TransactionContainer"
+import TransactionContainer from "../views/Transaction/DetailTransaction"
 
 const dashboardRoutes = [
   {
