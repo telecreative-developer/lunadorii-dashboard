@@ -14,7 +14,8 @@ import {
 	fetchSubcategories,
 	fetchBrands,
 	addProductThumbnail,
-	deleteProduct
+	deleteProduct,
+	updateProduct
 } from "../actions/product"
 const db = new PouchDB("lunadorii")
 const ReactSwal = withReactContent(Swal)
@@ -28,6 +29,7 @@ class ProductContainer extends React.Component {
 		super(props)
 
 		const {
+			product_id,
 			title,
 			description,
 			detail,
@@ -44,6 +46,7 @@ class ProductContainer extends React.Component {
 		} = props.navigationProductData
 
 		this.state = {
+			product_id,
 			title,
 			description,
 			detail,
@@ -210,9 +213,70 @@ class ProductContainer extends React.Component {
 		})
 	}
 
-	onNavigateUpdateProduct() {
+	onNavigateUpdateProduct(data) {
+		const product_id = data.target.attributes.getNamedItem("data-product-id")
+			.value
+		const title = data.target.attributes.getNamedItem("data-product-title")
+			.value
+		const detail = data.target.attributes.getNamedItem("data-product-detail")
+			.value
+		const description = data.target.attributes.getNamedItem(
+			"data-product-description"
+		).value
+		const to_use = data.target.attributes.getNamedItem("data-product-howtouse")
+			.value
+		const price = data.target.attributes.getNamedItem("data-product-price")
+			.value
+		const discount = data.target.attributes.getNamedItem(
+			"data-product-discount"
+		).value
+		const discount_percentage = data.target.attributes.getNamedItem(
+			"data-product-discount-percentage"
+		).value
+		const product_brand_id = data.target.attributes.getNamedItem(
+			"data-product-brand-id"
+		).value
+		const product_subcategory_id = data.target.attributes.getNamedItem(
+			"data-product-subcategory-id"
+		).value
+		const weight_gram = data.target.attributes.getNamedItem(
+			"data-product-weight"
+		).value
+		const thumbnails = JSON.parse(
+			data.target.attributes.getNamedItem("data-product-thumbnails").value
+		)
+
+		this.setState({
+			product_id,
+			title,
+			detail,
+			description,
+			to_use,
+			price,
+			discount,
+			discount_percentage,
+			weight_gram,
+			product_brand_id,
+			product_subcategory_id,
+			thumbnails
+		})
+
 		this.props.setNavigation({
-			product: "update-product"
+			product: "update-product",
+			product_data: {
+				product_id,
+				title,
+				detail,
+				description,
+				to_use,
+				price,
+				discount,
+				discount_percentage,
+				weight_gram,
+				product_brand_id,
+				product_subcategory_id,
+				thumbnails
+			}
 		})
 	}
 
@@ -250,6 +314,41 @@ class ProductContainer extends React.Component {
 					product_subcategory_id,
 					product_brand_id,
 					thumbnails: productThumbnails
+				},
+				doc.accessToken
+			)
+		})
+	}
+
+	handleUpdateProduct() {
+		const {
+			product_id,
+			title,
+			description,
+			detail,
+			to_use,
+			price,
+			discount,
+			weight_gram,
+			discount_percentage,
+			product_subcategory_id,
+			product_brand_id
+		} = this.state
+
+		db.get("session").then(doc => {
+			this.props.updateProduct(
+				{
+					product_id,
+					title,
+					description,
+					detail,
+					to_use,
+					price,
+					discount,
+					weight_gram,
+					discount_percentage,
+					product_subcategory_id,
+					product_brand_id
 				},
 				doc.accessToken
 			)
@@ -300,9 +399,7 @@ class ProductContainer extends React.Component {
 			thumbnails
 		} = this.state
 
-		if (
-			navigationProduct === "add-product"
-		) {
+		if (navigationProduct === "add-product") {
 			return (
 				<AddProduct
 					onChangeTitle={e => this.setState({ title: e.target.value })}
@@ -344,19 +441,24 @@ class ProductContainer extends React.Component {
 			)
 		}
 
-		if (
-			navigationProduct === "update-product"
-		) {
+		if (navigationProduct === "update-product") {
 			return (
 				<EditProduct
+					title={title}
 					onChangeTitle={e => this.setState({ title: e.target.value })}
+					description={description}
 					onChangeDescription={e =>
 						this.setState({ description: e.target.value })
 					}
+					detail={detail}
 					onChangeDetail={e => this.setState({ detail: e.target.value })}
+					toUse={to_use}
 					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
+					price={price}
 					onChangePrice={e => this.setState({ price: e.target.value })}
+					weight={weight_gram}
 					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
+					discount={discount_percentage}
 					onChangeDiscount={e =>
 						this.setState({ discount_percentage: e.target.value })
 					}
@@ -379,11 +481,13 @@ class ProductContainer extends React.Component {
 					}
 					thumbnails={productThumbnails}
 					onChangeThumbnail={thumbnail => this.handleAddThumbnail(thumbnail)}
-					handleAddProduct={() => this.handleAddProduct()}
+					handleUpdateProduct={() => this.handleUpdateProduct()}
 					loadingProduct={
 						(loading.status && loading.process_on === "ADD_PRODUCT") ||
 						(loading.status && loading.process_on === "UPDATE_PRODUCT")
 					}
+					brandSelected={product_brand_id}
+					subcategorySelected={product_subcategory_id}
 				/>
 			)
 		}
@@ -409,6 +513,7 @@ class ProductContainer extends React.Component {
 			<Product
 				products={products}
 				onShowDetailProduct={this.onNavigateDetailProduct.bind(this)}
+				onUpdateProduct={this.onNavigateUpdateProduct.bind(this)}
 				onAddProduct={this.onNavigateAddProduct.bind(this)}
 				onDeleteProduct={this.handleDeleteProduct.bind(this)}
 				loadingDeleteProduct={
@@ -434,6 +539,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispacth => ({
 	setNavigation: navigation => dispacth(setNavigation(navigation)),
 	addProductThumbnail: thumbnail => dispacth(addProductThumbnail(thumbnail)),
+	updateProduct: (data, accessToken) =>
+		dispacth(updateProduct(data, accessToken)),
 	addProduct: (data, accessToken) => dispacth(addProduct(data, accessToken)),
 	deleteProduct: (product_id, accessToken) =>
 		dispacth(deleteProduct(product_id, accessToken)),

@@ -35,6 +35,7 @@ const tooltipEdit = (
 
 const Product = ({
   products,
+  onUpdateProduct,
   onAddProduct,
   onDeleteProduct,
   loadingDeleteProduct,
@@ -77,7 +78,12 @@ const Product = ({
                         />
                       </td>
                       <td>{product.product}</td>
-                      <td>{convertToIDR(product.price - (product.price * product.discount) / 100)}</td>
+                      <td>
+                        {convertToIDR(
+                          product.price -
+                            (product.price * product.discount) / 100
+                        )}
+                      </td>
                       <td>{product.discount_percentage}%</td>
                       <td>{product.subcategories[0].subcategory}</td>
                       <td>{product.brands[0].brand}</td>
@@ -133,9 +139,58 @@ const Product = ({
                         </OverlayTrigger>
                         <OverlayTrigger placement="top" overlay={tooltipEdit}>
                           <button
+                            data-product-id={product.product_id}
+                            data-product-title={product.product}
+                            data-product-brand-id={
+                              product.brands[0].product_brand_id
+                            }
+                            data-product-brand={product.brands[0].brand}
+                            data-product-subcategory-id={
+                              product.subcategories[0].product_subcategory_id
+                            }
+                            data-product-subcategory={
+                              product.subcategories[0].subcategory
+                            }
+                            data-product-discount={product.discount}
+                            data-product-discount-percentage={
+                              product.discount_percentage
+                            }
+                            data-product-price={product.price}
+                            data-product-description={product.description}
+                            data-product-detail={product.detail}
+                            data-product-howtouse={product.to_use}
+                            data-product-weight={100}
+                            data-product-thumbnails={JSON.stringify(
+                              product.thumbnails
+                            )}
+                            onClick={onUpdateProduct}
                             className="btn btn-info"
                             style={styles.btnEdit}>
                             <i
+                              data-product-id={product.product_id}
+                              data-product-title={product.product}
+                              data-product-brand-id={
+                                product.brands[0].product_brand_id
+                              }
+                              data-product-brand={product.brands[0].brand}
+                              data-product-subcategory-id={
+                                product.subcategories[0].product_subcategory_id
+                              }
+                              data-product-subcategory={
+                                product.subcategories[0].subcategory
+                              }
+                              data-product-discount={product.discount}
+                              data-product-discount-percentage={
+                                product.discount_percentage
+                              }
+                              data-product-price={product.price}
+                              data-product-description={product.description}
+                              data-product-detail={product.detail}
+                              data-product-howtouse={product.to_use}
+                              data-product-weight={100}
+                              data-product-thumbnails={JSON.stringify(
+                                product.thumbnails
+                              )}
                               className="pe-7s-eyedropper"
                               style={{ color: "#fff" }}
                             />

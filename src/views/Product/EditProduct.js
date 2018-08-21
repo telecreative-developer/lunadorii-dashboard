@@ -10,18 +10,25 @@ const EditProduct = ({
   brands,
   brandSelected,
   onChangeBrand,
+  title,
   onChangeTitle,
   onChangeDescription,
+  description,
   onChangeDetail,
+  detail,
   onChangeHowToUse,
+  toUse,
   onChangePrice,
+  price,
   onChangeWeight,
+  weight,
   onChangeDiscount,
+  discount,
   thumbnails,
   onChangeThumbnail,
   onChangeDiscountCondition,
   discountCondition,
-  handleAddProduct,
+  handleUpdateProduct,
   loadingProduct
 }) => (
   <div className="contentAdd">
@@ -112,7 +119,8 @@ const EditProduct = ({
                     type="text"
                     name="title"
                     className="form-control"
-                    onKeyUp={onChangeTitle}
+                    value={title}
+                    onChange={onChangeTitle}
                     disabled={loadingProduct}
                     placeholder="Title"
                   />
@@ -121,7 +129,8 @@ const EditProduct = ({
                     className="form-control"
                     rows="5"
                     maxLength="255"
-                    onKeyUp={onChangeDescription}
+                    value={description}
+                    onChange={onChangeDescription}
                     disabled={loadingProduct}
                     placeholder="Description"
                   />
@@ -131,7 +140,8 @@ const EditProduct = ({
                     className="form-control"
                     rows="5"
                     maxLength="255"
-                    onKeyUp={onChangeDetail}
+                    value={detail}
+                    onChange={onChangeDetail}
                     disabled={loadingProduct}
                     placeholder="Detail"
                   />
@@ -141,7 +151,8 @@ const EditProduct = ({
                     className="form-control"
                     rows="5"
                     maxLength="255"
-                    onKeyUp={onChangeHowToUse}
+                    value={toUse}
+                    onChange={onChangeHowToUse}
                     disabled={loadingProduct}
                     placeholder="How to use"
                   />
@@ -151,7 +162,8 @@ const EditProduct = ({
                     type="number"
                     name="price"
                     className="form-control"
-                    onKeyUp={onChangePrice}
+                    value={price}
+                    onChange={onChangePrice}
                     disabled={loadingProduct}
                     placeholder="Price"
                   />
@@ -161,7 +173,8 @@ const EditProduct = ({
                     type="number"
                     name="weight"
                     className="form-control"
-                    onKeyUp={onChangeWeight}
+                    value={weight}
+                    onChange={onChangeWeight}
                     disabled={loadingProduct}
                     placeholder="Weight"
                   />
@@ -174,7 +187,8 @@ const EditProduct = ({
                         name="discount"
                         className="form-control"
                         disabled={!discountCondition || loadingProduct}
-                        onKeyUp={onChangeDiscount}
+                        value={discount}
+                        onChange={onChangeDiscount}
                         placeholder="0 %"
                       />
                     </Col>
@@ -248,7 +262,7 @@ const EditProduct = ({
                     </button>
                     <button
                       className="btn btn-primary"
-                      onClick={handleAddProduct}
+                      onClick={handleUpdateProduct}
                       style={styles.btnSave}>
                       Save
                     </button>

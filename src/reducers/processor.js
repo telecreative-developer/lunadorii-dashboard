@@ -19,7 +19,7 @@ const initialStateNavigation = {
 		category: "general",
 		type: "web"
 	},
-	product: "update-product",
+	product: "product",
 	product_data: {
 		title: "",
 		description: "",

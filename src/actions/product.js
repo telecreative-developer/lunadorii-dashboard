@@ -127,6 +127,37 @@ export const addProduct = (data, accessToken) => {
 	}
 }
 
+export const updateProduct = (data, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "UPDATE_PRODUCT" }))
+		return reduxFetch
+			.put({
+				url: server + `/product/${data.product_id}`,
+				accessToken: accessToken,
+				body: {
+					product: data.title,
+					description: data.description,
+					detail: data.detail,
+					to_use: data.to_use,
+					price: data.price,
+					discount: data.discount,
+					discount_percentage: data.discount_percentage,
+					product_subcategory_id: data.product_subcategory_id,
+					product_brand_id: data.product_brand_id,
+					weight_gram: data.weight_gram
+				}
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(setFailedAndBackToDefault(res.message, "UPDATE_PRODUCT"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "UPDATE_PRODUCT"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "UPDATE_PRODUCT")))
+	}
+}
+
 export const deleteProduct = (product_id, accessToken) => {
 	return dispatch => {
 		dispatch(setLoading({ status: true, process_on: "DELETE_PRODUCT" }))
