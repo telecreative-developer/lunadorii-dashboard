@@ -79,13 +79,55 @@ const uploadImageProductToS3 = (product_id, thumbnails, accessToken) => {
 }
 
 let keyProductThumbnail = 0
-export const addProductThumbnail = thumbnail => {
+export const addProductThumbnail = ({ thumbnail_url, thumbnail_origin }) => {
 	return {
 		type: "ADD_PRODUCT_THUMBNAIL",
 		payload: {
 			key: keyProductThumbnail++,
-			thumbnail_url: URL.createObjectURL(thumbnail),
-			thumbnail_origin: thumbnail
+			thumbnail_url,
+			thumbnail_origin
+		}
+	}
+}
+
+export const setProductThumbnail = ({
+	product_thumbnail_id,
+	thumbnail_url,
+	thumbnail_origin
+}) => {
+	return {
+		type: "SET_PRODUCT_THUMBNAIL",
+		payload: [
+			{
+				key: keyProductThumbnail++,
+				product_thumbnail_id,
+				thumbnail_url,
+				thumbnail_origin
+			}
+		]
+	}
+}
+
+let keyProductThumbnailWhenUpdate = 0
+export const addProductThumbnailWhenUpdate = ({
+	thumbnail_url,
+	thumbnail_origin
+}) => {
+	return {
+		type: "ADD_PRODUCT_THUMBNAIL_WHEN_UPDATE",
+		payload: {
+			key: keyProductThumbnailWhenUpdate++,
+			thumbnail_url,
+			thumbnail_origin
+		}
+	}
+}
+
+export const removeProductThumbnailWhenUpdate = ({ product_thumbnail_id }) => {
+	return {
+		type: "REMOVE_PRODUCT_THUMBNAIL_WHEN_UPDATE",
+		payload: {
+			product_thumbnail_id
 		}
 	}
 }
@@ -104,7 +146,7 @@ export const addProduct = (data, accessToken) => {
 					to_use: data.to_use,
 					price: data.price,
 					discount: data.discount,
-					discount_percentage: data.discount ? data.discount_percentage : 0,
+					discount_percentage: data.discount_percentage,
 					product_subcategory_id: data.product_subcategory_id,
 					product_brand_id: data.product_brand_id,
 					weight_gram: data.weight_gram
@@ -151,7 +193,13 @@ export const updateProduct = (data, accessToken) => {
 				if (res.status !== 201) {
 					dispatch(setFailedAndBackToDefault(res.message, "UPDATE_PRODUCT"))
 				} else {
-					dispatch(setSuccessAndBackToDefault(res.message, "UPDATE_PRODUCT"))
+					dispatch(
+						uploadImageProductToS3(
+							parseInt(res.data.product_id, 10),
+							data.thumbnails,
+							accessToken
+						)
+					)
 				}
 			})
 			.catch(err => dispatch(setFailedAndBackToDefault(err, "UPDATE_PRODUCT")))

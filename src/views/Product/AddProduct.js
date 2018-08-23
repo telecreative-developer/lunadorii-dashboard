@@ -16,6 +16,7 @@ const AddProduct = ({
   onChangeHowToUse,
   onChangePrice,
   onChangeWeight,
+  discount,
   onChangeDiscount,
   thumbnails,
   onChangeThumbnail,
@@ -173,8 +174,11 @@ const AddProduct = ({
                         type="number"
                         name="discount"
                         className="form-control"
-                        disabled={!discountCondition || loadingProduct}
-                        onKeyUp={onChangeDiscount}
+                        disabled={
+                          !JSON.parse(discountCondition) || loadingProduct
+                        }
+                        value={JSON.parse(discountCondition) ? discount : 0}
+                        onChange={onChangeDiscount}
                         placeholder="0 %"
                       />
                     </Col>
@@ -185,7 +189,7 @@ const AddProduct = ({
                             type="checkbox"
                             disabled={loadingProduct}
                             onChange={onChangeDiscountCondition}
-                            checked={discountCondition}
+                            checked={JSON.parse(discountCondition)}
                           />
                           <span className="slider round" />
                         </label>

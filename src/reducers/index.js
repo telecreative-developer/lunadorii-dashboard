@@ -4,7 +4,14 @@ import { reports } from "./reports"
 import { users } from "./users"
 import { banners } from "./banners"
 import { dashboardInfo } from "./dashboard"
-import { products, subcategories, brands, productThumbnails } from "./product"
+import {
+	products,
+	subcategories,
+	brands,
+	productThumbnails,
+	productThumbnailsWillAdd,
+	productThumbnailsWillRemove
+} from "./product"
 import { transactions, transaction } from "./transaction"
 
 const rootReducers = combineReducers({
@@ -21,7 +28,9 @@ const rootReducers = combineReducers({
 	subcategories,
 	brands,
 	transactions,
-	transaction
+	transaction,
+	productThumbnailsWillAdd,
+	productThumbnailsWillRemove
 })
 
 export default rootReducers

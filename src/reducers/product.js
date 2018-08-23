@@ -13,6 +13,26 @@ export const productThumbnails = (state = [], action) => {
 	switch (action.type) {
 		case "ADD_PRODUCT_THUMBNAIL":
 			return state.concat(action.payload)
+		case "SET_PRODUCT_THUMBNAIL":
+			return action.payload
+		default:
+			return state
+	}
+}
+
+export const productThumbnailsWillAdd = (state = [], action) => {
+	switch (action.type) {
+		case "ADD_PRODUCT_THUMBNAIL_WHEN_UPDATE":
+			return state.concat(action.payload)
+		default:
+			return state
+	}
+}
+
+export const productThumbnailsWillRemove = (state = [], action) => {
+	switch (action.type) {
+		case "REMOVE_PRODUCT_THUMBNAIL_WHEN_UPDATE":
+			return state.concat(action.payload)
 		default:
 			return state
 	}

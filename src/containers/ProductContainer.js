@@ -15,7 +15,10 @@ import {
 	fetchBrands,
 	addProductThumbnail,
 	deleteProduct,
-	updateProduct
+	updateProduct,
+	setProductThumbnail,
+	addProductThumbnailWhenUpdate,
+	removeProductThumbnailWhenUpdate
 } from "../actions/product"
 const db = new PouchDB("lunadorii")
 const ReactSwal = withReactContent(Swal)
@@ -278,10 +281,45 @@ class ProductContainer extends React.Component {
 				thumbnails
 			}
 		})
+
+		thumbnails.map((thumbnail, key) =>
+			this.handleSetThumbnail({
+				product_thumbnail_id: thumbnail.product_thumbnail_id,
+				thumbnail_url: thumbnail.thumbnail_url
+			})
+		)
 	}
 
 	handleAddThumbnail(thumbnail) {
-		this.props.addProductThumbnail(thumbnail[0])
+		this.props.addProductThumbnail({
+			thumbnail_url: URL.createObjectURL(thumbnail[0]),
+			thumbnail_origin: thumbnail[0]
+		})
+
+		if (this.props.navigationProduct === "update-product") {
+			this.handleAddThumbnailWhenUpdate(thumbnail)
+		}
+	}
+
+	handleSetThumbnail(thumbnail) {
+		this.props.setProductThumbnail({
+			product_thumbnail_id: thumbnail.product_thumbnail_id,
+			thumbnail_url: thumbnail.thumbnail_url,
+			thumbnail_origin: thumbnail.thumbnail_url
+		})
+	}
+
+	handleAddThumbnailWhenUpdate(thumbnail) {
+		this.props.addProductThumbnailWhenUpdate({
+			thumbnail_url: URL.createObjectURL(thumbnail[0]),
+			thumbnail_origin: thumbnail[0]
+		})
+	}
+
+	handleRemoveThumbnailWhenUpdate(product_thumbnail_id) {
+		this.props.removeProductThumbnailWhenUpdate({
+			product_thumbnail_id
+		})
 	}
 
 	handleAddProduct() {
@@ -332,26 +370,29 @@ class ProductContainer extends React.Component {
 			weight_gram,
 			discount_percentage,
 			product_subcategory_id,
-			product_brand_id
+			product_brand_id,
+			thumbnails
 		} = this.state
 
 		db.get("session").then(doc => {
-			this.props.updateProduct(
-				{
-					product_id,
-					title,
-					description,
-					detail,
-					to_use,
-					price,
-					discount,
-					weight_gram,
-					discount_percentage,
-					product_subcategory_id,
-					product_brand_id
-				},
-				doc.accessToken
-			)
+			this.props
+				.updateProduct(
+					{
+						product_id,
+						title,
+						description,
+						detail,
+						to_use,
+						price,
+						discount,
+						weight_gram,
+						discount_percentage,
+						product_subcategory_id,
+						product_brand_id
+					},
+					doc.accessToken
+				)
+				.then(() => this.props.addProductThumbnail(thumbnails))
 		})
 	}
 
@@ -411,6 +452,7 @@ class ProductContainer extends React.Component {
 					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
 					onChangePrice={e => this.setState({ price: e.target.value })}
 					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
+					discount={discount_percentage}
 					onChangeDiscount={e =>
 						this.setState({ discount_percentage: e.target.value })
 					}
@@ -478,7 +520,7 @@ class ProductContainer extends React.Component {
 					onChangeBrand={e =>
 						this.setState({ product_brand_id: e.target.value })
 					}
-					thumbnails={thumbnails}
+					thumbnails={productThumbnails}
 					onChangeThumbnail={thumbnail => this.handleAddThumbnail(thumbnail)}
 					handleUpdateProduct={() => this.handleUpdateProduct()}
 					loadingProduct={
@@ -538,11 +580,16 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispacth => ({
 	setNavigation: navigation => dispacth(setNavigation(navigation)),
 	addProductThumbnail: thumbnail => dispacth(addProductThumbnail(thumbnail)),
+	setProductThumbnail: thumbnail => dispacth(setProductThumbnail(thumbnail)),
 	updateProduct: (data, accessToken) =>
 		dispacth(updateProduct(data, accessToken)),
 	addProduct: (data, accessToken) => dispacth(addProduct(data, accessToken)),
 	deleteProduct: (product_id, accessToken) =>
 		dispacth(deleteProduct(product_id, accessToken)),
+	addProductThumbnailWhenUpdate: thumbnail =>
+		dispacth(addProductThumbnailWhenUpdate(thumbnail)),
+	removeProductThumbnailWhenUpdate: thumbnail_id =>
+		dispacth(removeProductThumbnailWhenUpdate(thumbnail_id)),
 	fetchProducts: accessToken => dispacth(fetchProducts(accessToken)),
 	fetchSubcategories: () => dispacth(fetchSubcategories()),
 	fetchBrands: () => dispacth(fetchBrands())
