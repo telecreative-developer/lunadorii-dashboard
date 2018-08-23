@@ -14,7 +14,9 @@ export const productThumbnails = (state = [], action) => {
 		case "ADD_PRODUCT_THUMBNAIL":
 			return state.concat(action.payload)
 		case "SET_PRODUCT_THUMBNAIL":
-			return action.payload
+			return state.concat(action.payload)
+		case "REMOVE_PRODUCT_THUMBNAIL":
+			return state.filter(d => d.key !== action.key)
 		default:
 			return state
 	}

@@ -29,7 +29,8 @@ const EditProduct = ({
   onChangeDiscountCondition,
   discountCondition,
   handleUpdateProduct,
-  loadingProduct
+  loadingProduct,
+  onRemoveThumbnail
 }) => (
   <div className="contentAdd">
     <Col xs={12}>
@@ -53,7 +54,14 @@ const EditProduct = ({
                           />
                           <div className="overlay">
                             <center>
-                              <p>Remove</p>
+                              <button
+                                data-thumbnail-id={
+                                  thumbnails[0].product_thumbnail_id
+                                }
+                                data-thumbnail-key={thumbnails[0].key}
+                                onClick={onRemoveThumbnail}>
+                                Remove
+                              </button>
                             </center>
                           </div>
                         </div>
@@ -77,21 +85,28 @@ const EditProduct = ({
                     <Row>
                       <Col xs={12}>
                         <div className="groupRight" style={styles.groupRight}>
-                          {thumbnails.length > 1 &&
+                          {thumbnails.length > 0 &&
                             thumbnails
-                              .filter(d => d.key !== 0)
-                              .map((d, key) => (
-                                <div className="product">
+                              .filter((thumbnail, key) => key !== 0)
+                              .map((thumbnail, key) => (
+                                <div className="product" key={key}>
                                   <img
                                     className="img-dropzone"
                                     key={key}
-                                    src={d.thumbnail_url}
+                                    src={thumbnail.thumbnail_url}
                                     alt="product-thumbnail"
                                     style={{ width: 100, height: 100 }}
                                   />
                                   <div className="overlay">
                                     <center>
-                                      <p>Remove</p>
+                                      <button
+                                        data-thumbnail-id={
+                                          thumbnail.product_thumbnail_id
+                                        }
+                                        data-thumbnail-key={thumbnail.key}
+                                        onClick={onRemoveThumbnail}>
+                                        Remove
+                                      </button>
                                     </center>
                                   </div>
                                 </div>

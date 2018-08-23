@@ -1,13 +1,13 @@
-import React from "react";
-import { Grid, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { convertToIDR } from "../../lib/conversion";
-import Card from "../../components/Card/Card";
+import React from "react"
+import { Grid, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap"
+import { convertToIDR } from "../../lib/conversion"
+import Card from "../../components/Card/Card"
 
 const tooltipClose = (
   <Tooltip id="tooltip">
     <strong>Close Product</strong>
   </Tooltip>
-);
+)
 
 const ProductDetail = ({
   title,
@@ -19,7 +19,8 @@ const ProductDetail = ({
   description,
   detail,
   howToUse,
-  thumbnails
+  thumbnails,
+  onBack
 }) => (
   <div className="content">
     <Grid fluid>
@@ -31,8 +32,8 @@ const ProductDetail = ({
             content={
               <div style={styles.wrapFullMessage}>
                 <OverlayTrigger placement="top" overlay={tooltipClose}>
-                  <button style={styles.btnCancel}>
-                    <i class="pe-7s-close-circle" />
+                  <button style={styles.btnCancel} onClick={onBack}>
+                    <i className="pe-7s-close-circle" />
                   </button>
                 </OverlayTrigger>
                 <Row>
@@ -50,7 +51,7 @@ const ProductDetail = ({
                             .map((thumbnail, key) => (
                               <Col xs={3}>
                                 <img
-                                  src={thumbnail.thumbnail}
+                                  src={thumbnail.thumbnail_url}
                                   alt={thumbnail.thumbnail_id}
                                   style={styles.imgSubProduct}
                                 />
@@ -127,7 +128,7 @@ const ProductDetail = ({
       </Row>
     </Grid>
   </div>
-);
+)
 
 const styles = {
   txtPrice: {
@@ -162,6 +163,6 @@ const styles = {
     fontSize: 25,
     color: "#000"
   }
-};
+}
 
-export default ProductDetail;
+export default ProductDetail

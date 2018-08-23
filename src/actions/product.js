@@ -38,7 +38,12 @@ const fetchProductsSuccess = data => ({
 	payload: data
 })
 
-const uploadImageProductToS3 = (product_id, thumbnails, accessToken) => {
+const uploadImageProductToS3 = (
+	product_id,
+	thumbnails,
+	accessToken,
+	process_on
+) => {
 	return dispatch => {
 		return thumbnails.map(thumbnail => {
 			return s3.upload(
@@ -63,15 +68,13 @@ const uploadImageProductToS3 = (product_id, thumbnails, accessToken) => {
 						.then(response => {
 							if (response.status !== 201) {
 								dispatch(
-									setFailedAndBackToDefault(response.message, "ADD_PRODUCT")
+									setFailedAndBackToDefault(response.message, process_on)
 								)
 							} else {
-								dispatch(setSuccessAndBackToDefault(res.message, "ADD_PRODUCT"))
+								dispatch(setSuccessAndBackToDefault(res.message, process_on))
 							}
 						})
-						.catch(err =>
-							dispatch(setFailedAndBackToDefault(err, "ADD_PRODUCT"))
-						)
+						.catch(err => dispatch(setFailedAndBackToDefault(err, process_on)))
 				}
 			)
 		})
@@ -87,6 +90,13 @@ export const addProductThumbnail = ({ thumbnail_url, thumbnail_origin }) => {
 			thumbnail_url,
 			thumbnail_origin
 		}
+	}
+}
+
+export const removeProductThumbnail = key => {
+	return {
+		type: "REMOVE_PRODUCT_THUMBNAIL",
+		key: parseInt(key, 10)
 	}
 }
 
@@ -160,7 +170,8 @@ export const addProduct = (data, accessToken) => {
 						uploadImageProductToS3(
 							parseInt(res.data.product_id, 10),
 							data.thumbnails,
-							accessToken
+							accessToken,
+							"ADD_PRODUCT"
 						)
 					)
 				}
@@ -193,13 +204,29 @@ export const updateProduct = (data, accessToken) => {
 				if (res.status !== 201) {
 					dispatch(setFailedAndBackToDefault(res.message, "UPDATE_PRODUCT"))
 				} else {
+					if (data.thumbnailsWillRemove.length) {
+						data.thumbnailsWillRemove.map(d =>
+							reduxFetch.delete({
+								url: server + `/product-thumbnail/${d.product_thumbnail_id}`,
+								accessToken: accessToken
+							})
+						)
+					}
+				}
+				return res
+			})
+			.then(res => {
+				if (data.thumbnails.length) {
 					dispatch(
 						uploadImageProductToS3(
 							parseInt(res.data.product_id, 10),
 							data.thumbnails,
-							accessToken
+							accessToken,
+							"UPDATE_PRODUCT"
 						)
 					)
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "DELETE_PRODUCT"))
 				}
 			})
 			.catch(err => dispatch(setFailedAndBackToDefault(err, "UPDATE_PRODUCT")))

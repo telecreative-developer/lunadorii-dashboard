@@ -14,6 +14,7 @@ import {
 	fetchSubcategories,
 	fetchBrands,
 	addProductThumbnail,
+	removeProductThumbnail,
 	deleteProduct,
 	updateProduct,
 	setProductThumbnail,
@@ -216,6 +217,12 @@ class ProductContainer extends React.Component {
 		})
 	}
 
+	onBack() {
+		this.props.setNavigation({
+			product: "product"
+		})
+	}
+
 	onNavigateUpdateProduct(data) {
 		const product_id = data.target.attributes.getNamedItem("data-product-id")
 			.value
@@ -264,6 +271,13 @@ class ProductContainer extends React.Component {
 			thumbnails
 		})
 
+		thumbnails.map((thumbnail, key) =>
+			this.handleSetThumbnail({
+				product_thumbnail_id: thumbnail.product_thumbnail_id,
+				thumbnail_url: thumbnail.thumbnail_url
+			})
+		)
+
 		this.props.setNavigation({
 			product: "update-product",
 			product_data: {
@@ -281,13 +295,6 @@ class ProductContainer extends React.Component {
 				thumbnails
 			}
 		})
-
-		thumbnails.map((thumbnail, key) =>
-			this.handleSetThumbnail({
-				product_thumbnail_id: thumbnail.product_thumbnail_id,
-				thumbnail_url: thumbnail.thumbnail_url
-			})
-		)
 	}
 
 	handleAddThumbnail(thumbnail) {
@@ -299,6 +306,10 @@ class ProductContainer extends React.Component {
 		if (this.props.navigationProduct === "update-product") {
 			this.handleAddThumbnailWhenUpdate(thumbnail)
 		}
+	}
+
+	handleRemoveThumbnail(key) {
+		this.props.removeProductThumbnail(key)
 	}
 
 	handleSetThumbnail(thumbnail) {
@@ -316,7 +327,14 @@ class ProductContainer extends React.Component {
 		})
 	}
 
-	handleRemoveThumbnailWhenUpdate(product_thumbnail_id) {
+	handleRemoveThumbnailWhenUpdate(data) {
+		const product_thumbnail_id = data.target.attributes.getNamedItem(
+			"data-thumbnail-id"
+		).value
+		const key = data.target.attributes.getNamedItem("data-thumbnail-key").value
+
+		this.handleRemoveThumbnail(key)
+
 		this.props.removeProductThumbnailWhenUpdate({
 			product_thumbnail_id
 		})
@@ -374,6 +392,8 @@ class ProductContainer extends React.Component {
 			thumbnails
 		} = this.state
 
+		const { productThumbnailsWillAdd, productThumbnailsWillRemove } = this.props
+
 		db.get("session").then(doc => {
 			this.props
 				.updateProduct(
@@ -388,7 +408,13 @@ class ProductContainer extends React.Component {
 						weight_gram,
 						discount_percentage,
 						product_subcategory_id,
-						product_brand_id
+						product_brand_id,
+						thumbnails: productThumbnailsWillAdd.length
+							? productThumbnailsWillAdd
+							: [],
+						thumbnailsWillRemove: productThumbnailsWillRemove.length
+							? productThumbnailsWillRemove
+							: []
 					},
 					doc.accessToken
 				)
@@ -527,6 +553,7 @@ class ProductContainer extends React.Component {
 						(loading.status && loading.process_on === "ADD_PRODUCT") ||
 						(loading.status && loading.process_on === "UPDATE_PRODUCT")
 					}
+					onRemoveThumbnail={this.handleRemoveThumbnailWhenUpdate.bind(this)}
 					brandSelected={product_brand_id}
 					subcategorySelected={product_subcategory_id}
 				/>
@@ -546,6 +573,7 @@ class ProductContainer extends React.Component {
 					detail={detail}
 					howToUse={to_use}
 					thumbnails={thumbnails}
+					onBack={this.onBack.bind(this)}
 				/>
 			)
 		}
@@ -570,6 +598,8 @@ const mapStateToProps = state => ({
 	productThumbnails: state.productThumbnails,
 	subcategories: state.subcategories,
 	brands: state.brands,
+	productThumbnailsWillAdd: state.productThumbnailsWillAdd,
+	productThumbnailsWillRemove: state.productThumbnailsWillRemove,
 	navigationProduct: state.navigation.product,
 	navigationProductData: state.navigation.product_data,
 	success: state.success,
@@ -580,6 +610,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispacth => ({
 	setNavigation: navigation => dispacth(setNavigation(navigation)),
 	addProductThumbnail: thumbnail => dispacth(addProductThumbnail(thumbnail)),
+	removeProductThumbnail: key => dispacth(removeProductThumbnail(key)),
 	setProductThumbnail: thumbnail => dispacth(setProductThumbnail(thumbnail)),
 	updateProduct: (data, accessToken) =>
 		dispacth(updateProduct(data, accessToken)),
