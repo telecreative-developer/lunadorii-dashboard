@@ -22,6 +22,7 @@ class ReportContainer extends React.Component {
 		} = props.navigationReportData
 
 		this.state = {
+			searchByTitle: "",
 			report_id: report_id,
 			name: name,
 			email: email,
@@ -123,7 +124,8 @@ class ReportContainer extends React.Component {
 			content,
 			date,
 			replyMessage,
-			reply
+			reply,
+			searchByTitle
 		} = this.state
 
 		if (navigationReport === "report-detail") {
@@ -149,6 +151,8 @@ class ReportContainer extends React.Component {
 			<Report
 				reports={reports}
 				onShowReport={this.handleShowReportDetail.bind(this)}
+				searchByTitle={searchByTitle}
+				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
 			/>
 		)
 	}

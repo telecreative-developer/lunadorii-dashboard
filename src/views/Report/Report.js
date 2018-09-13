@@ -1,6 +1,6 @@
 import React from "react"
 import moment from "moment"
-import { Grid, Row, Col, Table, OverlayTrigger, Tooltip } from "react-bootstrap"
+import { Grid, Row, Col, Table, OverlayTrigger, Tooltip, FormControl } from "react-bootstrap"
 import Card from "../../components/Card/Card"
 
 const tableHead = [
@@ -21,13 +21,23 @@ const tooltipShow = (
   </Tooltip>
 )
 
-const Report = ({ reports, onShowReport }) => (
+const Report = ({ reports, onShowReport, searchByTitle, onChangeSearch }) => (
   <div className="content">
     <Grid fluid>
       <Row>
         <Col md={12}>
           <Card
             title="All Reports"
+            search={
+              <form>
+                <FormControl
+                  type="text"
+                  placeholder="Search By Email"
+                  value={searchByTitle}
+                  onChange={onChangeSearch}
+                />
+              </form>
+            }
             ctTableFullWidth
             ctTableResponsive
             content={
@@ -38,7 +48,7 @@ const Report = ({ reports, onShowReport }) => (
                   </tr>
                 </thead>
                 <tbody>
-                  {reports.map((report, key) => (
+                  {reports.filter(reports => reports.email.indexOf(searchByTitle) > -1 ).map((report, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>{report.name}</td>
