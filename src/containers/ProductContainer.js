@@ -50,6 +50,7 @@ class ProductContainer extends React.Component {
 		} = props.navigationProductData
 
 		this.state = {
+			searchByTitle: "",
 			product_id,
 			title,
 			description,
@@ -466,6 +467,7 @@ class ProductContainer extends React.Component {
 		} = this.props
 
 		const {
+			searchByTitle,
 			title,
 			detail,
 			description,
@@ -604,6 +606,8 @@ class ProductContainer extends React.Component {
 				loadingDeleteProduct={
 					loading.status && loading.process_on === "DELETE_PRODUCT"
 				}
+				searchByTitle={searchByTitle}
+				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
 			/>
 		)
 	}

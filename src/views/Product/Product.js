@@ -1,5 +1,5 @@
 import React from "react"
-import { Grid, Row, Col, Table, OverlayTrigger, Tooltip } from "react-bootstrap"
+import { Grid, Row, Col, Table, OverlayTrigger, Tooltip, FormControl } from "react-bootstrap"
 import Card from "../../components/Card/Card"
 import { convertToIDR } from "../../lib/conversion"
 
@@ -39,7 +39,9 @@ const Product = ({
   onAddProduct,
   onDeleteProduct,
   loadingDeleteProduct,
-  onShowDetailProduct
+  onShowDetailProduct,
+  searchByTitle,
+  onChangeSearch
 }) => (
   <div className="content">
     <Grid fluid>
@@ -57,6 +59,16 @@ const Product = ({
         <Col md={12}>
           <Card
             title="All Products"
+            search={
+              <form>
+                <FormControl
+                  type="text"
+                  placeholder="Search By Product"
+                  value={searchByTitle}
+                  onChange={onChangeSearch}
+                />
+              </form>
+            }
             ctTableFullWidth
             ctTableResponsive
             content={
@@ -67,7 +79,7 @@ const Product = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((product, key) => (
+                  {products.filter(products => products.product.indexOf(searchByTitle) > -1 ).map((product, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>
