@@ -1,5 +1,5 @@
 import React from "react"
-import { Grid, Row, Col, Table, OverlayTrigger, Tooltip } from "react-bootstrap"
+import { Grid, Row, Col, Table, OverlayTrigger, Tooltip, FormControl } from "react-bootstrap"
 import moment from "moment"
 import Card from "../../components/Card/Card"
 import { convertToIDR } from "../../lib/conversion"
@@ -35,13 +35,23 @@ const tooltipDetail = (
   </Tooltip>
 )
 
-const Transaction = ({ transactions, onNavigateTransactionDetail }) => (
+const Transaction = ({ transactions, onNavigateTransactionDetail, searchByTitle, onChangeSearch }) => (
   <div className="content">
     <Grid fluid>
       <Row>
         <Col md={12}>
           <Card
             title="All Transaction"
+            search={
+              <form>
+                <FormControl
+                  type="text"
+                  placeholder="Search By Billing Code"
+                  value={searchByTitle}
+                  onChange={onChangeSearch}
+                />
+              </form>
+            }
             ctTableFullWidth
             ctTableResponsive
             content={
@@ -52,7 +62,7 @@ const Transaction = ({ transactions, onNavigateTransactionDetail }) => (
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.map((transaction, key) => (
+                  {transactions.filter(transactions => transactions.billing_code.indexOf(searchByTitle) > -1 ).map((transaction, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>{transaction.billing_code}</td>

@@ -18,6 +18,10 @@ class TransactionContainer extends React.Component {
 		if (!props.transactions.length) {
 			db.get("session").then(doc => props.fetchTransactions(doc.accessToken))
 		}
+
+		this.state = {
+			searchByTitle: ""
+		}
 	}
 
 	handleNavigateTransactionDetail(data) {
@@ -45,6 +49,7 @@ class TransactionContainer extends React.Component {
 
 	render() {
 		const { navigationTransaction, transactions, transaction } = this.props
+		const { searchByTitle } = this.state
 
 		if (navigationTransaction === "transaction_detail") {
 			return (
@@ -61,6 +66,8 @@ class TransactionContainer extends React.Component {
 				onNavigateTransactionDetail={this.handleNavigateTransactionDetail.bind(
 					this
 				)}
+				searchByTitle={searchByTitle}
+				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
 			/>
 		)
 	}
