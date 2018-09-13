@@ -221,6 +221,19 @@ class ProductContainer extends React.Component {
 		this.props.setNavigation({
 			product: "product"
 		})
+		this.setState({
+			title: "",
+			detail: "",
+			description: "",
+			to_use: "",
+			price: 0,
+			discount: false,
+			discount_percentage: 0,
+			weight_gram: 0,
+			product_subcategory_id: 1,
+			product_brand_id: 1,
+			thumbnails: []
+		})
 	}
 
 	onNavigateUpdateProduct(data) {
@@ -442,6 +455,7 @@ class ProductContainer extends React.Component {
 	}
 
 	render() {
+		console.log(this.state)
 		const {
 			products,
 			productThumbnails,
@@ -506,6 +520,7 @@ class ProductContainer extends React.Component {
 						(loading.status && loading.process_on === "ADD_PRODUCT") ||
 						(loading.status && loading.process_on === "UPDATE_PRODUCT")
 					}
+					onBack={this.onBack.bind(this)}
 				/>
 			)
 		}
@@ -556,6 +571,7 @@ class ProductContainer extends React.Component {
 					onRemoveThumbnail={this.handleRemoveThumbnailWhenUpdate.bind(this)}
 					brandSelected={product_brand_id}
 					subcategorySelected={product_subcategory_id}
+					onBack={this.onBack.bind(this)}
 				/>
 			)
 		}

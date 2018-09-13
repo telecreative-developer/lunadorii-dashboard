@@ -30,7 +30,8 @@ const EditProduct = ({
   discountCondition,
   handleUpdateProduct,
   loadingProduct,
-  onRemoveThumbnail
+  onRemoveThumbnail,
+  onBack
 }) => (
   <div className="contentAdd">
     <Col xs={12}>
@@ -274,6 +275,7 @@ const EditProduct = ({
                   <div style={styles.divButton}>
                     <button
                       className="btn btn-warning"
+                      onClick={onBack}
                       style={styles.btnCancel}>
                       Cancel
                     </button>

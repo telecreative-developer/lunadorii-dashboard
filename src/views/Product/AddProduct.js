@@ -23,7 +23,8 @@ const AddProduct = ({
   onChangeDiscountCondition,
   discountCondition,
   handleAddProduct,
-  loadingProduct
+  loadingProduct,
+  onBack
 }) => (
   <div className="contentAdd">
     <Col xs={12}>
@@ -247,6 +248,7 @@ const AddProduct = ({
                   <div style={styles.divButton}>
                     <button
                       className="btn btn-warning"
+                      onClick={onBack}
                       style={styles.btnCancel}>
                       Cancel
                     </button>
