@@ -26,7 +26,7 @@ const AddBanner = ({
   <div className="contentAdd">
     <Col xs={12}>
       <Card
-        title="Add Banner"
+        title={formType === "add-banner" ? "Add Banner" : "Update Banner"}
         ctTableFullWidth
         ctTableResponsive
         content={

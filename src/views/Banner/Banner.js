@@ -1,5 +1,5 @@
 import React from "react"
-import { Grid, Row, Col, Table, OverlayTrigger, Tooltip } from "react-bootstrap"
+import { Grid, Row, Col, Table, OverlayTrigger, Tooltip, FormControl } from "react-bootstrap"
 import moment from "moment"
 import Card from "../../components/Card/Card"
 
@@ -45,7 +45,9 @@ const Banner = ({
   onSetUnactive,
   onSetActive,
   onDeleteBanner,
-  loadingDeleteBanner
+  loadingDeleteBanner,
+  searchByTitle,
+  onChangeSearch
 }) => (
   <div className="content">
     <Grid fluid>
@@ -63,6 +65,16 @@ const Banner = ({
         <Col md={12}>
           <Card
             title="All Banners"
+            search={
+              <form>
+                <FormControl
+                  type="text"
+                  placeholder="Search By Title"
+                  value={searchByTitle}
+                  onChange={onChangeSearch}
+                />
+              </form>
+            }
             ctTableFullWidth
             ctTableResponsive
             content={
@@ -73,7 +85,7 @@ const Banner = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {banners.map((banner, key) => (
+                  {banners.filter(banner => banner.title.indexOf(searchByTitle) > -1 ).map((banner, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>

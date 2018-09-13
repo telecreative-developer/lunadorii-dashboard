@@ -37,6 +37,7 @@ class BannerContainer extends React.Component {
 
 		this.state = {
 			banner_id,
+			searchByTitle: "",
 			title,
 			thumbnails,
 			thumbnail_url,
@@ -246,6 +247,17 @@ class BannerContainer extends React.Component {
 		})
 	}
 
+	handleCancelBanner(){
+		this.props.setNavigation({ banner: "banner" })
+		this.setState({
+			banner_id: "",
+			title: "",
+			thumbnail_url: "",
+			typeSelected: "type",
+			categorySelected: "general"
+		})
+	}
+
 	render() {
 		const {
 			thumbnails,
@@ -254,7 +266,8 @@ class BannerContainer extends React.Component {
 			categories,
 			types,
 			categorySelected,
-			typeSelected
+			typeSelected,
+			searchByTitle
 		} = this.state
 		const { navigationBanner, loading, banners } = this.props
 
@@ -283,7 +296,7 @@ class BannerContainer extends React.Component {
 					onClearImage={() =>
 						this.setState({ thumbnails: "", thumbnail_url: "" })
 					}
-					handleCancel={() => this.props.setNavigation({ banner: "banner" })}
+					handleCancel={() => this.handleCancelBanner()}
 					submitType={navigationBanner}
 					loadingBanner={
 						(loading.status && loading.process_on === "ADD_BANNER") ||
@@ -304,6 +317,8 @@ class BannerContainer extends React.Component {
 				loadingDeleteBanner={
 					loading.status && loading.process_on === "DELETE_BANNER"
 				}
+				searchByTitle={searchByTitle}
+				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
 			/>
 		)
 	}
