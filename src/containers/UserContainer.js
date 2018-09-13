@@ -6,6 +6,14 @@ import { fetchUsers } from "../actions/users"
 const db = new PouchDB("lunadorii")
 
 class UserContainer extends React.Component {
+	constructor(props) {
+		super(props)
+		
+		this.state = {
+			searchByTitle: ""
+		}
+	}
+	
 	componentWillMount() {
 		db.get("session").then(doc =>
 			this.props.fetchUsers({ accessToken: doc.accessToken })
@@ -14,7 +22,14 @@ class UserContainer extends React.Component {
 
 	render() {
 		const { users } = this.props
-		return <User users={users} />
+		const { searchByTitle } = this.state
+		return (
+			<User 
+				users={users}
+				searchByTitle={searchByTitle}
+				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
+			/>
+		)
 	}
 }
 

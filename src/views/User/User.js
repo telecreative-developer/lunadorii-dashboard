@@ -1,17 +1,27 @@
 import React from "react"
-import { Grid, Row, Col, Table } from "react-bootstrap"
+import { Grid, Row, Col, Table, FormControl } from "react-bootstrap"
 import moment from "moment"
 import Card from "../../components/Card/Card"
 
 const tableHead = ["No", "Avatar", "Fullname", "Email", "Joined At", "Verified"]
 
-const User = ({ users }) => (
+const User = ({ users, searchByTitle, onChangeSearch }) => (
   <div className="content">
     <Grid fluid>
       <Row>
         <Col md={12}>
           <Card
             title="All Users"
+            search={
+              <form>
+                <FormControl
+                  type="text"
+                  placeholder="Search By Email"
+                  value={searchByTitle}
+                  onChange={onChangeSearch}
+                />
+              </form>
+            }
             ctTableFullWidth
             ctTableResponsive
             content={
@@ -22,7 +32,7 @@ const User = ({ users }) => (
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map((user, key) => (
+                  {users.filter(user => user.email.indexOf(searchByTitle) > -1 ).map((user, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>
