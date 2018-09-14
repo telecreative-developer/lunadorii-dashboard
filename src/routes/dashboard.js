@@ -5,6 +5,7 @@ import Icons from "../views/Icons/Icons"
 import BannerContainer from "../containers/BannerContainer"
 import ProductContainer from "../containers/ProductContainer"
 import TransactionContainer from "../containers/TransactionContainer"
+import CategoryContainer from "../containers/CategoryContainer";
 
 const dashboardRoutes = [
   {
@@ -48,6 +49,12 @@ const dashboardRoutes = [
     name: "Icons",
     icon: "pe-7s-science",
     component: Icons
+  },
+  {
+    path: "/category",
+    name: "Category",
+    icon: "pe-7s-ribbon",
+    component: CategoryContainer
   },
   { redirect: true, path: "/", to: "/dashboard", name: "Dashboard" }
 ]
