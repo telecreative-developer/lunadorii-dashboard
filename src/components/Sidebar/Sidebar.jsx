@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { NavLink } from "react-router-dom"
 import HeaderLinks from "../Header/HeaderLinks"
 import dashboardRoutes from "../../routes/dashboard"
-import logo from "../../assets/img/reactlogo.png"
+import logo from "../../assets/img/917a9f5f-1633-40b6-830e-d06fe964b3f5.jpeg"
 
 class Sidebar extends Component {
   constructor(props) {
@@ -28,10 +28,15 @@ class Sidebar extends Component {
   render() {
     return (
       <div id="sidebar" className="sidebar" data-color="black">
-        <div className="sidebar-background" />
-        <div className="logo">
+        <div className="sidebar-background"/>
+          {/* <img src="https://res.cloudinary.com/ajsdjasdbnajsdasjd/image/upload/v1536923311/917a9f5f-1633-40b6-830e-d06fe964b3f5.jpg" alt=""/> */}
+        <div className="logo" style={{padding:25}}>
+        <div className="logo-img" style={{position:"absolute"}}>
+          <img src={logo} alt="logo_image" style={{width:50,height:50,position:"absolute",margin:0}}/>
+          </div>
           <a
-            href="https://www.creative-tim.com"
+            href="#"
+            style={{marginLeft:80,marginTop:0}}
             className="simple-text logo-normal">
             Lunadorii
           </a>
