@@ -18,7 +18,7 @@ class HeaderLinks extends React.PureComponent {
     return (
       <div>
         <Nav pullRight onSelect={this.handleSelect.bind(this)}>
-          <NavItem eventKey={1}>Account</NavItem>
+          {/* <NavItem eventKey={1}>Account</NavItem> */}
           <NavItem eventKey={2}>Log out</NavItem>
         </Nav>
       </div>
