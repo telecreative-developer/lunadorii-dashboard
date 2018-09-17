@@ -226,7 +226,7 @@ export const updateProduct = (data, accessToken) => {
 						)
 					)
 				} else {
-					dispatch(setSuccessAndBackToDefault(res.message, "DELETE_PRODUCT"))
+					dispatch(setSuccessAndBackToDefault(res.message, "UPDATE_PRODUCT"))
 				}
 			})
 			.catch(err => dispatch(setFailedAndBackToDefault(err, "UPDATE_PRODUCT")))
