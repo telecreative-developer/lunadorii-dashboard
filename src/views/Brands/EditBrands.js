@@ -2,74 +2,84 @@ import React from "react"
 import { Row, Col } from "react-bootstrap"
 import Dropzone from "react-dropzone"
 import Card from "../../components/Card/Card"
-import "../../assets/css/categoryIcons.css"
 
-const AddCategory = ({
-
-
-  handleAddProduct,
+const EditBrands = ({
+ 
+  title,
+  onChangeTitle,
+  thumbnails,
+  onChangeThumbnail,
+  handleUpdateProduct,
   loadingProduct,
+  onRemoveThumbnail,
   onBack
 }) => (
   <div className="contentAdd">
     <Col xs={12}>
       <Card
-        title="Add Category"
+        title="Edit Brands"
         ctTableFullWidth
         ctTableResponsive
         content={
           <div>
             <Row>
               <Col xs={6}>
-              <div style={styles.headerGroup}>
-              <Row>
-                <Col xs={2}>
-
-                    <input
-                      type="radio"
-                      name="radio"
-                      value="icon1"
-                      id="id1"
-                      className="input-hidden"
-                    />
-                  <label for="id1">
-                    <img src="https://ichef.bbci.co.uk/onesport/cps/800/cpsprodpb/29D9/production/_100031701_hf1_vf18_front-2.jpg" style={{width:100,height:100}}/> 
-                  </label>
-
-                </Col>
-                <Col xs={2}>
-                  <input
-                    type="radio"
-                    name="radio"
-                    value="icon1"
-                    id="id2"
-                    className="input-hidden"
-                  />
-                  <label for="id2">
-                  <img src="https://ichef.bbci.co.uk/onesport/cps/800/cpsprodpb/29D9/production/_100031701_hf1_vf18_front-2.jpg" style={{width:100,height:100}}/> 
-                  </label>
-
-                  </Col>                                  
-              </Row>
-              </div>
+                <Row>
+                  <Col xs={12}>
+                    <div style={styles.headerGroup}>
+                      {thumbnails.length ? (
+                        <div className="product-banner">
+                          <img
+                            src={thumbnails[0].thumbnail_url}
+                            alt="product-thumbnail"
+                            style={{ width: "100%", maxHeight: 225 }}
+                          />
+                          <div className="overlay">
+                            <center>
+                              <button
+                                data-thumbnail-id={
+                                  thumbnails[0].product_thumbnail_id
+                                }
+                                data-thumbnail-key={thumbnails[0].key}
+                                onClick={onRemoveThumbnail}>
+                                Remove
+                              </button>
+                            </center>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="imageUploader">
+                          <Dropzone
+                            style={{ width: "100%", paddingBottom: 60 }}
+                            accept="image/jpeg, image/jpg, image/png"
+                            onDrop={onChangeThumbnail}>
+                            <p style={styles.pIconCamera}>
+                              <i
+                                className="pe-7s-camera"
+                                style={styles.iconCamera}
+                              />
+                            </p>
+                            <div className="group" />
+                          </Dropzone>
+                        </div>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
               </Col>
               <Col xs={6}>
                 <div style={styles.form}>
-                  <label>Name Category</label>
+                  <label>Title</label>
                   <input
                     type="text"
                     name="title"
                     className="form-control"
-                    
-                    placeholder="Name Category"
+                    value={title}
+                    onChange={onChangeTitle}
+                    disabled={loadingProduct}
+                    placeholder="Title"
                   />
-              <label style={styles.label}>Categories</label>
-                  <select
-                    className="form-control">
-                      <option value="select">select</option>
-                      <option value="other">...</option>
-                  </select>
-              </div>
+                </div>
               </Col>
             </Row>
             <Row>
@@ -99,9 +109,9 @@ const AddCategory = ({
                     </button>
                     <button
                       className="btn btn-primary"
-                      onClick={handleAddProduct}
+                      onClick={handleUpdateProduct}
                       style={styles.btnSave}>
-                      Save
+                      Update
                     </button>
                   </div>
                 )}
@@ -124,11 +134,8 @@ const styles = {
     border: "none",
     marginRight: 10
   },
-  label: {
-    marginTop: 10
-  },
   headerGroup: {
-    marginLeft: 30
+    marginLeft: 15
   },
   groupRight: {
     marginLeft: 15,
@@ -171,4 +178,4 @@ const styles = {
   }
 }
 
-export default AddCategory
+export default EditBrands

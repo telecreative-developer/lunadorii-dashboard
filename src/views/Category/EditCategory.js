@@ -2,6 +2,7 @@ import React from "react"
 import { Row, Col } from "react-bootstrap"
 import Dropzone from "react-dropzone"
 import Card from "../../components/Card/Card"
+import "../../assets/css/categoryIcons.css"
 
 const EditCategory = ({
   
@@ -23,74 +24,36 @@ const EditCategory = ({
           <div>
             <Row>
               <Col xs={6}>
-              <Row>
               <div style={styles.headerGroup}>
+                <Row>
                 <Col xs={2}>
-                  <img
-                    className="img-dropzone"
-                    src={'http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png'}
-                    alt="category-icons"
-                    style={{ width: 100, height: 100, marginTop:10}}
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="icon1"
+                    id="id1"
+                    className="input-hidden"
                   />
-                </Col>
-                <Col xs={2}>
-                  <img
-                    className="img-dropzone"
-                    src={'http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png'}
-                    alt="category-icons"
-                    style={{ width: 100, height: 100, marginTop:10}}
+                  <label for="id1">
+                  <img src="https://ichef.bbci.co.uk/onesport/cps/800/cpsprodpb/29D9/production/_100031701_hf1_vf18_front-2.jpg" style={{width:100,height:100}}/> 
+                  </label>
+
+                  </Col>
+                  <Col xs={2}>
+                  <input
+                  type="radio"
+                  name="radio"
+                  value="icon1"
+                  id="id2"
+                  className="input-hidden"
                   />
-                </Col>
-                <Col xs={2}>
-                  <img
-                    className="img-dropzone"
-                    src={'http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png'}
-                    alt="category-icons"
-                    style={{ width: 100, height: 100, marginTop:10}}
-                  />
-                </Col>
-                <Col xs={2}>
-                  <img
-                    className="img-dropzone"
-                    src={'http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png'}
-                    alt="category-icons"
-                    style={{ width: 100, height: 100, marginTop:10}}
-                  />
-                </Col>
-                <Col xs={2}>
-                  <img
-                    className="img-dropzone"
-                    src={'http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png'}
-                    alt="category-icons"
-                    style={{ width: 100, height: 100, marginTop:10}}
-                  />
-                </Col>
-                <Col xs={2}>
-                  <img
-                    className="img-dropzone"
-                    src={'http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png'}
-                    alt="category-icons"
-                    style={{ width: 100, height: 100, marginTop:10}}
-                  />
-                </Col>
-                <Col xs={2}>
-                  <img
-                    className="img-dropzone"
-                    src={'http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png'}
-                    alt="category-icons"
-                    style={{ width: 100, height: 100, marginTop:10}}
-                  />
-                </Col>
-                <Col xs={2}>
-                  <img
-                    className="img-dropzone"
-                    src={'http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png'}
-                    alt="category-icons"
-                    style={{ width: 100, height: 100, marginTop:10}}
-                  />
-                </Col>
-                </div>
-              </Row>
+                  <label for="id2">
+                  <img src="https://ichef.bbci.co.uk/onesport/cps/800/cpsprodpb/29D9/production/_100031701_hf1_vf18_front-2.jpg" style={{width:100,height:100}}/> 
+                  </label>
+
+                  </Col>
+                </Row>
+              </div>
               </Col>
               <Col xs={6}>
                 <div style={styles.form}>
@@ -104,7 +67,12 @@ const EditCategory = ({
                     disabled={loadingProduct}
                     placeholder="Title"
                   />
-                  
+                   <label style={styles.label}>Categories</label>
+                  <select
+                    className="form-control">
+                      <option value="select">select</option>
+                      <option value="other">...</option>
+                  </select>
                 </div>
               </Col>
             </Row>
@@ -161,7 +129,7 @@ const styles = {
     marginRight: 10
   },
   headerGroup: {
-    marginLeft: 15
+    marginLeft: 30
   },
   groupRight: {
     marginLeft: 15,

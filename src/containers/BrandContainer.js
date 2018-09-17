@@ -4,10 +4,9 @@ import { connect } from "react-redux"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import { setNavigation } from "../actions/processor"
-import Category from "../views/Category/Category"
-import AddCategory from "../views/Category/AddCategory"
-import EditCategory from "../views/Category/EditCategory"
-import ProductDetail from "../views/Product/ProductDetail"
+import Brands from "../views/Brands/Brands"
+import AddBrands from "../views/Brands/AddBrands"
+import EditBrands from "../views/Brands/EditBrands"
 import {
 	addProduct,
 	fetchProducts,
@@ -28,7 +27,7 @@ const sweetAlert = (title, type, confirmButtonText) => {
 	return ReactSwal.fire({ title, type, confirmButtonText })
 }
 
-class CategoryContainer extends React.Component {
+class ProductContainer extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -485,7 +484,7 @@ class CategoryContainer extends React.Component {
 
 		if (navigationProduct === "add-product") {
 			return (
-				<AddCategory
+				<AddBrands
 					onChangeTitle={e => this.setState({ title: e.target.value })}
 					onChangeDescription={e =>
 						this.setState({ description: e.target.value })
@@ -529,7 +528,7 @@ class CategoryContainer extends React.Component {
 
 		if (navigationProduct === "update-product") {
 			return (
-				<EditCategory
+				<EditBrands
 					title={title}
 					onChangeTitle={e => this.setState({ title: e.target.value })}
 					description={description}
@@ -578,26 +577,8 @@ class CategoryContainer extends React.Component {
 			)
 		}
 
-		if (navigationProduct === "product-detail") {
-			return (
-				<ProductDetail
-					title={title}
-					brand={brand}
-					subcategory={subcategory}
-					discount={discount_percentage}
-					weightGram={weight_gram}
-					price={price}
-					description={description}
-					detail={detail}
-					howToUse={to_use}
-					thumbnails={thumbnails}
-					onBack={this.onBack.bind(this)}
-				/>
-			)
-		}
-
 		return (
-			<Category
+			<Brands
 				products={products}
 				onShowDetailProduct={this.onNavigateDetailProduct.bind(this)}
 				onUpdateProduct={this.onNavigateUpdateProduct.bind(this)}
@@ -649,4 +630,4 @@ const mapDispatchToProps = dispacth => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(CategoryContainer)
+)(ProductContainer)
