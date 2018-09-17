@@ -24,6 +24,7 @@ const AddProduct = ({
   discountCondition,
   handleAddProduct,
   loadingProduct,
+  onRemoveThumbnail,
   onBack
 }) => (
   <div className="contentAdd">
@@ -48,7 +49,11 @@ const AddProduct = ({
                           />
                           <div className="overlay">
                             <center>
-                              <p>Remove</p>
+                                <p data-thumbnail-id={
+                                thumbnails[0].product_thumbnail_id
+                              }
+                              data-thumbnail-key={thumbnails[0].key}
+                              onClick={onRemoveThumbnail}>Remove</p>
                             </center>
                           </div>
                         </div>
@@ -86,7 +91,13 @@ const AddProduct = ({
                                   />
                                   <div className="overlay">
                                     <center>
-                                      <p>Remove</p>
+                                      <p data-thumbnail-id={
+                                thumbnails[0].product_thumbnail_id
+                              }
+                              data-thumbnail-key={thumbnails[0].key}
+                              onClick={onRemoveThumbnail}>
+                                        Remove
+                                      </p>
                                     </center>
                                   </div>
                                 </div>

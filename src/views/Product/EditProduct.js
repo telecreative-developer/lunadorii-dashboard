@@ -55,14 +55,14 @@ const EditProduct = ({
                           />
                           <div className="overlay">
                             <center>
-                              <button
-                                data-thumbnail-id={
-                                  thumbnails[0].product_thumbnail_id
-                                }
-                                data-thumbnail-key={thumbnails[0].key}
-                                onClick={onRemoveThumbnail}>
-                                Remove
-                              </button>
+                            <p 
+                              data-thumbnail-id={
+                                thumbnails[0].product_thumbnail_id
+                              }
+                              data-thumbnail-key={thumbnails[0].key}
+                              onClick={onRemoveThumbnail}>
+                              Remove
+                              </p>
                             </center>
                           </div>
                         </div>
@@ -100,14 +100,14 @@ const EditProduct = ({
                                   />
                                   <div className="overlay">
                                     <center>
-                                      <button
-                                        data-thumbnail-id={
-                                          thumbnail.product_thumbnail_id
-                                        }
-                                        data-thumbnail-key={thumbnail.key}
-                                        onClick={onRemoveThumbnail}>
+                                    <p 
+                                      data-thumbnail-id={
+                                        thumbnail.product_thumbnail_id
+                                      }
+                                      data-thumbnail-key={thumbnail.key}
+                                      onClick={onRemoveThumbnail}>
                                         Remove
-                                      </button>
+                                      </p>
                                     </center>
                                   </div>
                                 </div>

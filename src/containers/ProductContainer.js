@@ -354,6 +354,12 @@ class ProductContainer extends React.Component {
 		})
 	}
 
+	handleRemoveThumbnailWhenAdd(data) {
+		const key = data.target.attributes.getNamedItem("data-thumbnail-key").value
+
+		this.handleRemoveThumbnail(key)
+	}
+
 	handleAddProduct() {
 		const {
 			title,
@@ -523,6 +529,7 @@ class ProductContainer extends React.Component {
 						(loading.status && loading.process_on === "UPDATE_PRODUCT")
 					}
 					onBack={this.onBack.bind(this)}
+					onRemoveThumbnail={this.handleRemoveThumbnailWhenAdd.bind(this)}
 				/>
 			)
 		}
