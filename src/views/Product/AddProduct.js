@@ -240,7 +240,7 @@ const AddProduct = ({
                     ))}
                   </select>
                 </div>
-                <label>*you have to input atleast Title & price</label>
+                <label>*you have to input atleast Photo, Title & price</label>
               </Col>
             </Row>
             <Row>
@@ -269,7 +269,7 @@ const AddProduct = ({
                       Cancel
                     </button>
                     <button
-                      disabled={title == "" || price == 0}
+                      disabled={title == "" || price == 0 || thumbnails.length == 0}
                       className="btn btn-primary"
                       onClick={handleAddProduct}
                       style={styles.btnSave}>
