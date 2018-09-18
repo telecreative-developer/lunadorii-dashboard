@@ -502,7 +502,8 @@ class ProductContainer extends React.Component {
 					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
 					discount={discount_percentage}
 					onChangeDiscount={e =>
-						this.setState({ discount_percentage: e.target.value })
+						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0 ?
+						this.setState({ discount_percentage: e.target.value.replace(/[^\d]/,'') }) : null
 					}
 					discountCondition={discount}
 					onChangeDiscountCondition={e =>
@@ -516,6 +517,8 @@ class ProductContainer extends React.Component {
 					onChangeSubcategory={e =>
 						this.setState({ product_subcategory_id: e.target.value })
 					}
+					title={title}
+					price={price}
 					brands={brands}
 					brandSelected={product_brand_id}
 					onChangeBrand={e =>

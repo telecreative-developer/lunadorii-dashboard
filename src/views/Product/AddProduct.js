@@ -7,6 +7,8 @@ const AddProduct = ({
   subcategories,
   subcategorySelected,
   onChangeSubcategory,
+  title,
+  price,
   brands,
   brandSelected,
   onChangeBrand,
@@ -184,6 +186,8 @@ const AddProduct = ({
                     <Col md={9}>
                       <input
                         type="number"
+                        min="0"
+                        pattern={"(([0-9]*[0-9][0-9]*([.][0-9]+)?)|([0]+[.][0-9]*[0-9][0-9]*))"}
                         name="discount"
                         className="form-control"
                         disabled={
@@ -236,6 +240,7 @@ const AddProduct = ({
                     ))}
                   </select>
                 </div>
+                <label>*you have to input atleast Title & price</label>
               </Col>
             </Row>
             <Row>
@@ -264,6 +269,7 @@ const AddProduct = ({
                       Cancel
                     </button>
                     <button
+                      disabled={title == "" || price == 0}
                       className="btn btn-primary"
                       onClick={handleAddProduct}
                       style={styles.btnSave}>
