@@ -120,7 +120,7 @@ const Product = ({
                             data-product-description={product.description}
                             data-product-detail={product.detail}
                             data-product-howtouse={product.to_use}
-                            data-product-weight={100}
+                            data-product-weight={product.weight_gram}
                             data-product-thumbnails={JSON.stringify(
                               product.thumbnails
                             )}
@@ -141,7 +141,7 @@ const Product = ({
                               data-product-description={product.description}
                               data-product-detail={product.detail}
                               data-product-howtouse={product.to_use}
-                              data-product-weight={100}
+                              data-product-weight={product.weight_gram}
                               data-product-thumbnails={JSON.stringify(
                                 product.thumbnails
                               )}
@@ -171,7 +171,7 @@ const Product = ({
                             data-product-description={product.description}
                             data-product-detail={product.detail}
                             data-product-howtouse={product.to_use}
-                            data-product-weight={100}
+                            data-product-weight={product.weight_gram}
                             data-product-thumbnails={JSON.stringify(
                               product.thumbnails
                             )}
@@ -199,7 +199,7 @@ const Product = ({
                               data-product-description={product.description}
                               data-product-detail={product.detail}
                               data-product-howtouse={product.to_use}
-                              data-product-weight={100}
+                              data-product-weight={product.weight_gram}
                               data-product-thumbnails={JSON.stringify(
                                 product.thumbnails
                               )}
