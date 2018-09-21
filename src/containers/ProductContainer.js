@@ -498,7 +498,10 @@ class ProductContainer extends React.Component {
 					}
 					onChangeDetail={e => this.setState({ detail: e.target.value })}
 					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
-					onChangePrice={e => this.setState({ price: e.target.value })}
+					onChangePrice={e => 
+						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0 ?
+						this.setState({ price: e.target.value.replace(/[^\d]/,'') }) : null
+					}
 					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
 					discount={discount_percentage}
 					onChangeDiscount={e =>
@@ -551,12 +554,16 @@ class ProductContainer extends React.Component {
 					toUse={to_use}
 					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
 					price={price}
-					onChangePrice={e => this.setState({ price: e.target.value })}
+					onChangePrice={e => 
+						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0 ?
+						this.setState({ price: e.target.value.replace(/[^\d]/,'') }) : null
+					}
 					weight={weight_gram}
 					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
 					discount={discount_percentage}
 					onChangeDiscount={e =>
-						this.setState({ discount_percentage: e.target.value })
+						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0 ?
+						this.setState({ discount_percentage: e.target.value.replace(/[^\d]/,'') }) : null
 					}
 					discountCondition={discount}
 					onChangeDiscountCondition={e =>
