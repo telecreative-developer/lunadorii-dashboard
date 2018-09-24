@@ -6,7 +6,7 @@ import { convertToIDR } from "../../lib/conversion"
 
 const tableHead = ["No", "Product", "Price", "Qty", "Subtotal"]
 
-const TransactionDetail = ({ transaction, onNavigateToTransaction }) => (
+const TransactionDetail = ({ transaction, onNavigateToTransaction, onChangeResi, resi, loadingProduct, handleChangeToPacking, handleChangeToShipping }) => (
   <div className="content">
     <Grid fluid>
       <Row>
@@ -117,9 +117,44 @@ const TransactionDetail = ({ transaction, onNavigateToTransaction }) => (
                     </tr>
                   </thead>
                 </Table>
+                {transaction.order_status && transaction.order_status.toUpperCase() === "PACKING" ? (
+                  <Row>
+                    <Col md={8} />
+                    <Col md={4} style={{paddingLeft: 35, marginBottom: 10}}>
+                    <label>Resi Number</label>
+                    <input
+                      type="text"
+                      name="resi"
+                      className="form-control"
+                      onKeyUp={onChangeResi}
+                      disabled={loadingProduct}
+                      placeholder="Resi Number"
+                      style={{textTransform: 'uppercase'}}
+                    />
+                    </Col>
+                  </Row>
+                ) : null }
                 <Row>
-                  <Col md={10} />
-                  <Col md={2}>
+                  <Col md={8} />
+                  <Col md={4}>
+                    {transaction.order_status && transaction.order_status.toUpperCase() === "CHECKOUT" ? (
+                      <button
+                        data-transaction-code={transaction.billing_code && transaction.billing_code.toUpperCase()}
+                        className="btn btn-primary"
+                        onClick={handleChangeToPacking}
+                        style={styles.btnSave}>
+                          change to packing
+                      </button>
+                    ) : transaction.order_status && transaction.order_status.toUpperCase() === "PACKING" ? (
+                      <button
+                      data-transaction-code={transaction.billing_code && transaction.billing_code.toUpperCase()}
+                        disabled={!resi}
+                        className="btn btn-primary"
+                        onClick={handleChangeToShipping}
+                        style={styles.btnSave}>
+                          change to shipping
+                      </button>
+                    ) : null}
                     <button
                       className="btn btn-warning"
                       onClick={onNavigateToTransaction}
@@ -141,6 +176,13 @@ const styles = {
   wrapBody: {
     paddingLeft: 15,
     paddingRight: 15
+  },
+  btnSave: {
+    background: "#3279b8",
+    border: "none",
+    float: "left",
+    marginLeft: 20,
+    color: "#fff"
   },
   btnCancel: {
     background: "#ffc107",

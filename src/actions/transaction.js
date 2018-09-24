@@ -68,3 +68,59 @@ const fetchSingleTransactionSuccess = data => ({
 	type: "FETCH_SINGLE_TRANSACTION_SUCCESS",
 	payload: data
 })
+
+export const updateTransactionStatusPacking = (transaction_code, accessToken) => {
+	return dispatch => {
+		dispatch(
+			setLoading({ status: true, process_on: "UPDATE_TRANSACTION_STATUS_PACKING" })
+		)
+		return reduxFetch
+			.put({
+				url: server + `/order/status/packing/${transaction_code}`,
+				body: {},
+				accessToken: accessToken
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(
+						setFailedAndBackToDefault(res.message, "UPDATE_TRANSACTION_STATUS_PACKING")
+					)
+				} else {
+					dispatch(
+						setSuccessAndBackToDefault(res.message, "UPDATE_TRANSACTION_STATUS_PACKING")
+					)
+				}
+			})
+			.catch(err =>
+				dispatch(setFailedAndBackToDefault(err, "UPDATE_TRANSACTION_STATUS_PACKING"))
+			)
+	}
+}
+
+export const updateTransactionStatusShipping = (transaction_code, receipt_number, accessToken) => {
+	return dispatch => {
+		dispatch(
+			setLoading({ status: true, process_on: "UPDATE_TRANSACTION_STATUS_SHIPPING" })
+		)
+		return reduxFetch
+			.put({
+				url: server + `/order/status/shipping/${transaction_code}`,
+				body: { receipt_number },
+				accessToken: accessToken
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(
+						setFailedAndBackToDefault(res.message, "UPDATE_TRANSACTION_STATUS_SHIPPING")
+					)
+				} else {
+					dispatch(
+						setSuccessAndBackToDefault(res.message, "UPDATE_TRANSACTION_STATUS_SHIPPING")
+					)
+				}
+			})
+			.catch(err =>
+				dispatch(setFailedAndBackToDefault(err, "UPDATE_TRANSACTION_STATUS_SHIPPING"))
+			)
+	}
+}
