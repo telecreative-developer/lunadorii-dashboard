@@ -312,3 +312,112 @@ const fetchBrandsSuccess = data => ({
 	type: "FETCH_BRANDS_SUCCESS",
 	payload: data
 })
+
+const uploadImageBrandToS3 = thumbnails => {
+	return s3
+		.upload({
+			ACL: "public-read",
+			Body: thumbnails[0],
+			Key: `brand-${Date.now()}.${thumbnails[0].type.split("/")[1]}`,
+			Bucket: awsConfig.bucket
+		})
+		.promise()
+}
+
+export const addBrand = (data, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "ADD_BRANDS" }))
+		return uploadImageBrandToS3(data.thumbnails)
+			.then(res => {
+				return reduxFetch.post({
+					url: server + "/product-brands",
+					accessToken: accessToken,
+					body: {
+						brand: data.brand,
+						logo_url: res.Location
+					}
+				})
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(setFailedAndBackToDefault(res.message, "ADD_BRANDS"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "ADD_BRANDS"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "ADD_BRANDS")))
+	}
+}
+
+export const updateBrandWithImage = (data, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "UPDATE_BRANDS" }))
+		return uploadImageBrandToS3(data.thumbnails)
+			.then(res => {
+				return reduxFetch.put({
+					url: server + "/product-brands/" + data.product_brand_id,
+					accessToken: accessToken,
+					body: {
+						brand: data.brand,
+						logo_url: res.Location,
+					}
+				})
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(setFailedAndBackToDefault(res.message, "UPDATE_BRANDS"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "UPDATE_BRANDS"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "UPDATE_BRANDS")))
+	}
+}
+
+export const updateBrand = (data, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "UPDATE_BRANDS" }))
+		return reduxFetch
+			.put({
+				url: server + "/product-brands/" + data.product_brand_id,
+				accessToken: accessToken,
+				body: {
+					brand: data.brand,
+					logo_url: data.logo_url,
+				}
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(setFailedAndBackToDefault(res.message, "UPDATE_BRANDS"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "UPDATE_BRANDS"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "UPDATE_BRANDS")))
+	}
+}
+
+export const deleteBrand = (product_brand_id, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "DELETE_BRANDS" }))
+		dispatch(deleteBannerReducer(product_brand_id))
+		return reduxFetch
+			.delete({
+				url: server + "/product-brands/" + product_brand_id,
+				accessToken: accessToken
+			})
+			.then(res => {
+				if (res.status !== 200) {
+					dispatch(setFailedAndBackToDefault(res.message, "DELETE_BRANDS"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "DELETE_BRANDS"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "DELETE_BRANDS")))
+	}
+}
+
+const deleteBannerReducer = product_brand_id => ({
+	type: "DELETE_BRANDS_REDUCER",
+	product_brand_id: parseInt(product_brand_id, 10)
+})

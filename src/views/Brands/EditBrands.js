@@ -4,14 +4,14 @@ import Dropzone from "react-dropzone"
 import Card from "../../components/Card/Card"
 
 const EditBrands = ({
- 
   title,
   onChangeTitle,
-  thumbnails,
+  logo_url,
+  thumbnail,
   onChangeThumbnail,
-  handleUpdateProduct,
-  loadingProduct,
-  onRemoveThumbnail,
+  onClearImage,
+  handleUpdateBrand,
+  loadingBrand,
   onBack
 }) => (
   <div className="contentAdd">
@@ -23,49 +23,45 @@ const EditBrands = ({
         content={
           <div>
             <Row>
-              <Col xs={6}>
-                <Row>
-                  <Col xs={12}>
-                    <div style={styles.headerGroup}>
-                      {thumbnails.length ? (
-                        <div className="product-banner">
-                          <img
-                            src={thumbnails[0].thumbnail_url}
-                            alt="product-thumbnail"
-                            style={{ width: "100%", maxHeight: 225 }}
-                          />
-                          <div className="overlay">
-                            <center>
-                              <button
-                                data-thumbnail-id={
-                                  thumbnails[0].product_thumbnail_id
-                                }
-                                data-thumbnail-key={thumbnails[0].key}
-                                onClick={onRemoveThumbnail}>
-                                Remove
-                              </button>
-                            </center>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="imageUploader">
-                          <Dropzone
-                            style={{ width: "100%", paddingBottom: 60 }}
-                            accept="image/jpeg, image/jpg, image/png"
-                            onDrop={onChangeThumbnail}>
-                            <p style={styles.pIconCamera}>
-                              <i
-                                className="pe-7s-camera"
-                                style={styles.iconCamera}
-                              />
-                            </p>
-                            <div className="group" />
-                          </Dropzone>
-                        </div>
-                      )}
+            <Col xs={6}>
+                {logo_url ? (
+                  <div className="profile">
+                    <img
+                      alt="brand-thumbnail"
+                      src={logo_url}
+                      style={styles.thumbnailBrand}
+                    />
+                    <div className="overlay" onClick={onClearImage}>
+                      <center>
+                        <p>Remove</p>
+                      </center>
                     </div>
-                  </Col>
-                </Row>
+                  </div>
+                ) : thumbnail.length ? (
+                  <div className="profile">
+                    <img
+                      alt="brand-thumbnail"
+                      src={URL.createObjectURL(thumbnail[0])}
+                      style={styles.thumbnailBrand}
+                    />
+                    <div className="overlay" onClick={onClearImage}>
+                      <center>
+                        <p>Remove</p>
+                      </center>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="imageUploader">
+                    <Dropzone
+                      accept="image/jpeg, image/jpg, image/png"
+                      onDrop={onChangeThumbnail}
+                      style={{ width: "100%", paddingBottom: 60 }}>
+                      <p style={styles.pIconCamera}>
+                        <i className="pe-7s-camera" style={styles.iconCamera} />
+                      </p>
+                    </Dropzone>
+                  </div>
+                )}
               </Col>
               <Col xs={6}>
                 <div style={styles.form}>
@@ -76,7 +72,7 @@ const EditBrands = ({
                     className="form-control"
                     value={title}
                     onChange={onChangeTitle}
-                    disabled={loadingProduct}
+                    disabled={loadingBrand}
                     placeholder="Title"
                   />
                 </div>
@@ -84,17 +80,17 @@ const EditBrands = ({
             </Row>
             <Row>
               <Col xs={12}>
-                {loadingProduct ? (
+                {loadingBrand ? (
                   <div style={styles.divButton}>
                     <button
                       className="btn btn-default"
-                      disabled={loadingProduct}
+                      disabled={loadingBrand}
                       style={styles.btnDefault}>
                       Loading...
                     </button>
                     <button
                       className="btn btn-default"
-                      disabled={loadingProduct}
+                      disabled={loadingBrand}
                       style={styles.btnDefault}>
                       Loading...
                     </button>
@@ -108,8 +104,9 @@ const EditBrands = ({
                       Cancel
                     </button>
                     <button
+                      disabled={!thumbnail || !title}
                       className="btn btn-primary"
-                      onClick={handleUpdateProduct}
+                      onClick={handleUpdateBrand}
                       style={styles.btnSave}>
                       Update
                     </button>
@@ -125,9 +122,13 @@ const EditBrands = ({
 )
 
 const styles = {
-  imageBanners: {
+  imageBrands: {
     width: "100%",
     maxHeight: 400
+  },
+  thumbnailBrand: {
+    width: "100%",
+    maxHeight: 225
   },
   btnDefault: {
     background: "#6d6d6d",

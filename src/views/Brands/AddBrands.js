@@ -4,12 +4,14 @@ import Dropzone from "react-dropzone"
 import Card from "../../components/Card/Card"
 
 const AddBrands = ({
-  
+  title,
   onChangeTitle,
-  thumbnails,
+  logo_url,
+  thumbnail,
   onChangeThumbnail,
-  handleAddProduct,
-  loadingProduct,
+  onClearImage,
+  handleAddBrand,
+  loadingBrand,
   onBack
 }) => (
   <div className="contentAdd">
@@ -22,41 +24,44 @@ const AddBrands = ({
           <div>
             <Row>
               <Col xs={6}>
-                <Row>
-                  <Col xs={12}>
-                    <div style={styles.headerGroup}>
-                      {thumbnails.length ? (
-                        <div className="product-banner">
-                          <img
-                            src={thumbnails[0].thumbnail_url}
-                            alt="product-thumbnail"
-                            style={{ width: "100%", maxHeight: 225 }}
-                          />
-                          <div className="overlay">
-                            <center>
-                              <p>Remove</p>
-                            </center>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="imageUploader">
-                          <Dropzone
-                            style={{ width: "100%", paddingBottom: 60 }}
-                            accept="image/jpeg, image/jpg, image/png"
-                            onDrop={onChangeThumbnail}>
-                            <p style={styles.pIconCamera}>
-                              <i
-                                className="pe-7s-camera"
-                                style={styles.iconCamera}
-                              />
-                            </p>
-                            <div className="group" />
-                          </Dropzone>
-                        </div>
-                      )}
+                {logo_url ? (
+                  <div className="profile">
+                    <img
+                      alt="brand-thumbnail"
+                      src={logo_url}
+                      style={styles.thumbnailBrand}
+                    />
+                    <div className="overlay" onClick={onClearImage}>
+                      <center>
+                        <p>Remove</p>
+                      </center>
                     </div>
-                  </Col>
-                </Row>
+                  </div>
+                ) : thumbnail.length ? (
+                  <div className="profile">
+                    <img
+                      alt="brand-thumbnail"
+                      src={URL.createObjectURL(thumbnail[0])}
+                      style={styles.thumbnailBrand}
+                    />
+                    <div className="overlay" onClick={onClearImage}>
+                      <center>
+                        <p>Remove</p>
+                      </center>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="imageUploader">
+                    <Dropzone
+                      accept="image/jpeg, image/jpg, image/png"
+                      onDrop={onChangeThumbnail}
+                      style={{ width: "100%", paddingBottom: 60 }}>
+                      <p style={styles.pIconCamera}>
+                        <i className="pe-7s-camera" style={styles.iconCamera} />
+                      </p>
+                    </Dropzone>
+                  </div>
+                )}
               </Col>
               <Col xs={6}>
                 <div style={styles.form}>
@@ -66,7 +71,7 @@ const AddBrands = ({
                     name="title"
                     className="form-control"
                     onKeyUp={onChangeTitle}
-                    disabled={loadingProduct}
+                    disabled={loadingBrand}
                     placeholder="Brand"
                   />
                 </div>
@@ -74,17 +79,17 @@ const AddBrands = ({
             </Row>
             <Row>
               <Col xs={12}>
-                {loadingProduct ? (
+                {loadingBrand ? (
                   <div style={styles.divButton}>
                     <button
                       className="btn btn-default"
-                      disabled={loadingProduct}
+                      disabled={loadingBrand}
                       style={styles.btnDefault}>
                       Loading...
                     </button>
                     <button
                       className="btn btn-default"
-                      disabled={loadingProduct}
+                      disabled={loadingBrand}
                       style={styles.btnDefault}>
                       Loading...
                     </button>
@@ -98,8 +103,9 @@ const AddBrands = ({
                       Cancel
                     </button>
                     <button
+                      disabled={!thumbnail || !title}
                       className="btn btn-primary"
-                      onClick={handleAddProduct}
+                      onClick={handleAddBrand}
                       style={styles.btnSave}>
                       Save
                     </button>
@@ -115,9 +121,13 @@ const AddBrands = ({
 )
 
 const styles = {
-  imageBanners: {
+  imageBrands: {
     width: "100%",
     maxHeight: 400
+  },
+  thumbnailBrand: {
+    width: "100%",
+    maxHeight: 225
   },
   btnDefault: {
     background: "#6d6d6d",

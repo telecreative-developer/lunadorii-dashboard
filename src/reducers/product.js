@@ -44,6 +44,8 @@ export const subcategories = (state = [], action) => {
 	switch (action.type) {
 		case "FETCH_SUBCATEGORIES_SUCCESS":
 			return action.payload
+		case "DELETE_SUBCATEGORIES_REDUCER":
+			return state.filter(subcategories => subcategories.product_subcategory_id !== action.product_subcategory_id)
 		default:
 			return state
 	}
@@ -53,6 +55,8 @@ export const brands = (state = [], action) => {
 	switch (action.type) {
 		case "FETCH_BRANDS_SUCCESS":
 			return action.payload
+		case "DELETE_BRANDS_REDUCER":
+			return state.filter(brand => brand.product_brand_id !== action.product_brand_id)
 		default:
 			return state
 	}

@@ -7,15 +7,8 @@ const tableHead = [
   "No",
   "Picture",
   "Brand",
-  // "Reviews",
   "Action"
 ]
-
-const tooltipShow = (
-  <Tooltip id="tooltip">
-    <strong>Show Product</strong>
-  </Tooltip>
-)
 
 const tooltipRemove = (
   <Tooltip id="tooltip">
@@ -29,13 +22,12 @@ const tooltipEdit = (
   </Tooltip>
 )
 
-const Product = ({
-  products,
-  onUpdateProduct,
-  onAddProduct,
-  onDeleteProduct,
-  loadingDeleteProduct,
-  onShowDetailProduct,
+const Brand = ({
+  brands,
+  onUpdateBrand,
+  onAddBrand,
+  onDeleteBrand,
+  loadingDeleteBrand,
   searchByTitle,
   onChangeSearch
 }) => (
@@ -45,7 +37,7 @@ const Product = ({
         <Col xs={12}>
           <button
             className="btn btn-primary"
-            onClick={onAddProduct}
+            onClick={onAddBrand}
             style={styles.btnAdd}>
             Add Brands
           </button>
@@ -59,7 +51,7 @@ const Product = ({
               <form>
                 <FormControl
                   type="text"
-                  placeholder="Search By Product"
+                  placeholder="Search By Brand"
                   value={searchByTitle}
                   onChange={onChangeSearch}
                 />
@@ -75,80 +67,38 @@ const Product = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {products.filter(products => products.product.indexOf(searchByTitle) > -1 ).map((product, key) => (
+                  {brands.filter(brands => brands.brand.indexOf(searchByTitle) > -1 ).map((brand, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>
                         <img
-                          alt="product-thumbnail"
-                          src={product.thumbnails[0].thumbnail_url}
+                          alt="brand-thumbnail"
+                          src={brand.logo_url}
                           style={{ width: 100 }}
                         />
                       </td>
-                      <td>{product.product}</td>
+                      <td>{brand.brand}</td>
                       <td>
                         
                         <OverlayTrigger placement="top" overlay={tooltipEdit}>
                           <button
-                            data-product-id={product.product_id}
-                            data-product-title={product.product}
-                            data-product-brand-id={
-                              product.brands[0].product_brand_id
-                            }
-                            data-product-brand={product.brands[0].brand}
-                            data-product-subcategory-id={
-                              product.subcategories[0].product_subcategory_id
-                            }
-                            data-product-subcategory={
-                              product.subcategories[0].subcategory
-                            }
-                            data-product-discount={product.discount}
-                            data-product-discount-percentage={
-                              product.discount_percentage
-                            }
-                            data-product-price={product.price}
-                            data-product-description={product.description}
-                            data-product-detail={product.detail}
-                            data-product-howtouse={product.to_use}
-                            data-product-weight={100}
-                            data-product-thumbnails={JSON.stringify(
-                              product.thumbnails
-                            )}
-                            onClick={onUpdateProduct}
+                            data-brand-id={brand.product_brand_id}
+                            data-brand-title={brand.brand}
+                            data-brand-thumbnail={brand.logo_url}
+                            onClick={onUpdateBrand}
                             className="btn btn-info"
                             style={styles.btnEdit}>
                             <i
-                              data-product-id={product.product_id}
-                              data-product-title={product.product}
-                              data-product-brand-id={
-                                product.brands[0].product_brand_id
-                              }
-                              data-product-brand={product.brands[0].brand}
-                              data-product-subcategory-id={
-                                product.subcategories[0].product_subcategory_id
-                              }
-                              data-product-subcategory={
-                                product.subcategories[0].subcategory
-                              }
-                              data-product-discount={product.discount}
-                              data-product-discount-percentage={
-                                product.discount_percentage
-                              }
-                              data-product-price={product.price}
-                              data-product-description={product.description}
-                              data-product-detail={product.detail}
-                              data-product-howtouse={product.to_use}
-                              data-product-weight={100}
-                              data-product-thumbnails={JSON.stringify(
-                                product.thumbnails
-                              )}
+                              data-brand-id={brand.product_brand_id}
+                              data-brand-title={brand.brand}
+                              data-brand-thumbnail={brand.logo_url}
                               className="pe-7s-eyedropper"
                               style={{ color: "#fff" }}
                             />
                           </button>
                         </OverlayTrigger>
                         <OverlayTrigger placement="top" overlay={tooltipRemove}>
-                          {loadingDeleteProduct ? (
+                          {loadingDeleteBrand ? (
                             <button
                               className="btn btn-default"
                               style={styles.btnDefault}>
@@ -159,12 +109,12 @@ const Product = ({
                             </button>
                           ) : (
                             <button
-                              data-product-id={product.product_id}
+                              data-brand-id={brand.product_brand_id}
                               className="btn btn-default"
-                              onClick={onDeleteProduct}
+                              onClick={onDeleteBrand}
                               style={styles.btnDefault}>
                               <i
-                                data-product-id={product.product_id}
+                                data-brand-id={brand.product_brand_id}
                                 className="pe-7s-trash"
                                 style={{ color: "#fff" }}
                               />
@@ -210,4 +160,4 @@ const styles = {
   }
 }
 
-export default Product
+export default Brand

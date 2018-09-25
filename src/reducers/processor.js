@@ -46,7 +46,14 @@ const initialStateNavigation = {
 		content: "",
 		date: "",
 		reply: []
-	}
+	},
+	brand: "brand",
+	brand_data: {
+		product_brand_id: "",
+		brand: "",
+		logo_url: "",
+		thumbnails: []
+	}, 
 }
 
 export const navigation = (state = initialStateNavigation, action) => {
