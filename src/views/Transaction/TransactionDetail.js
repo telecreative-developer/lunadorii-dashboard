@@ -137,7 +137,9 @@ const TransactionDetail = ({ transaction, onNavigateToTransaction, onChangeResi,
                 <Row>
                   <Col md={8} />
                   <Col md={4}>
-                    {transaction.order_status && transaction.order_status.toUpperCase() === "ACCEPTED_PAYMENT" ? (
+                    {transaction.order_status && transaction.order_status.toUpperCase() === "ACCEPTED_PAYMENT" ||
+                      (transaction.order_status && transaction.order_status.toUpperCase() === "CHECKOUT" &&
+                      transaction.midtrans_response && transaction.midtrans_response.transaction_status.toUpperCase() === "SETTLEMENT") ? (
                       <button
                         data-transaction-code={transaction.billing_code && transaction.billing_code.toUpperCase()}
                         className="btn btn-primary"

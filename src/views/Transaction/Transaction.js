@@ -66,7 +66,11 @@ const Transaction = ({ transactions, onNavigateTransactionDetail, searchByTitle,
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>{transaction.billing_code}</td>
-                      <td>{transaction.order_status}</td>
+                      {transaction.order_status !== "checkout" ? (
+                        <td>{transaction.order_status}</td>
+                      ): (
+                        <td><p style={styles.checkout} >{transaction.order_status}</p></td>
+                      )}
                       <td>
                         {transaction.paid_method === "credit_card"
                           ? "Credit Card"
@@ -135,6 +139,9 @@ const styles = {
     border: "none",
     color: "#fff",
     marginRight: 10
+  },
+  checkout: {
+    color: "red"
   }
 }
 
