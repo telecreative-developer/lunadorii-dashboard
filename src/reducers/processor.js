@@ -53,7 +53,15 @@ const initialStateNavigation = {
 		brand: "",
 		logo_url: "",
 		thumbnails: []
-	}, 
+	},
+	category: "category",
+	category_data: {
+		product_subcategory_id: "",
+		subcategory: "",
+		thumbnail_url: "",
+		product_category_id: "",
+		thumbnails: []
+	} 
 }
 
 export const navigation = (state = initialStateNavigation, action) => {

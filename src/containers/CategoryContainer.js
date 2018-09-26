@@ -7,19 +7,13 @@ import { setNavigation } from "../actions/processor"
 import Category from "../views/Category/Category"
 import AddCategory from "../views/Category/AddCategory"
 import EditCategory from "../views/Category/EditCategory"
-import ProductDetail from "../views/Product/ProductDetail"
 import {
-	addProduct,
-	fetchProducts,
+	fetchCategories,
 	fetchSubcategories,
-	fetchBrands,
-	addProductThumbnail,
-	removeProductThumbnail,
-	deleteProduct,
-	updateProduct,
-	setProductThumbnail,
-	addProductThumbnailWhenUpdate,
-	removeProductThumbnailWhenUpdate
+	addSubcategories,
+	updateSubcategoriesWithImage,
+	updateSubcategories,
+	deleteSubcategories
 } from "../actions/product"
 const db = new PouchDB("lunadorii")
 const ReactSwal = withReactContent(Swal)
@@ -33,415 +27,196 @@ class CategoryContainer extends React.Component {
 		super(props)
 
 		const {
-			product_id,
-			title,
-			description,
-			detail,
-			to_use,
-			price,
-			discount,
-			discount_percentage,
-			weight_gram,
-			subcategory,
 			product_subcategory_id,
-			brand,
-			product_brand_id,
+			subcategory,
+			thumbnail_url,
+			product_category_id,
 			thumbnails
-		} = props.navigationProductData
+		} = props.navigationCategoryData
 
 		this.state = {
 			searchByTitle: "",
-			product_id,
-			title,
-			description,
-			detail,
-			to_use,
-			price,
-			discount,
-			discount_percentage,
-			weight_gram,
-			subcategory,
 			product_subcategory_id,
-			brand,
-			product_brand_id,
+			subcategory,
+			thumbnail_url,
+			product_category_id,
 			thumbnails
-		}
-
-		if (!props.products.length) {
-			db.get("session").then(doc => {
-				this.props.fetchProducts(doc.accessToken)
-			})
 		}
 
 		if (!props.subcategories.length) {
 			this.props.fetchSubcategories()
 		}
 
-		if (!props.brands.length) {
-			this.props.fetchBrands()
+		if (!props.categories.length) {
+			this.props.fetchCategories()
 		}
 	}
 
 	getSnapshotBeforeUpdate(prevProps, prevState) {
 		const { success, failed } = prevProps
 
-		if (success.status && success.process_on === "ADD_PRODUCT") {
-			return "ADD_PRODUCT_SUCCESS"
+		if (success.status && success.process_on === "ADD_SUBCATEGORIES") {
+			return "ADD_SUBCATEGORIES_SUCCESS"
 		}
 
-		if (failed.status && failed.process_on === "ADD_PRODUCT") {
-			return "ADD_PRODUCT_FAILED"
+		if (failed.status && failed.process_on === "ADD_SUBCATEGORIES") {
+			return "ADD_SUBCATEGORIES_FAILED"
 		}
 
-		if (success.status && success.process_on === "UPDATE_PRODUCT") {
-			return "UPDATE_PRODUCT_SUCCESS"
+		if (success.status && success.process_on === "UPDATE_SUBCATEGORIES") {
+			return "UPDATE_SUBCATEGORIES_SUCCESS"
 		}
 
-		if (failed.status && failed.process_on === "UPDATE_PRODUCT") {
-			return "UPDATE_PRODUCT_FAILED"
+		if (failed.status && failed.process_on === "UPDATE_SUBCATEGORIES") {
+			return "UPDATE_SUBCATEGORIES_FAILED"
 		}
 
-		if (success.status && success.process_on === "DELETE_PRODUCT") {
-			return "DELETE_PRODUCT_SUCCESS"
+		if (success.status && success.process_on === "DELETE_SUBCATEGORIES") {
+			return "DELETE_SUBCATEGORIES_SUCCESS"
 		}
 
-		if (failed.status && failed.process_on === "DELETE_PRODUCT") {
-			return "DELETE_PRODUCT_FAILED"
+		if (failed.status && failed.process_on === "DELETE_SUBCATEGORIES") {
+			return "DELETE_SUBCATEGORIES_FAILED"
 		}
 
 		return null
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (snapshot === "ADD_PRODUCT_SUCCESS") {
-			sweetAlert("Success Add Product", "success", "Close").then(res => {
+		if (snapshot === "ADD_SUBCATEGORIES_SUCCESS") {
+			sweetAlert("Success Add Category", "success", "Close").then(res => {
 				return window.location.reload()
 			})
 		}
 
-		if (snapshot === "ADD_PRODUCT_FAILED") {
-			sweetAlert("Failed Add Product", "error", "Close").then(res => {
+		if (snapshot === "ADD_SUBCATEGORIES_FAILED") {
+			sweetAlert("Failed Add Category", "error", "Close").then(res => {
 				return window.location.reload()
 			})
 		}
 
-		if (snapshot === "UPDATE_PRODUCT_SUCCESS") {
-			sweetAlert("Success Update Product", "success", "Close").then(res => {
+		if (snapshot === "UPDATE_SUBCATEGORIES_SUCCESS") {
+			sweetAlert("Success Update Category", "success", "Close").then(res => {
 				return window.location.reload()
 			})
 		}
 
-		if (snapshot === "UPDATE_PRODUCT_FAILED") {
-			sweetAlert("Failed Update Product", "error", "Close").then(res => {
+		if (snapshot === "UPDATE_SUBCATEGORIES_FAILED") {
+			sweetAlert("Failed Update Category", "error", "Close").then(res => {
 				return window.location.reload()
 			})
 		}
 
-		if (snapshot === "DELETE_PRODUCT_SUCCESS") {
-			sweetAlert("Success Delete Product", "success", "Close").then(res => {
+		if (snapshot === "DELETE_SUBCATEGORIES_SUCCESS") {
+			sweetAlert("Success Delete Category", "success", "Close").then(res => {
 				return window.location.reload()
 			})
 		}
 
-		if (snapshot === "DELETE_PRODUCT_FAILED") {
-			sweetAlert("Failed Delete Product", "error", "Close").then(res => {
+		if (snapshot === "DELETE_SUBCATEGORIES_FAILED") {
+			sweetAlert("Failed Delete Category", "error", "Close").then(res => {
 				return window.location.reload()
 			})
 		}
 	}
 
-	onNavigateAddProduct() {
+	onNavigateAddSubcategory() {
 		this.props.setNavigation({
-			product: "add-product"
-		})
-	}
-
-	onNavigateDetailProduct(data) {
-		const title = data.target.attributes.getNamedItem("data-product-title")
-			.value
-		const detail = data.target.attributes.getNamedItem("data-product-detail")
-			.value
-		const description = data.target.attributes.getNamedItem(
-			"data-product-description"
-		).value
-		const to_use = data.target.attributes.getNamedItem("data-product-howtouse")
-			.value
-		const price = data.target.attributes.getNamedItem("data-product-price")
-			.value
-		const discount = data.target.attributes.getNamedItem(
-			"data-product-discount"
-		).value
-		const discount_percentage = data.target.attributes.getNamedItem(
-			"data-product-discount-percentage"
-		).value
-		const brand = data.target.attributes.getNamedItem("data-product-brand")
-			.value
-		const subcategory = data.target.attributes.getNamedItem(
-			"data-product-subcategory"
-		).value
-		const weight_gram = data.target.attributes.getNamedItem(
-			"data-product-weight"
-		).value
-		const thumbnails = JSON.parse(
-			data.target.attributes.getNamedItem("data-product-thumbnails").value
-		)
-
-		this.setState({
-			title,
-			detail,
-			description,
-			to_use,
-			price,
-			discount,
-			discount_percentage,
-			weight_gram,
-			brand,
-			subcategory,
-			thumbnails
-		})
-
-		this.props.setNavigation({
-			product: "product-detail",
-			product_data: {
-				title,
-				detail,
-				description,
-				to_use,
-				price,
-				discount,
-				discount_percentage,
-				weight_gram,
-				brand,
-				subcategory,
-				thumbnails
-			}
+			category: "add-category"
 		})
 	}
 
 	onBack() {
 		this.props.setNavigation({
-			product: "product"
-		})
-		this.setState({
-			title: "",
-			detail: "",
-			description: "",
-			to_use: "",
-			price: 0,
-			discount: false,
-			discount_percentage: 0,
-			weight_gram: 0,
-			product_subcategory_id: 1,
-			product_brand_id: 1,
-			thumbnails: []
+			category: "category"
 		})
 	}
 
-	onNavigateUpdateProduct(data) {
-		const product_id = data.target.attributes.getNamedItem("data-product-id")
+	onNavigateUpdateSubcategory(data) {
+		const product_subcategory_id = data.target.attributes.getNamedItem("data-subcategory-id")
 			.value
-		const title = data.target.attributes.getNamedItem("data-product-title")
+		const subcategory = data.target.attributes.getNamedItem("data-subcategory-title")
 			.value
-		const detail = data.target.attributes.getNamedItem("data-product-detail")
+		const thumbnail_url = data.target.attributes.getNamedItem("data-subcategory-thumbnail")
 			.value
-		const description = data.target.attributes.getNamedItem(
-			"data-product-description"
-		).value
-		const to_use = data.target.attributes.getNamedItem("data-product-howtouse")
+		const product_category_id = data.target.attributes.getNamedItem("data-subcategory-CategoryId")
 			.value
-		const price = data.target.attributes.getNamedItem("data-product-price")
-			.value
-		const discount = data.target.attributes.getNamedItem(
-			"data-product-discount"
-		).value
-		const discount_percentage = data.target.attributes.getNamedItem(
-			"data-product-discount-percentage"
-		).value
-		const product_brand_id = data.target.attributes.getNamedItem(
-			"data-product-brand-id"
-		).value
-		const product_subcategory_id = data.target.attributes.getNamedItem(
-			"data-product-subcategory-id"
-		).value
-		const weight_gram = data.target.attributes.getNamedItem(
-			"data-product-weight"
-		).value
-		const thumbnails = JSON.parse(
-			data.target.attributes.getNamedItem("data-product-thumbnails").value
-		)
-
+		
 		this.setState({
-			product_id,
-			title,
-			detail,
-			description,
-			to_use,
-			price,
-			discount,
-			discount_percentage,
-			weight_gram,
-			product_brand_id,
 			product_subcategory_id,
-			thumbnails
+			subcategory,
+			thumbnail_url,
+			product_category_id
 		})
 
-		thumbnails.map((thumbnail, key) =>
-			this.handleSetThumbnail({
-				product_thumbnail_id: thumbnail.product_thumbnail_id,
-				thumbnail_url: thumbnail.thumbnail_url
-			})
-		)
-
 		this.props.setNavigation({
-			product: "update-product",
-			product_data: {
-				product_id,
-				title,
-				detail,
-				description,
-				to_use,
-				price,
-				discount,
-				discount_percentage,
-				weight_gram,
-				product_brand_id,
+			category: "update-category",
+			category_data: {
 				product_subcategory_id,
-				thumbnails
+				subcategory,
+				thumbnail_url,
+				product_category_id
 			}
 		})
 	}
 
-	handleAddThumbnail(thumbnail) {
-		this.props.addProductThumbnail({
-			thumbnail_url: URL.createObjectURL(thumbnail[0]),
-			thumbnail_origin: thumbnail[0]
-		})
-
-		if (this.props.navigationProduct === "update-product") {
-			this.handleAddThumbnailWhenUpdate(thumbnail)
-		}
-	}
-
-	handleRemoveThumbnail(key) {
-		this.props.removeProductThumbnail(key)
-	}
-
-	handleSetThumbnail(thumbnail) {
-		this.props.setProductThumbnail({
-			product_thumbnail_id: thumbnail.product_thumbnail_id,
-			thumbnail_url: thumbnail.thumbnail_url,
-			thumbnail_origin: thumbnail.thumbnail_url
-		})
-	}
-
-	handleAddThumbnailWhenUpdate(thumbnail) {
-		this.props.addProductThumbnailWhenUpdate({
-			thumbnail_url: URL.createObjectURL(thumbnail[0]),
-			thumbnail_origin: thumbnail[0]
-		})
-	}
-
-	handleRemoveThumbnailWhenUpdate(data) {
-		const product_thumbnail_id = data.target.attributes.getNamedItem(
-			"data-thumbnail-id"
-		).value
-		const key = data.target.attributes.getNamedItem("data-thumbnail-key").value
-
-		this.handleRemoveThumbnail(key)
-
-		this.props.removeProductThumbnailWhenUpdate({
-			product_thumbnail_id
-		})
-	}
-
-	handleAddProduct() {
+	handleAddCategory() {
 		const {
-			title,
-			description,
-			detail,
-			to_use,
-			price,
-			discount,
-			weight_gram,
-			discount_percentage,
-			product_subcategory_id,
-			product_brand_id
+			subcategory,
+			product_category_id,
+			thumbnails
 		} = this.state
 
-		const { productThumbnails } = this.props
-
 		db.get("session").then(doc => {
-			this.props.addProduct(
+			this.props.addSubcategories(
 				{
-					title,
-					description,
-					detail,
-					to_use,
-					price,
-					discount,
-					weight_gram,
-					discount_percentage,
-					product_subcategory_id,
-					product_brand_id,
-					thumbnails: productThumbnails
+					thumbnails,
+					subcategory,
+					product_category_id
 				},
 				doc.accessToken
 			)
 		})
 	}
 
-	handleUpdateProduct() {
+	handleUpdateCategory() {
 		const {
-			product_id,
-			title,
-			description,
-			detail,
-			to_use,
-			price,
-			discount,
-			weight_gram,
-			discount_percentage,
 			product_subcategory_id,
-			product_brand_id,
+			subcategory,
+			thumbnail_url,
+			product_category_id,
 			thumbnails
 		} = this.state
 
-		const { productThumbnailsWillAdd, productThumbnailsWillRemove } = this.props
-
 		db.get("session").then(doc => {
-			this.props
-				.updateProduct(
-					{
-						product_id,
-						title,
-						description,
-						detail,
-						to_use,
-						price,
-						discount,
-						weight_gram,
-						discount_percentage,
-						product_subcategory_id,
-						product_brand_id,
-						thumbnails: productThumbnailsWillAdd.length
-							? productThumbnailsWillAdd
-							: [],
-						thumbnailsWillRemove: productThumbnailsWillRemove.length
-							? productThumbnailsWillRemove
-							: []
-					},
-					doc.accessToken
-				)
-				.then(() => this.props.addProductThumbnail(thumbnails))
+			return thumbnail_url
+				? this.props.updateSubcategories(
+						{
+							product_subcategory_id,
+							subcategory,
+							thumbnail_url,
+							product_category_id
+						},
+						doc.accessToken
+				  )
+				: this.props.updateSubcategoriesWithImage(
+						{
+							product_subcategory_id,
+							subcategory,
+							product_category_id,
+							thumbnails
+						},
+						doc.accessToken
+				  )
 		})
 	}
 
-	handleDeleteProduct(data) {
-		const product_id = data.target.attributes.getNamedItem("data-product-id")
+	handleDeleteSubcategory(data) {
+		const product_subcategory_id = data.target.attributes.getNamedItem("data-subcategory-id")
 			.value
 
 		ReactSwal.fire({
-			title: "Delete Product",
+			title: "Delete Category",
 			text: "Are you sure?",
 			type: "warning",
 			confirmButtonText: "Delete",
@@ -449,148 +224,69 @@ class CategoryContainer extends React.Component {
 		}).then(res => {
 			if (res.value) {
 				db.get("session").then(doc =>
-					this.props.deleteProduct(product_id, doc.accessToken)
+					this.props.deleteSubcategories(product_subcategory_id, doc.accessToken)
 				)
 			}
 		})
 	}
 
 	render() {
-		console.log(this.state)
 		const {
-			products,
-			productThumbnails,
+			categories,
 			subcategories,
-			brands,
-			navigationProduct,
+			navigationCategory,
 			loading
 		} = this.props
 
 		const {
 			searchByTitle,
-			title,
-			detail,
-			description,
-			to_use,
-			price,
-			discount,
-			discount_percentage,
-			weight_gram,
-			brand,
 			subcategory,
-			product_subcategory_id,
-			product_brand_id,
+			thumbnail_url,
+			product_category_id,
 			thumbnails
 		} = this.state
 
-		if (navigationProduct === "add-product") {
+		if (navigationCategory === "add-category") {
 			return (
 				<AddCategory
-					onChangeTitle={e => this.setState({ title: e.target.value })}
-					onChangeDescription={e =>
-						this.setState({ description: e.target.value })
+					categories={categories}
+					thumbnail_url={thumbnail_url}
+					thumbnail={thumbnails}
+					categoryId={product_category_id}
+					title={subcategory}
+					onChangeTitle={e => this.setState({ subcategory: e.target.value })}
+					onChangeCategory={e => this.setState({ product_category_id: e.target.value })}
+					handleAddCategory={() => this.handleAddCategory()}
+					onChangeThumbnail={thumbnails => this.setState({ thumbnails })}
+					loadingCategory={
+						(loading.status && loading.process_on === "ADD_CATEGORIES")
 					}
-					onChangeDetail={e => this.setState({ detail: e.target.value })}
-					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
-					onChangePrice={e => this.setState({ price: e.target.value })}
-					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
-					discount={discount_percentage}
-					onChangeDiscount={e =>
-						this.setState({ discount_percentage: e.target.value })
-					}
-					discountCondition={discount}
-					onChangeDiscountCondition={e =>
-						this.setState({
-							discount: !this.state.discount,
-							discount_percentage: !this.state.discount ? 1 : 0
-						})
-					}
-					subcategories={subcategories}
-					subcategorySelected={product_subcategory_id}
-					onChangeSubcategory={e =>
-						this.setState({ product_subcategory_id: e.target.value })
-					}
-					brands={brands}
-					brandSelected={product_brand_id}
-					onChangeBrand={e =>
-						this.setState({ product_brand_id: e.target.value })
-					}
-					thumbnails={productThumbnails}
-					onChangeThumbnail={thumbnail => this.handleAddThumbnail(thumbnail)}
-					handleAddProduct={() => this.handleAddProduct()}
-					loadingProduct={
-						(loading.status && loading.process_on === "ADD_PRODUCT") ||
-						(loading.status && loading.process_on === "UPDATE_PRODUCT")
+					onClearImage={() =>
+						this.setState({ thumbnails: "", thumbnail_url: "" })
 					}
 					onBack={this.onBack.bind(this)}
 				/>
 			)
 		}
 
-		if (navigationProduct === "update-product") {
+		if (navigationCategory === "update-category") {
 			return (
 				<EditCategory
-					title={title}
-					onChangeTitle={e => this.setState({ title: e.target.value })}
-					description={description}
-					onChangeDescription={e =>
-						this.setState({ description: e.target.value })
+					categories={categories}
+					thumbnail_url={thumbnail_url}
+					thumbnail={thumbnails}
+					categoryId={product_category_id}
+					title={subcategory}
+					onChangeTitle={e => this.setState({ subcategory: e.target.value })}
+					onChangeCategory={e => this.setState({ product_category_id: e.target.value })}
+					handleUpdateCategory={() => this.handleUpdateCategory()}
+					onChangeThumbnail={thumbnails => this.setState({ thumbnails })}
+					loadingCategory={
+						(loading.status && loading.process_on === "UPDATE_CATEGORIES")
 					}
-					detail={detail}
-					onChangeDetail={e => this.setState({ detail: e.target.value })}
-					toUse={to_use}
-					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
-					price={price}
-					onChangePrice={e => this.setState({ price: e.target.value })}
-					weight={weight_gram}
-					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
-					discount={discount_percentage}
-					onChangeDiscount={e =>
-						this.setState({ discount_percentage: e.target.value })
+					onClearImage={() =>
+						this.setState({ thumbnails: "", thumbnail_url: "" })
 					}
-					discountCondition={discount}
-					onChangeDiscountCondition={e =>
-						this.setState({
-							discount: !this.state.discount,
-							discount_percentage: !this.state.discount ? 1 : 0
-						})
-					}
-					subcategories={subcategories}
-					onChangeSubcategory={e =>
-						this.setState({ product_subcategory_id: e.target.value })
-					}
-					brands={brands}
-					onChangeBrand={e =>
-						this.setState({ product_brand_id: e.target.value })
-					}
-					thumbnails={productThumbnails}
-					onChangeThumbnail={thumbnail => this.handleAddThumbnail(thumbnail)}
-					handleUpdateProduct={() => this.handleUpdateProduct()}
-					loadingProduct={
-						(loading.status && loading.process_on === "ADD_PRODUCT") ||
-						(loading.status && loading.process_on === "UPDATE_PRODUCT")
-					}
-					onRemoveThumbnail={this.handleRemoveThumbnailWhenUpdate.bind(this)}
-					brandSelected={product_brand_id}
-					subcategorySelected={product_subcategory_id}
-					onBack={this.onBack.bind(this)}
-				/>
-			)
-		}
-
-		if (navigationProduct === "product-detail") {
-			return (
-				<ProductDetail
-					title={title}
-					brand={brand}
-					subcategory={subcategory}
-					discount={discount_percentage}
-					weightGram={weight_gram}
-					price={price}
-					description={description}
-					detail={detail}
-					howToUse={to_use}
-					thumbnails={thumbnails}
 					onBack={this.onBack.bind(this)}
 				/>
 			)
@@ -598,13 +294,13 @@ class CategoryContainer extends React.Component {
 
 		return (
 			<Category
-				products={products}
-				onShowDetailProduct={this.onNavigateDetailProduct.bind(this)}
-				onUpdateProduct={this.onNavigateUpdateProduct.bind(this)}
-				onAddProduct={this.onNavigateAddProduct.bind(this)}
-				onDeleteProduct={this.handleDeleteProduct.bind(this)}
-				loadingDeleteProduct={
-					loading.status && loading.process_on === "DELETE_PRODUCT"
+				subcategories={subcategories}
+				categories={categories}
+				onUpdateSubcategory={this.onNavigateUpdateSubcategory.bind(this)}
+				onAddSubcategory={this.onNavigateAddSubcategory.bind(this)}
+				onDeleteSubcategory={this.handleDeleteSubcategory.bind(this)}
+				loadingDeleteSubcategory={
+					loading.status && loading.process_on === "DELETE_SUBCATEGORIES"
 				}
 				searchByTitle={searchByTitle}
 				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
@@ -614,14 +310,10 @@ class CategoryContainer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	products: state.products,
-	productThumbnails: state.productThumbnails,
 	subcategories: state.subcategories,
-	brands: state.brands,
-	productThumbnailsWillAdd: state.productThumbnailsWillAdd,
-	productThumbnailsWillRemove: state.productThumbnailsWillRemove,
-	navigationProduct: state.navigation.product,
-	navigationProductData: state.navigation.product_data,
+	categories: state.categories,
+	navigationCategory: state.navigation.category,
+	navigationCategoryData: state.navigation.category_data,
 	success: state.success,
 	failed: state.failed,
 	loading: state.loading
@@ -629,21 +321,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispacth => ({
 	setNavigation: navigation => dispacth(setNavigation(navigation)),
-	addProductThumbnail: thumbnail => dispacth(addProductThumbnail(thumbnail)),
-	removeProductThumbnail: key => dispacth(removeProductThumbnail(key)),
-	setProductThumbnail: thumbnail => dispacth(setProductThumbnail(thumbnail)),
-	updateProduct: (data, accessToken) =>
-		dispacth(updateProduct(data, accessToken)),
-	addProduct: (data, accessToken) => dispacth(addProduct(data, accessToken)),
-	deleteProduct: (product_id, accessToken) =>
-		dispacth(deleteProduct(product_id, accessToken)),
-	addProductThumbnailWhenUpdate: thumbnail =>
-		dispacth(addProductThumbnailWhenUpdate(thumbnail)),
-	removeProductThumbnailWhenUpdate: thumbnail_id =>
-		dispacth(removeProductThumbnailWhenUpdate(thumbnail_id)),
-	fetchProducts: accessToken => dispacth(fetchProducts(accessToken)),
+	fetchCategories: () => dispacth(fetchCategories()),
 	fetchSubcategories: () => dispacth(fetchSubcategories()),
-	fetchBrands: () => dispacth(fetchBrands())
+	addSubcategories: (data, accessToken) => dispacth(addSubcategories(data, accessToken)),
+	updateSubcategories: (data, accessToken) => dispacth(updateSubcategories(data, accessToken)),
+	updateSubcategoriesWithImage: (data, accessToken) => dispacth(updateSubcategoriesWithImage(data, accessToken)),
+	deleteSubcategories: (product_subcategory_id, accessToken) => dispacth(deleteSubcategories(product_subcategory_id, accessToken))
 })
 
 export default connect(

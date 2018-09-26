@@ -6,6 +6,7 @@ import { banners } from "./banners"
 import { dashboardInfo } from "./dashboard"
 import {
 	products,
+	categories,
 	subcategories,
 	brands,
 	productThumbnails,
@@ -25,6 +26,7 @@ const rootReducers = combineReducers({
 	dashboardInfo,
 	products,
 	productThumbnails,
+	categories,
 	subcategories,
 	brands,
 	transactions,

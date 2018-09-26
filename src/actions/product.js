@@ -259,6 +259,38 @@ const deleteProductReducer = product_id => ({
 	product_id: parseInt(product_id, 10)
 })
 
+//function categories
+export const fetchCategories = () => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "FETCH_CATEGORIES" }))
+		return reduxFetch
+			.get({
+				url: server + "/product-categories"
+			})
+			.then(res => {
+				if (res.status !== 200) {
+					dispatch(
+						setFailedAndBackToDefault(res.message, "FETCH_CATEGORIES")
+					)
+				} else {
+					dispatch(fetchCategoriesSuccess(res.data))
+					dispatch(
+						setSuccessAndBackToDefault(res.message, "FETCH_CATEGORIES")
+					)
+				}
+			})
+			.catch(err =>
+				dispatch(setFailedAndBackToDefault(err, "FETCH_CATEGORIES"))
+			)
+	}
+}
+
+const fetchCategoriesSuccess = data => ({
+	type: "FETCH_CATEGORIES_SUCCESS",
+	payload: data
+})
+
+//function subcategories
 export const fetchSubcategories = () => {
 	return dispatch => {
 		dispatch(setLoading({ status: true, process_on: "FETCH_SUBCATEGORIES" }))
@@ -289,6 +321,119 @@ const fetchSubategoriesSuccess = data => ({
 	payload: data
 })
 
+const uploadImageSubcategoriesToS3 = thumbnails => {
+	return s3
+		.upload({
+			ACL: "public-read",
+			Body: thumbnails[0],
+			Key: `subcategories-${Date.now()}.${thumbnails[0].type.split("/")[1]}`,
+			Bucket: awsConfig.bucket
+		})
+		.promise()
+}
+
+export const addSubcategories = (data, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "ADD_SUBCATEGORIES" }))
+		return uploadImageSubcategoriesToS3(data.thumbnails)
+			.then(res => {
+				return reduxFetch.post({
+					url: server + "/product-subcategories",
+					accessToken: accessToken,
+					body: {
+						subcategory: data.subcategory,
+						thumbnail_url: res.Location,
+						product_category_id: data.product_category_id
+					}
+				})
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(setFailedAndBackToDefault(res.message, "ADD_SUBCATEGORIES"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "ADD_SUBCATEGORIES"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "ADD_SUBCATEGORIES")))
+	}
+}
+
+export const updateSubcategoriesWithImage = (data, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "UPDATE_SUBCATEGORIES" }))
+		return uploadImageSubcategoriesToS3(data.thumbnails)
+			.then(res => {
+				return reduxFetch.put({
+					url: server + "/product-subcategories/" + data.product_subcategory_id,
+					accessToken: accessToken,
+					body: {
+						subcategory: data.subcategory,
+						thumbnail_url: res.Location,
+						product_category_id: data.product_category_id
+					}
+				})
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(setFailedAndBackToDefault(res.message, "UPDATE_SUBCATEGORIES"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "UPDATE_SUBCATEGORIES"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "UPDATE_SUBCATEGORIES")))
+	}
+}
+
+export const updateSubcategories = (data, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "UPDATE_SUBCATEGORIES" }))
+		return reduxFetch
+			.put({
+				url: server + "/product-subcategories/" + data.product_subcategory_id,
+				accessToken: accessToken,
+				body: {
+					subcategory: data.subcategory,
+					thumbnail_url: data.thumbnail_url,
+					product_category_id: data.product_category_id
+				}
+			})
+			.then(res => {
+				if (res.status !== 201) {
+					dispatch(setFailedAndBackToDefault(res.message, "UPDATE_SUBCATEGORIES"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "UPDATE_SUBCATEGORIES"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "UPDATE_SUBCATEGORIES")))
+	}
+}
+
+export const deleteSubcategories = (product_subcategory_id, accessToken) => {
+	return dispatch => {
+		dispatch(setLoading({ status: true, process_on: "DELETE_SUBCATEGORIES" }))
+		dispatch(deleteSubcategoriesReducer(product_subcategory_id))
+		return reduxFetch
+			.delete({
+				url: server + "/product-subcategories/" + product_subcategory_id,
+				accessToken: accessToken
+			})
+			.then(res => {
+				if (res.status !== 200) {
+					dispatch(setFailedAndBackToDefault(res.message, "DELETE_SUBCATEGORIES"))
+				} else {
+					dispatch(setSuccessAndBackToDefault(res.message, "DELETE_SUBCATEGORIES"))
+				}
+			})
+			.catch(err => dispatch(setFailedAndBackToDefault(err, "DELETE_SUBCATEGORIES")))
+	}
+}
+
+const deleteSubcategoriesReducer = product_subcategory_id => ({
+	type: "DELETE_SUBCATEGORIES_REDUCER",
+	product_subcategory_id: parseInt(product_subcategory_id, 10)
+})
+
+//function Brands
 export const fetchBrands = () => {
 	return dispatch => {
 		dispatch(setLoading({ status: true, process_on: "FETCH_BRANDS" }))
@@ -400,7 +545,7 @@ export const updateBrand = (data, accessToken) => {
 export const deleteBrand = (product_brand_id, accessToken) => {
 	return dispatch => {
 		dispatch(setLoading({ status: true, process_on: "DELETE_BRANDS" }))
-		dispatch(deleteBannerReducer(product_brand_id))
+		dispatch(deleteBrandReducer(product_brand_id))
 		return reduxFetch
 			.delete({
 				url: server + "/product-brands/" + product_brand_id,
@@ -417,7 +562,7 @@ export const deleteBrand = (product_brand_id, accessToken) => {
 	}
 }
 
-const deleteBannerReducer = product_brand_id => ({
+const deleteBrandReducer = product_brand_id => ({
 	type: "DELETE_BRANDS_REDUCER",
 	product_brand_id: parseInt(product_brand_id, 10)
 })

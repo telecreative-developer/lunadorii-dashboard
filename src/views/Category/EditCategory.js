@@ -5,13 +5,17 @@ import Card from "../../components/Card/Card"
 import "../../assets/css/categoryIcons.css"
 
 const EditCategory = ({
-  
+  categories,
+  thumbnail_url,
+  thumbnail,
   title,
+  categoryId,
   onChangeTitle,
-  
-  handleUpdateProduct,
-  loadingProduct,
-  
+  onChangeCategory,
+  onChangeThumbnail,
+  handleUpdateCategory,
+  loadingCategory,
+  onClearImage,
   onBack
 }) => (
   <div className="contentAdd">
@@ -24,71 +28,83 @@ const EditCategory = ({
           <div>
             <Row>
               <Col xs={6}>
-              <div style={styles.headerGroup}>
-                <Row>
-                <Col xs={2}>
-                  <input
-                    type="radio"
-                    name="radio"
-                    value="icon1"
-                    id="id1"
-                    className="input-hidden"
-                  />
-                  <label for="id1">
-                  <img src="https://ichef.bbci.co.uk/onesport/cps/800/cpsprodpb/29D9/production/_100031701_hf1_vf18_front-2.jpg" style={{width:100,height:100}}/> 
-                  </label>
-
-                  </Col>
-                  <Col xs={2}>
-                  <input
-                  type="radio"
-                  name="radio"
-                  value="icon1"
-                  id="id2"
-                  className="input-hidden"
-                  />
-                  <label for="id2">
-                  <img src="https://ichef.bbci.co.uk/onesport/cps/800/cpsprodpb/29D9/production/_100031701_hf1_vf18_front-2.jpg" style={{width:100,height:100}}/> 
-                  </label>
-
-                  </Col>
-                </Row>
-              </div>
-              </Col>
+                  {thumbnail_url ? (
+                    <div className="profile">
+                      <img
+                        alt="category-thumbnail"
+                        src={thumbnail_url}
+                        style={styles.thumbnailCategory}
+                      />
+                      <div className="overlay" onClick={onClearImage}>
+                        <center>
+                          <p>Remove</p>
+                        </center>
+                      </div>
+                    </div>
+                  ) : thumbnail.length ? (
+                    <div className="profile">
+                      <img
+                        alt="category-thumbnail"
+                        src={URL.createObjectURL(thumbnail[0])}
+                        style={styles.thumbnailCategory}
+                      />
+                      <div className="overlay" onClick={onClearImage}>
+                        <center>
+                          <p>Remove</p>
+                        </center>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="imageUploader">
+                      <Dropzone
+                        accept="image/jpeg, image/jpg, image/png"
+                        onDrop={onChangeThumbnail}
+                        style={{ width: "100%", paddingBottom: 60 }}>
+                        <p style={styles.pIconCamera}>
+                          <i className="pe-7s-camera" style={styles.iconCamera} />
+                        </p>
+                      </Dropzone>
+                    </div>
+                  )}
+                </Col>
               <Col xs={6}>
                 <div style={styles.form}>
-                  <label>Title</label>
+                  <label>Name Category</label>
                   <input
                     type="text"
                     name="title"
                     className="form-control"
                     value={title}
                     onChange={onChangeTitle}
-                    disabled={loadingProduct}
-                    placeholder="Title"
+                    disabled={loadingCategory}
+                    placeholder="Category"
                   />
-                   <label style={styles.label}>Categories</label>
+              <label style={styles.label}>which part of the body</label>
                   <select
+                    disabled={loadingCategory}
+                    value={categoryId}
+                    onChange={onChangeCategory}
                     className="form-control">
-                      <option value="select">select</option>
-                      <option value="other">...</option>
+                    {categories.map(categories => (
+                      <option value={categories.product_category_id}>{categories.category}</option>
+                    ))}
                   </select>
-                </div>
+              </div>
               </Col>
             </Row>
             <Row>
               <Col xs={12}>
-                {loadingProduct ? (
+                {loadingCategory ? (
                   <div style={styles.divButton}>
                     <button
                       className="btn btn-default"
-                      disabled={loadingProduct}
+                      disabled={loadingCategory}
                       style={styles.btnDefault}>
                       Loading...
                     </button>
                     <button
                       className="btn btn-default"
-                      disabled={loadingProduct}
+                      disabled={loadingCategory}
                       style={styles.btnDefault}>
                       Loading...
                     </button>
@@ -102,8 +118,9 @@ const EditCategory = ({
                       Cancel
                     </button>
                     <button
+                      disabled={!thumbnail || !title}
                       className="btn btn-primary"
-                      onClick={handleUpdateProduct}
+                      onClick={handleUpdateCategory}
                       style={styles.btnSave}>
                       Update
                     </button>
@@ -119,14 +136,17 @@ const EditCategory = ({
 )
 
 const styles = {
-  imageBanners: {
+  thumbnailCategory: {
     width: "100%",
-    maxHeight: 400
+    maxHeight: 225
   },
   btnDefault: {
     background: "#6d6d6d",
     border: "none",
     marginRight: 10
+  },
+  label: {
+    marginTop: 10
   },
   headerGroup: {
     marginLeft: 30

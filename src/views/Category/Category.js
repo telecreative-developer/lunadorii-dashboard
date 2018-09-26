@@ -7,9 +7,6 @@ const tableHead = [
   "No",
   "Name",
   "Icon",
-  "Created at",
-  "Updated at",
-  // "Reviews",
   "Action"
 ]
 
@@ -27,13 +24,13 @@ const tooltipEdit = (
   </Tooltip>
 )
 
-const Product = ({
-  products,
-  onUpdateProduct,
-  onAddProduct,
-  onDeleteProduct,
-  loadingDeleteProduct,
-  onShowDetailProduct,
+const Category = ({
+  categories,
+  subcategories,
+  onUpdateSubcategory,
+  onAddSubcategory,
+  onDeleteSubcategory,
+  loadingDeleteSubcategory,
   searchByTitle,
   onChangeSearch
 }) => (
@@ -43,7 +40,7 @@ const Product = ({
         <Col xs={12}>
           <button
             className="btn btn-primary"
-            onClick={onAddProduct}
+            onClick={onAddSubcategory}
             style={styles.btnAdd}>
             Add Category
           </button>
@@ -57,7 +54,7 @@ const Product = ({
               <form>
                 <FormControl
                   type="text"
-                  placeholder="Search By Product"
+                  placeholder="Search By Category"
                   value={searchByTitle}
                   onChange={onChangeSearch}
                 />
@@ -73,88 +70,42 @@ const Product = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {products.filter(products => products.product.indexOf(searchByTitle) > -1 ).map((product, key) => (
+                  {subcategories.filter(subcategories => subcategories.subcategory.indexOf(searchByTitle) > -1 ).map((subcategory, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
-                      <td>{product.product}</td>
+                      <td>{subcategory.subcategory}</td>
                       <td>
                         <img
-                          alt="product-thumbnail"
-                          src={product.thumbnails[0].thumbnail_url}
+                          alt="category-thumbnail"
+                          src={subcategory.thumbnail_url}
                           style={{ width: 100 }}
                         />
                       </td>
                       
-                      <td>{product.subcategories[0].subcategory}</td>
-                      <td>{product.brands[0].brand}</td>
-                      {/* <td>
-                        {product.reviews.length
-                          ? product.reviews.length
-                          : "Not yet"}
-                      </td> */}
+                      <td>{categories.filter(category => category.product_category_id === subcategory.product_category_id).map(d => d.category)}</td>
                       <td>
                         
                         <OverlayTrigger placement="top" overlay={tooltipEdit}>
                           <button
-                            data-product-id={product.product_id}
-                            data-product-title={product.product}
-                            data-product-brand-id={
-                              product.brands[0].product_brand_id
-                            }
-                            data-product-brand={product.brands[0].brand}
-                            data-product-subcategory-id={
-                              product.subcategories[0].product_subcategory_id
-                            }
-                            data-product-subcategory={
-                              product.subcategories[0].subcategory
-                            }
-                            data-product-discount={product.discount}
-                            data-product-discount-percentage={
-                              product.discount_percentage
-                            }
-                            data-product-price={product.price}
-                            data-product-description={product.description}
-                            data-product-detail={product.detail}
-                            data-product-howtouse={product.to_use}
-                            data-product-weight={100}
-                            data-product-thumbnails={JSON.stringify(
-                              product.thumbnails
-                            )}
-                            onClick={onUpdateProduct}
+                            data-subcategory-id={subcategory.product_subcategory_id}
+                            data-subcategory-CategoryId={subcategory.product_category_id}
+                            data-subcategory-title={subcategory.subcategory}
+                            data-subcategory-thumbnail={subcategory.thumbnail_url}
+                            onClick={onUpdateSubcategory}
                             className="btn btn-info"
                             style={styles.btnEdit}>
                             <i
-                              data-product-id={product.product_id}
-                              data-product-title={product.product}
-                              data-product-brand-id={
-                                product.brands[0].product_brand_id
-                              }
-                              data-product-brand={product.brands[0].brand}
-                              data-product-subcategory-id={
-                                product.subcategories[0].product_subcategory_id
-                              }
-                              data-product-subcategory={
-                                product.subcategories[0].subcategory
-                              }
-                              data-product-discount={product.discount}
-                              data-product-discount-percentage={
-                                product.discount_percentage
-                              }
-                              data-product-price={product.price}
-                              data-product-description={product.description}
-                              data-product-detail={product.detail}
-                              data-product-howtouse={product.to_use}
-                              data-product-weight={100}
-                              data-product-thumbnails={JSON.stringify(
-                                product.thumbnails
-                              )}
+                              data-subcategory-id={subcategory.product_subcategory_id}
+                              data-subcategory-CategoryId={subcategory.product_category_id}
+                              data-subcategory-title={subcategory.subcategory}
+                              data-subcategory-thumbnail={subcategory.thumbnail_url}
                               className="pe-7s-eyedropper"
                               style={{ color: "#fff" }}
                             />
                           </button>
                         </OverlayTrigger>
                         <OverlayTrigger placement="top" overlay={tooltipRemove}>
-                          {loadingDeleteProduct ? (
+                          {loadingDeleteSubcategory ? (
                             <button
                               className="btn btn-default"
                               style={styles.btnDefault}>
@@ -165,12 +116,12 @@ const Product = ({
                             </button>
                           ) : (
                             <button
-                              data-product-id={product.product_id}
+                            data-subcategory-id={subcategory.product_subcategory_id}
                               className="btn btn-default"
-                              onClick={onDeleteProduct}
+                              onClick={onDeleteSubcategory}
                               style={styles.btnDefault}>
                               <i
-                                data-product-id={product.product_id}
+                                data-subcategory-id={subcategory.product_subcategory_id}
                                 className="pe-7s-trash"
                                 style={{ color: "#fff" }}
                               />
@@ -216,4 +167,4 @@ const styles = {
   }
 }
 
-export default Product
+export default Category
