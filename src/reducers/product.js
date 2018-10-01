@@ -17,6 +17,8 @@ export const productThumbnails = (state = [], action) => {
 			return state.concat(action.payload)
 		case "REMOVE_PRODUCT_THUMBNAIL":
 			return state.filter(d => d.key !== action.key)
+		case "CLEAR_PRODUCT_THUMBNAIL":
+			return state = []
 		default:
 			return state
 	}
@@ -26,6 +28,8 @@ export const productThumbnailsWillAdd = (state = [], action) => {
 	switch (action.type) {
 		case "ADD_PRODUCT_THUMBNAIL_WHEN_UPDATE":
 			return state.concat(action.payload)
+		case "CANCEL_ADD_PRODUCT_THUMBNAIL_WHEN_UPDATE":
+			return state.filter(d => d.key != action.payload.key)
 		default:
 			return state
 	}

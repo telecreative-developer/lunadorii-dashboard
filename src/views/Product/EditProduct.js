@@ -102,7 +102,7 @@ const EditProduct = ({
                                     <center>
                                     <p 
                                       data-thumbnail-id={
-                                        thumbnail.product_thumbnail_id
+                                        thumbnail.product_thumbnail_id ? thumbnail.product_thumbnail_id : ""
                                       }
                                       data-thumbnail-key={thumbnail.key}
                                       onClick={onRemoveThumbnail}>

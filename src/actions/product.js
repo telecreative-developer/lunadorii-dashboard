@@ -86,7 +86,7 @@ export const addProductThumbnail = ({ thumbnail_url, thumbnail_origin }) => {
 	return {
 		type: "ADD_PRODUCT_THUMBNAIL",
 		payload: {
-			key: keyProductThumbnail++,
+			key: keyProductThumbnail,
 			thumbnail_url,
 			thumbnail_origin
 		}
@@ -97,6 +97,12 @@ export const removeProductThumbnail = key => {
 	return {
 		type: "REMOVE_PRODUCT_THUMBNAIL",
 		key: parseInt(key, 10)
+	}
+}
+
+export const clearProductThumbnail = () => {
+	return {
+		type: "CLEAR_PRODUCT_THUMBNAIL"
 	}
 }
 
@@ -126,9 +132,20 @@ export const addProductThumbnailWhenUpdate = ({
 	return {
 		type: "ADD_PRODUCT_THUMBNAIL_WHEN_UPDATE",
 		payload: {
-			key: keyProductThumbnailWhenUpdate++,
+			key: keyProductThumbnail++,
 			thumbnail_url,
 			thumbnail_origin
+		}
+	}
+}
+
+export const cancelAddProductThumbnailWhenUpdate = ({
+	key
+}) => {
+	return {
+		type: "CANCEL_ADD_PRODUCT_THUMBNAIL_WHEN_UPDATE",
+		payload: {
+			key: key
 		}
 	}
 }

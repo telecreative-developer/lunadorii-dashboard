@@ -15,10 +15,12 @@ import {
 	fetchBrands,
 	addProductThumbnail,
 	removeProductThumbnail,
+	clearProductThumbnail,
 	deleteProduct,
 	updateProduct,
 	setProductThumbnail,
 	addProductThumbnailWhenUpdate,
+	cancelAddProductThumbnailWhenUpdate,
 	removeProductThumbnailWhenUpdate
 } from "../actions/product"
 const db = new PouchDB("lunadorii")
@@ -222,6 +224,7 @@ class ProductContainer extends React.Component {
 		this.props.setNavigation({
 			product: "product"
 		})
+		this.props.clearProductThumbnail()
 		this.setState({
 			title: "",
 			detail: "",
@@ -342,16 +345,21 @@ class ProductContainer extends React.Component {
 	}
 
 	handleRemoveThumbnailWhenUpdate(data) {
-		const product_thumbnail_id = data.target.attributes.getNamedItem(
+		let product_thumbnail_id = data.target.attributes.getNamedItem(
 			"data-thumbnail-id"
 		).value
 		const key = data.target.attributes.getNamedItem("data-thumbnail-key").value
 
 		this.handleRemoveThumbnail(key)
-
-		this.props.removeProductThumbnailWhenUpdate({
-			product_thumbnail_id
-		})
+		if(product_thumbnail_id !== ""){
+			this.props.removeProductThumbnailWhenUpdate({
+				product_thumbnail_id
+			})
+		}else{
+			this.props.cancelAddProductThumbnailWhenUpdate({
+				key
+			})
+		}
 	}
 
 	handleRemoveThumbnailWhenAdd(data) {
@@ -462,7 +470,6 @@ class ProductContainer extends React.Component {
 	}
 
 	render() {
-		console.log(this.state)
 		const {
 			products,
 			productThumbnails,
@@ -648,6 +655,7 @@ const mapDispatchToProps = dispacth => ({
 	setNavigation: navigation => dispacth(setNavigation(navigation)),
 	addProductThumbnail: thumbnail => dispacth(addProductThumbnail(thumbnail)),
 	removeProductThumbnail: key => dispacth(removeProductThumbnail(key)),
+	clearProductThumbnail: () => dispacth(clearProductThumbnail()),
 	setProductThumbnail: thumbnail => dispacth(setProductThumbnail(thumbnail)),
 	updateProduct: (data, accessToken) =>
 		dispacth(updateProduct(data, accessToken)),
@@ -656,6 +664,8 @@ const mapDispatchToProps = dispacth => ({
 		dispacth(deleteProduct(product_id, accessToken)),
 	addProductThumbnailWhenUpdate: thumbnail =>
 		dispacth(addProductThumbnailWhenUpdate(thumbnail)),
+	cancelAddProductThumbnailWhenUpdate: thumbnail =>
+		dispacth(cancelAddProductThumbnailWhenUpdate(thumbnail)),
 	removeProductThumbnailWhenUpdate: thumbnail_id =>
 		dispacth(removeProductThumbnailWhenUpdate(thumbnail_id)),
 	fetchProducts: accessToken => dispacth(fetchProducts(accessToken)),
