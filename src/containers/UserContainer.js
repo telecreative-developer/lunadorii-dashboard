@@ -27,7 +27,7 @@ class UserContainer extends React.Component {
 			<User 
 				users={users}
 				searchByTitle={searchByTitle}
-				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
+				onChangeSearch={e => this.setState({ searchByTitle: e.target.value.toLowerCase() })}
 			/>
 		)
 	}

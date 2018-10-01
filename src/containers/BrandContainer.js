@@ -278,7 +278,7 @@ class BrandContainer extends React.Component {
 					loading.status && loading.process_on === "DELETE_BRANDS"
 				}
 				searchByTitle={searchByTitle}
-				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
+				onChangeSearch={e => this.setState({ searchByTitle: e.target.value.toLowerCase() })}
 			/>
 		)
 	}

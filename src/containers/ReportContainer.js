@@ -152,7 +152,7 @@ class ReportContainer extends React.Component {
 				reports={reports}
 				onShowReport={this.handleShowReportDetail.bind(this)}
 				searchByTitle={searchByTitle}
-				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
+				onChangeSearch={e => this.setState({ searchByTitle: e.target.value.toLowerCase() })}
 			/>
 		)
 	}

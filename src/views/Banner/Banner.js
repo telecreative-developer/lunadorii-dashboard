@@ -85,7 +85,7 @@ const Banner = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {banners.filter(banner => banner.title.indexOf(searchByTitle) > -1 ).map((banner, key) => (
+                  {banners.filter(banner => banner.title.toLowerCase().indexOf(searchByTitle) > -1 ).map((banner, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>

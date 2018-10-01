@@ -32,7 +32,7 @@ const User = ({ users, searchByTitle, onChangeSearch }) => (
                   </tr>
                 </thead>
                 <tbody>
-                  {users.filter(user => user.email.indexOf(searchByTitle) > -1 ).map((user, key) => (
+                  {users.filter(user => user.email.toLowerCase().indexOf(searchByTitle) > -1 ).map((user, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>

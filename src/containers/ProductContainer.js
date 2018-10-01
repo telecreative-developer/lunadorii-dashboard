@@ -624,7 +624,7 @@ class ProductContainer extends React.Component {
 					loading.status && loading.process_on === "DELETE_PRODUCT"
 				}
 				searchByTitle={searchByTitle}
-				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
+				onChangeSearch={e => this.setState({ searchByTitle: e.target.value.toLowerCase() })}
 			/>
 		)
 	}

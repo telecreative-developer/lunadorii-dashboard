@@ -318,7 +318,7 @@ class BannerContainer extends React.Component {
 					loading.status && loading.process_on === "DELETE_BANNER"
 				}
 				searchByTitle={searchByTitle}
-				onChangeSearch={e => this.setState({ searchByTitle: e.target.value })}
+				onChangeSearch={e => this.setState({ searchByTitle: e.target.value.toLowerCase() })}
 			/>
 		)
 	}

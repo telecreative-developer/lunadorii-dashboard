@@ -70,7 +70,7 @@ const Category = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {subcategories.filter(subcategories => subcategories.subcategory.indexOf(searchByTitle) > -1 ).map((subcategory, key) => (
+                  {subcategories.filter(subcategories => subcategories.subcategory.toLowerCase().indexOf(searchByTitle) > -1 ).map((subcategory, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>{subcategory.subcategory}</td>

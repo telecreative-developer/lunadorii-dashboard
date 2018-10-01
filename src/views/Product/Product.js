@@ -79,7 +79,7 @@ const Product = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {products.filter(products => products.product.indexOf(searchByTitle) > -1 ).map((product, key) => (
+                  {products.filter(products => products.product.toLowerCase().indexOf(searchByTitle) > -1 ).map((product, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>

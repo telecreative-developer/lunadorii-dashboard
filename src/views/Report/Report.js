@@ -48,7 +48,7 @@ const Report = ({ reports, onShowReport, searchByTitle, onChangeSearch }) => (
                   </tr>
                 </thead>
                 <tbody>
-                  {reports.filter(reports => reports.email.indexOf(searchByTitle) > -1 ).map((report, key) => (
+                  {reports.filter(reports => reports.email.toLowerCase().indexOf(searchByTitle) > -1 ).map((report, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>{report.name}</td>

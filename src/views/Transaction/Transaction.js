@@ -62,7 +62,7 @@ const Transaction = ({ transactions, onNavigateTransactionDetail, searchByTitle,
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.filter(transactions => transactions.billing_code.indexOf(searchByTitle) > -1 ).map((transaction, key) => (
+                  {transactions.filter(transactions => transactions.billing_code.toLowerCase().indexOf(searchByTitle) > -1 ).map((transaction, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>{transaction.billing_code}</td>
