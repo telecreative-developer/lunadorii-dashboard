@@ -93,7 +93,7 @@ const Product = ({
                       <td>
                         {convertToIDR(
                           product.price -
-                            (product.price * product.discount) / 100
+                            (product.price * product.discount_percentage) / 100
                         )}
                       </td>
                       <td>{product.discount_percentage}%</td>
