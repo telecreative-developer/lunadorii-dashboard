@@ -103,7 +103,7 @@ const AddBrands = ({
                       Cancel
                     </button>
                     <button
-                      disabled={!thumbnail || !title}
+                      disabled={thumbnail == "" || !title}
                       className="btn btn-primary"
                       onClick={handleAddBrand}
                       style={styles.btnSave}>

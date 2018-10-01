@@ -142,6 +142,7 @@ const AddBanner = ({
                     </button>
                     {submitType === "add-banner" ? (
                       <button
+                        disabled={thumbnail == "" || !title}
                         className="btn btn-primary"
                         style={styles.btnSave}
                         onClick={handleAddBanner}>

@@ -118,7 +118,7 @@ const AddCategory = ({
                       Cancel
                     </button>
                     <button
-                      disabled={!thumbnail || !title}
+                      disabled={thumbnail == "" || !title}
                       className="btn btn-primary"
                       onClick={handleAddCategory}
                       style={styles.btnSave}>
