@@ -86,7 +86,7 @@ export const addProductThumbnail = ({ thumbnail_url, thumbnail_origin }) => {
 	return {
 		type: "ADD_PRODUCT_THUMBNAIL",
 		payload: {
-			key: keyProductThumbnail,
+			key: keyProductThumbnail++,
 			thumbnail_url,
 			thumbnail_origin
 		}

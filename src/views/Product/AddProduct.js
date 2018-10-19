@@ -81,7 +81,7 @@ const AddProduct = ({
                         <div className="groupRight" style={styles.groupRight}>
                           {thumbnails.length > 1 &&
                             thumbnails
-                              .filter(d => d.key !== 0)
+                              .filter(d => d.key !== thumbnails[0].key)
                               .map((d, key) => (
                                 <div className="product">
                                   <img
@@ -187,6 +187,8 @@ const AddProduct = ({
                       <input
                         type="number"
                         min="0"
+                        max={100}
+                        maxLength={3}
                         pattern={"(([0-9]*[0-9][0-9]*([.][0-9]+)?)|([0]+[.][0-9]*[0-9][0-9]*))"}
                         name="discount"
                         className="form-control"

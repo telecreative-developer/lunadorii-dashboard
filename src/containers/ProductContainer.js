@@ -497,6 +497,7 @@ class ProductContainer extends React.Component {
 		} = this.state
 
 		if (navigationProduct === "add-product") {
+			{console.log(this.props.productThumbnails)}
 			return (
 				<AddProduct
 					onChangeTitle={e => this.setState({ title: e.target.value })}
@@ -512,7 +513,7 @@ class ProductContainer extends React.Component {
 					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
 					discount={discount_percentage}
 					onChangeDiscount={e =>
-						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0 ?
+						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0 && e.target.value <= 100 ?
 						this.setState({ discount_percentage: e.target.value.replace(/[^\d]/,'') }) : null
 					}
 					discountCondition={discount}
@@ -562,14 +563,14 @@ class ProductContainer extends React.Component {
 					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
 					price={price}
 					onChangePrice={e => 
-						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0 ?
+						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0  ?
 						this.setState({ price: e.target.value.replace(/[^\d]/,'') }) : null
 					}
 					weight={weight_gram}
 					onChangeWeight={e => this.setState({ weight_gram: e.target.value })}
 					discount={discount_percentage}
 					onChangeDiscount={e =>
-						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0 ?
+						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0 && e.target.value <= 100 ?
 						this.setState({ discount_percentage: e.target.value.replace(/[^\d]/,'') }) : null
 					}
 					discountCondition={discount}
