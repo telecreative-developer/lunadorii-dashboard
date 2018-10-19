@@ -79,7 +79,7 @@ const AddCategory = ({
                     disabled={loadingCategory}
                     placeholder="Category"
                   />
-              <label style={styles.label}>which part of the body</label>
+              <label style={styles.label}>which body part is this category <br /> (example: Head, Hand & foot, body)</label>
                   <select
                     disabled={loadingCategory}
                     value={categoryId}
