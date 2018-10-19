@@ -120,8 +120,12 @@ class BrandContainer extends React.Component {
 	}
 
 	onBack() {
-		this.props.setNavigation({
-			brand: "brand"
+		this.props.setNavigation({ brand: "brand" })
+		this.setState({
+			product_brand_id: "",
+			logo_url: "",
+			brand: "",
+			thumbnails: ""
 		})
 	}
 

@@ -127,8 +127,13 @@ class CategoryContainer extends React.Component {
 	}
 
 	onBack() {
-		this.props.setNavigation({
-			category: "category"
+		this.props.setNavigation({ category: "category" })
+		this.setState({
+			product_subcategory_id: "",
+			subcategory: "",
+			thumbnail_url: "",
+			product_category_id: "",
+			thumbnails: ""
 		})
 	}
 
