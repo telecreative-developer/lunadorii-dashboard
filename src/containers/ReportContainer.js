@@ -48,7 +48,7 @@ class ReportContainer extends React.Component {
 		const read = attributes.getNamedItem("data-report-read").value
 		const date = attributes.getNamedItem("data-report-date").value
 		const reply = attributes.getNamedItem("data-report-reply").value
-
+		
 		await this.props.setNavigation({
 			report: "report-detail",
 			report_data: {
