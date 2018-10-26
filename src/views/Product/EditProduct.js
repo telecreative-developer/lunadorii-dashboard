@@ -141,10 +141,12 @@ const EditProduct = ({
                     placeholder="Title"
                   />
                   <label style={styles.label}>Description</label>
+                  <br />
+                  <label style={styles.label}>{description.length}/1000</label>
                   <textarea
                     className="form-control"
                     rows="5"
-                    maxLength="255"
+                    maxLength="1000"
                     value={description}
                     onChange={onChangeDescription}
                     disabled={loadingProduct}
@@ -152,10 +154,12 @@ const EditProduct = ({
                   />
 
                   <label style={styles.label}>Detail</label>
+                  <br />
+                  <label style={styles.label}>{detail.length}/1000</label>
                   <textarea
                     className="form-control"
                     rows="5"
-                    maxLength="255"
+                    maxLength="1000"
                     value={detail}
                     onChange={onChangeDetail}
                     disabled={loadingProduct}

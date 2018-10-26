@@ -8,6 +8,8 @@ const AddProduct = ({
   subcategorySelected,
   onChangeSubcategory,
   title,
+  description,
+  detail,
   price,
   brands,
   brandSelected,
@@ -132,20 +134,24 @@ const AddProduct = ({
                     placeholder="Title"
                   />
                   <label style={styles.label}>Description</label>
+                  <br />
+                  <label style={styles.label}>{description.length}/1000</label>
                   <textarea
                     className="form-control"
                     rows="5"
-                    maxLength="255"
+                    maxLength="1000"
                     onKeyUp={onChangeDescription}
                     disabled={loadingProduct}
                     placeholder="Description"
                   />
 
                   <label style={styles.label}>Detail</label>
+                  <br />
+                  <label style={styles.label}>{detail.length}/1000</label>
                   <textarea
                     className="form-control"
                     rows="5"
-                    maxLength="255"
+                    maxLength="1000"
                     onKeyUp={onChangeDetail}
                     disabled={loadingProduct}
                     placeholder="Detail"

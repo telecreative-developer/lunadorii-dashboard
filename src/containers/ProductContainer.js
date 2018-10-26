@@ -501,10 +501,14 @@ class ProductContainer extends React.Component {
 			return (
 				<AddProduct
 					onChangeTitle={e => this.setState({ title: e.target.value })}
-					onChangeDescription={e =>
-						this.setState({ description: e.target.value })
+					description={description}
+					onChangeDescription={e => e.target.value.length <= 1000 ?
+						this.setState({ description: e.target.value }) : null
 					}
-					onChangeDetail={e => this.setState({ detail: e.target.value })}
+					detail={detail}
+					onChangeDetail={e => e.target.value.length <= 1000 ? 
+						this.setState({ detail: e.target.value }) : null
+					}
 					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
 					onChangePrice={e => 
 						parseInt(e.target.value.replace(/[^\d]/,'')) !== 0 ?
@@ -554,11 +558,13 @@ class ProductContainer extends React.Component {
 					title={title}
 					onChangeTitle={e => this.setState({ title: e.target.value })}
 					description={description}
-					onChangeDescription={e =>
-						this.setState({ description: e.target.value })
+					onChangeDescription={e => e.target.value.length <= 1000 ?
+						this.setState({ description: e.target.value }) : null
 					}
 					detail={detail}
-					onChangeDetail={e => this.setState({ detail: e.target.value })}
+					onChangeDetail={e => e.target.value.length <= 1000 ? 
+						this.setState({ detail: e.target.value }) : null
+					}
 					toUse={to_use}
 					onChangeHowToUse={e => this.setState({ to_use: e.target.value })}
 					price={price}
