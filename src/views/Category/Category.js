@@ -7,7 +7,7 @@ const tableHead = [
   "No",
   "Name",
   "Icon",
-  "Action"
+  "Body Part"
 ]
 
 
