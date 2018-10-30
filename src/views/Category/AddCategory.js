@@ -79,7 +79,7 @@ const AddCategory = ({
                     disabled={loadingCategory}
                     placeholder="Category"
                   />
-              <label style={styles.label}>which body part is this category <br /> (example: Head, Hand & foot, body)</label>
+              {/* <label style={styles.label}>which body part is this category <br /> (example: Head, Hand & foot, body)</label>
                   <select
                     disabled={loadingCategory}
                     value={categoryId}
@@ -88,7 +88,7 @@ const AddCategory = ({
                     {categories.map(categories => (
                       <option value={categories.product_category_id}>{categories.category}</option>
                     ))}
-                  </select>
+                  </select> */}
               </div>
               </Col>
             </Row>

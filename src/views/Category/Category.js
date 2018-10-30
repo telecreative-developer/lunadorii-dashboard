@@ -7,7 +7,7 @@ const tableHead = [
   "No",
   "Name",
   "Icon",
-  "Body Part"
+  // "Body Part"
 ]
 
 
@@ -82,7 +82,7 @@ const Category = ({
                         />
                       </td>
                       
-                      <td>{categories.filter(category => category.product_category_id === subcategory.product_category_id).map(d => d.category)}</td>
+                      {/* <td>{categories.filter(category => category.product_category_id === subcategory.product_category_id).map(d => d.category)}</td> */}
                       <td>
                         
                         <OverlayTrigger placement="top" overlay={tooltipEdit}>
