@@ -95,7 +95,7 @@ const AddBanner = ({
                       </option>
                     ))}
                   </select>
-                  <label style={styles.label}>Type</label>
+                  {/* <label style={styles.label}>Type</label>
                   <select
                     className="form-control"
                     value={typeSelected}
@@ -105,7 +105,7 @@ const AddBanner = ({
                         {type.type}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
                 </div>
               </Col>
             </Row>

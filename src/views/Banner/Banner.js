@@ -7,7 +7,7 @@ const tableHead = [
   "No",
   "Thumbnail",
   "Title",
-  "Type",
+  // "Type",
   "Category",
   "Created At",
   "Active",
@@ -96,7 +96,7 @@ const Banner = ({
                         />
                       </td>
                       <td>{banner.title}</td>
-                      <td>{banner.type}</td>
+                      {/* <td>{banner.type}</td> */}
                       <td>{banner.category}</td>
                       <td>{moment(banner.created_at).format("LLL")}</td>
                       <td>
