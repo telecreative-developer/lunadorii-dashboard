@@ -47,6 +47,14 @@ const TransactionDetail = ({ transaction, onNavigateToTransaction, onChangeResi,
                           {transaction.total && convertToIDR(transaction.total)}
                         </span>
                       </p>
+                      <p style={styles.txtLabel}>
+                        Resi Number :{" "}
+                        <span style={styles.span}>
+                          {transaction.receipt_number
+                            ? transaction.receipt_number
+                            : "Not yet"}
+                        </span>
+                      </p>
                     </div>
                   </Col>
                   <Col md={6}>
