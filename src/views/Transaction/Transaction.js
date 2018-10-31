@@ -35,7 +35,7 @@ const tooltipDetail = (
   </Tooltip>
 )
 
-const Transaction = ({ transactions, onNavigateTransactionDetail, searchByTitle, onChangeSearch }) => (
+const Transaction = ({ transactions, onNavigateTransactionDetail, searchByTitle, groupByStatus, onChangeSearch, onChangeFilter }) => (
   <div className="content">
     <Grid fluid>
       <Row>
@@ -52,6 +52,18 @@ const Transaction = ({ transactions, onNavigateTransactionDetail, searchByTitle,
                 />
               </form>
             }
+            filter={
+              <form>
+                <FormControl componentClass="select" placeholder="order status" onChange={onChangeFilter}>
+                  <option value="">order status</option>
+                  <option value="checkout">checkout</option>
+                  <option value="accepted_payment">accepted_payment</option>
+                  <option value="Packing">Packing</option>
+                  <option value="Shipping">Shipping</option>
+                  <option value="Delivered">Delivered</option>
+                </FormControl>
+              </form>
+            }
             ctTableFullWidth
             ctTableResponsive
             content={
@@ -62,7 +74,7 @@ const Transaction = ({ transactions, onNavigateTransactionDetail, searchByTitle,
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.filter(transactions => transactions.billing_code.toLowerCase().indexOf(searchByTitle) > -1 ).map((transaction, key) => (
+                  {transactions.filter(transactions => transactions.billing_code.toLowerCase().indexOf(searchByTitle) > -1 && transactions.order_status.indexOf(groupByStatus) > -1 ).map((transaction, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>{transaction.billing_code}</td>

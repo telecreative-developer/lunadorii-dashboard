@@ -30,6 +30,7 @@ class TransactionContainer extends React.Component {
 
 		this.state = {
 			searchByTitle: "",
+			groupByStatus: "",
 			resi: ""
 		}
 	}
@@ -136,7 +137,7 @@ class TransactionContainer extends React.Component {
 
 	render() {
 		const { navigationTransaction, transactions, transaction, loading } = this.props
-		const { searchByTitle, resi } = this.state
+		const { searchByTitle, groupByStatus, resi } = this.state
 
 		if (navigationTransaction === "transaction_detail") {
 			return (
@@ -162,7 +163,9 @@ class TransactionContainer extends React.Component {
 					this
 				)}
 				searchByTitle={searchByTitle}
+				groupByStatus={groupByStatus}
 				onChangeSearch={e => this.setState({ searchByTitle: e.target.value.toLowerCase() })}
+				onChangeFilter={e => this.setState({ groupByStatus: e.target.value })}
 			/>
 		)
 	}
