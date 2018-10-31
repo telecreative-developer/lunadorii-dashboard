@@ -67,7 +67,7 @@ const Brand = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {brands.filter(brands => brands.brand.toLowerCase().indexOf(searchByTitle) > -1 ).map((brand, key) => (
+                  {brands.sort((a, b) => a.brand.localeCompare(b.brand)).filter(brands => brands.brand.toLowerCase().indexOf(searchByTitle) > -1 ).map((brand, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>

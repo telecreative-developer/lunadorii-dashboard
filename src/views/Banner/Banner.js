@@ -85,7 +85,7 @@ const Banner = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {banners.filter(banner => banner.title.toLowerCase().indexOf(searchByTitle) > -1 ).map((banner, key) => (
+                  {banners.sort((a, b) => a.title.localeCompare(b.title)).filter(banner => banner.title.toLowerCase().indexOf(searchByTitle) > -1 ).map((banner, key) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>
