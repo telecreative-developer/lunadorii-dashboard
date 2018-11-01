@@ -72,7 +72,7 @@ const Report = ({ reports, onShowReport, searchByTitle, onChangeSearch }) => (
                             data-report-name={report.name}
                             data-report-email={report.email}
                             data-report-subject={report.subject}
-                            data-report-content={report.read ? report.content : ""}
+                            data-report-content={report.content}
                             data-report-read={report.read}
                             data-report-date={report.created_at}
                             data-report-reply={JSON.stringify(report.reply)}
