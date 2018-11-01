@@ -100,13 +100,22 @@ const TransactionDetail = ({ transaction, onNavigateToTransaction, onChangeResi,
                         <tr key={key}>
                           <td>{key + 1}</td>
                           <td>{d.product}</td>
-                          <td>{convertToIDR(d.price)}</td>
+                          <td>{convertToIDR(d.price - (d.price * d.discount_percentage) / 100)}</td>
                           <td>{d.qty}</td>
-                          <td>{convertToIDR(d.qty * d.price)}</td>
+                          <td>{convertToIDR(d.qty * (d.price - (d.price * d.discount_percentage) / 100))}</td>
                         </tr>
                       ))}
                   </tbody>
                   <thead>
+                    <tr>
+                      <th className="borderBottom" />
+                      <th className="borderBottom" />
+                      <th className="borderBottom" />
+                      <th>Delivery</th>
+                      <th style={styles.th}>
+                        {transaction.delivery_price && convertToIDR(transaction.delivery_price)}
+                      </th>
+                    </tr>
                     <tr>
                       <th className="borderBottom" />
                       <th className="borderBottom" />
