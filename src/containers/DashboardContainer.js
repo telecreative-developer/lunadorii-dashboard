@@ -7,9 +7,10 @@ const db = new PouchDB("lunadorii")
 
 class DashboardContainer extends React.Component {
 	componentWillMount() {
-		db.get("session").then(doc =>
+		db.get("session").then(doc => {
+			console.log(doc)
 			this.props.fetchDashboardInfo({ accessToken: doc.accessToken })
-		)
+		})
 	}
 
 	render() {
